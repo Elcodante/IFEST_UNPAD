@@ -212,4 +212,12 @@ public class RoomController : MonoBehaviour
             );
         }
     }
+
+    public void OpenMiniGameList()
+    {
+        if (RoomMiniGameUI.Instance == null)
+            return;
+
+        RoomMiniGameUI.Instance.OpenForRoom(this);
+    }
 }

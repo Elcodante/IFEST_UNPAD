@@ -21,7 +21,7 @@ public class MinigameDragManager : BaseMinigameManager
     public RectTransform floorSpawnArea;
     public int minSpawnCount = 4;
     public int maxSpawnCount = 7;
-    public int maxSpawnAttempts = 50; 
+    public int maxSpawnAttempts = 50;
     private int currentMatches = 0;
 
     public void AddCorrectMatch()
@@ -120,7 +120,7 @@ public class MinigameDragManager : BaseMinigameManager
                 item.ReturnToStart();
             }
             else
-            {               
+            {
                 item.gameObject.SetActive(false);
             }
         }
@@ -169,5 +169,15 @@ public class MinigameDragManager : BaseMinigameManager
             }
         }
         return Vector2.zero;
+    }
+
+    public void RemoveCorrectMatch()
+    {
+        currentMatches--;
+        if(currentMatches < 0)
+        {
+            currentMatches = 0;
+            Debug.Log($"[Minigame] Objek terpental! Progress mundur: {currentMatches}/{totalRequiredMatches}");
+        }
     }
 }

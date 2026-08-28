@@ -10,6 +10,12 @@ public class DropZone : MonoBehaviour, IDropHandler
     [Tooltip("Masukkan script Manajer Minigame ke sini")]
     public MinigameDragManager minigameManager;
 
+    [Header("Hazard Link")]
+    public GearJamHazard myHazard;
+
+    [HideInInspector]
+    public DraggableItem currentItem;
+
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag != null)
@@ -27,6 +33,8 @@ public class DropZone : MonoBehaviour, IDropHandler
 
                     draggedItem.GetComponent<CanvasGroup>().blocksRaycasts = false;
                    
+                    currentItem = draggedItem;
+
                     if (minigameManager != null)
                     {
                         minigameManager.AddCorrectMatch();
@@ -60,6 +68,21 @@ public class DropZone : MonoBehaviour, IDropHandler
                     Debug.Log("[DropZone] Kabel salah port! Memulangkan kabel.");                   
                 }
                 return;
+            }
+        }
+    }
+
+    public void EjectItem()
+    {
+        if(currentItem != null)
+        {
+            Debug.Log($"[DropZone] Memuntahkan {currentItem.name}!");
+            currentItem.ReturnToStart();
+            currentItem = null;
+
+            if(minigameManager != null)
+            {
+                minigameManager.RemoveCorrectMatch();
             }
         }
     }

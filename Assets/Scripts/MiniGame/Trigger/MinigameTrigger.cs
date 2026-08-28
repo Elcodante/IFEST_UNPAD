@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-
+using UnityEngine.EventSystems;
 [RequireComponent(typeof(Collider2D))]
 public class MinigameTrigger : MonoBehaviour
 {
@@ -60,7 +60,12 @@ public class MinigameTrigger : MonoBehaviour
     {
         
         if (!isDangerActive) return;
-       
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
 

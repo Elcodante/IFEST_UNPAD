@@ -8,6 +8,10 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [Header("Item Properties")]
     public string itemID;
 
+    [Header("O2 Wind Mechanic")]
+    public bool affectedByWind = false;
+    public float dragTolerance = 2.5f;
+
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Canvas mainCanvas;
@@ -16,6 +20,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [HideInInspector] public Transform originalParent;
 
     private bool isInitialized = false; // Pelindung Race Condition
+    private bool isFailedDrag = false;
 
     private void Awake()
     {
@@ -39,12 +44,26 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        isFailedDrag = false;
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (isFailedDrag) return; 
+        
+        if (affectedByWind && O2WindManager.Instance != null && O2WindManager.Instance.isWindBlowing)
+        {           
+            if (eventData.delta.magnitude > dragTolerance)
+            {
+                Debug.Log("[O2 Minigame] GAGAL! Sampah tersedot angin.");
+                isFailedDrag = true; 
+                ReturnToStart();     
+                return;
+            }
+        }
+
         if (mainCanvas != null)
             rectTransform.anchoredPosition += eventData.delta / mainCanvas.scaleFactor;
     }

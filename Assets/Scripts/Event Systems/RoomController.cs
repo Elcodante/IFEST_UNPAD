@@ -49,6 +49,12 @@ public class RoomController : MonoBehaviour
     public RoomStatus CurrentStatus => currentStatus;
     public string RoomName => roomName;
 
+    /// <summary>
+    /// Trigger yang sedang aktif (dipilih random) untuk serangan saat ini, kalau ada.
+    /// Null kalau room sedang Aman/Dikuasai atau minigame-nya sudah diklik/diselesaikan.
+    /// </summary>
+    public MinigameTrigger CurrentActiveTrigger { get; private set; }
+
     private void Awake()
     {
         ResetRoom();
@@ -118,13 +124,15 @@ public class RoomController : MonoBehaviour
     /// Memilih salah satu MinigameTrigger di room ini secara acak dan mengaktifkan
     /// warning-nya. Dipanggil setiap kali room mulai diserang.
     /// </summary>
-    private void ActivateRandomMinigameTrigger()
+private void ActivateRandomMinigameTrigger()
     {
         if (minigameTriggers == null || minigameTriggers.Length == 0)
             return;
 
         int index = Random.Range(0, minigameTriggers.Length);
         MinigameTrigger chosen = minigameTriggers[index];
+
+        CurrentActiveTrigger = chosen;
 
         if (chosen != null)
         {
@@ -137,8 +145,10 @@ public class RoomController : MonoBehaviour
     /// Dipanggil saat attack sudah diselesaikan atau room di-reset, supaya tidak ada
     /// warning yang nyangkut menyala.
     /// </summary>
-    private void CancelAllMinigameTriggers()
+private void CancelAllMinigameTriggers()
     {
+        CurrentActiveTrigger = null;
+
         if (minigameTriggers == null)
             return;
 

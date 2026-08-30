@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,8 +20,12 @@ public class RoomManager : MonoBehaviour
 
     public List<Room> rooms = new List<Room>();
     public GameObject prefabEventInvasi;
+    public GameObject panelGameOver;
 
-    public GameObject panelGameOver; // Wadah untuk UI Layar Hitam
+    [Header("PENGATURAN WAVE / HARI")]
+    public float waktuTungguAwal = 5f;   
+    public float jedaAntarInvasi = 30f; 
+    public int jumlahInvasiDay2 = 3;    
 
     void Awake()
     {
@@ -29,30 +34,57 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
-        // Matikan layar Game Over saat game baru mulai
         if (panelGameOver != null) panelGameOver.SetActive(false);
+
+        Room ruangAwal = rooms.Find(r => r.roomID == 1);
+        if (ruangAwal != null) ruangAwal.currentState = RoomState.Diinvasi;
+
+        StartCoroutine(SistemWaveOtomatis());
     }
 
-    // Fungsi untuk memunculkan layar hitam
+    IEnumerator SistemWaveOtomatis()
+    {
+        Debug.Log("WAVE SYSTEM: Game dimulai. Menunggu gelombang serangan...");
+        yield return new WaitForSeconds(waktuTungguAwal);
+
+        for (int i = 0; i < jumlahInvasiDay2; i++)
+        {
+            SpawnZombieDiRuangAcak();
+            if (i < jumlahInvasiDay2 - 1)
+            {
+                yield return new WaitForSeconds(jedaAntarInvasi);
+            }
+        }
+
+        Debug.Log("WAVE SYSTEM: Semua invasi gelombang ini telah selesai dipanggil!");
+    }
+
+    public void JadikanRuanganAman(int id)
+    {
+        Room r = rooms.Find(x => x.roomID == id);
+        if (r != null)
+        {
+            r.currentState = RoomState.Aman;
+            Debug.Log("Sistem: Ruangan " + id + " sekarang kembali AMAN dan kosong.");
+        }
+    }
+
     public void MunculkanGameOver()
     {
         if (panelGameOver != null) panelGameOver.SetActive(true);
-        Time.timeScale = 0f; // Bekukan game
+        Time.timeScale = 0f;
     }
 
-    // Fungsi untuk tombol Restart
     public void TombolRestartDitekan()
     {
-        Time.timeScale = 1f; // Cairkan waktu kembali
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // Fungsi untuk tombol Main Menu (Quit)
     public void TombolQuitDitekan()
     {
         Time.timeScale = 1f;
         Debug.Log("Kembali ke Main Menu!");
-        // SceneManager.LoadScene("NamaSceneMenu"); // Temanmu akan mengaktifkan ini nanti
     }
 
     public void SebarkanZombieDari(int idAsal)
@@ -83,6 +115,41 @@ public class RoomManager : MonoBehaviour
                 zc.targetRoomID = target.roomID;
                 zc.lokasiSpawn = target.lokasiRuangan;
             }
+        }
+    }
+
+    public void SpawnZombieDiRuangAcak()
+    {
+        List<Room> daftarRuangAman = new List<Room>();
+        foreach (Room r in rooms)
+        {
+            // PENGECUALIAN RUANG 6: Harus Aman DAN BUKAN Ruang 6
+            if (r.currentState == RoomState.Aman && r.roomID != 6)
+            {
+                daftarRuangAman.Add(r);
+            }
+        }
+
+        if (daftarRuangAman.Count > 0)
+        {
+            int indexAcak = Random.Range(0, daftarRuangAman.Count);
+            Room target = daftarRuangAman[indexAcak];
+
+            target.currentState = RoomState.Diinvasi;
+
+            if (prefabEventInvasi != null)
+            {
+                GameObject invasiBaru = Instantiate(prefabEventInvasi);
+                ZombieController zc = invasiBaru.GetComponent<ZombieController>();
+                zc.targetRoomID = target.roomID;
+                zc.lokasiSpawn = target.lokasiRuangan;
+
+                Debug.Log("WAVE SYSTEM: Muncul invasi baru secara acak di Ruangan " + target.roomID);
+            }
+        }
+        else
+        {
+            Debug.Log("WAVE SYSTEM: Gagal spawn! Semua ruangan (selain markas) sudah terinfeksi!");
         }
     }
 }

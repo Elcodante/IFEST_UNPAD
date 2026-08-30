@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &779416
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1552,7 +1552,7 @@ PrefabInstance:
       objectReference: {fileID: 1798848740}
     - target: {fileID: 2743949754392073193, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
       propertyPath: waktuTumbuh
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3463894118187994509, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
       propertyPath: m_Name
@@ -2064,6 +2064,9 @@ MonoBehaviour:
     lokasiRuangan: {fileID: 1427356898}
   prefabEventInvasi: {fileID: 3463894118187994509, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
   panelGameOver: {fileID: 779415}
+  waktuTungguAwal: 20
+  jedaAntarInvasi: 40
+  jumlahInvasiDay2: 3
 --- !u!4 &1605127810
 Transform:
   m_ObjectHideFlags: 0
@@ -2244,7 +2247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1997531917
 RectTransform:
   m_ObjectHideFlags: 0

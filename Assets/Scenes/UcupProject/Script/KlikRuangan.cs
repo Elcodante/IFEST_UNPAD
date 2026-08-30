@@ -21,7 +21,6 @@ public class KlikRuangan : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            // Mengubah posisi klik di layar komputermu menjadi titik koordinat 2D di dalam game
             Vector2 posisiMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             // Mengecek apakah titik klik tersebut berada tepat di dalam kotak hijau ruangan ini

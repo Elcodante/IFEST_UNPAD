@@ -37,6 +37,10 @@ public class RoomController : MonoBehaviour
     [SerializeField] private GameObject attackedNotification;
     [SerializeField] private GameObject controlledNotification;
 
+    [Header("Minigame Triggers")]
+    [Tooltip("Semua MinigameTrigger yang ada di room ini. Saat room diserang, salah satu akan dipilih secara acak untuk diaktifkan.")]
+    [SerializeField] private MinigameTrigger[] minigameTriggers;
+
     private RoomStatus currentStatus;
     private float captureTimer;
     private float damageTimer;
@@ -90,6 +94,7 @@ public class RoomController : MonoBehaviour
             return;
 
         SetStatus(RoomStatus.Diserang);
+        ActivateRandomMinigameTrigger();
     }
 
     /// <summary>
@@ -102,6 +107,48 @@ public class RoomController : MonoBehaviour
             return;
 
         SetStatus(RoomStatus.Aman);
+        CancelAllMinigameTriggers();
+    }
+
+    // =========================================================
+    // MINIGAME TRIGGERS
+    // =========================================================
+
+    /// <summary>
+    /// Memilih salah satu MinigameTrigger di room ini secara acak dan mengaktifkan
+    /// warning-nya. Dipanggil setiap kali room mulai diserang.
+    /// </summary>
+    private void ActivateRandomMinigameTrigger()
+    {
+        if (minigameTriggers == null || minigameTriggers.Length == 0)
+            return;
+
+        int index = Random.Range(0, minigameTriggers.Length);
+        MinigameTrigger chosen = minigameTriggers[index];
+
+        if (chosen != null)
+        {
+            chosen.ActivateDanger();
+        }
+    }
+
+    /// <summary>
+    /// Mematikan warning pada semua MinigameTrigger di room ini tanpa memicu minigame.
+    /// Dipanggil saat attack sudah diselesaikan atau room di-reset, supaya tidak ada
+    /// warning yang nyangkut menyala.
+    /// </summary>
+    private void CancelAllMinigameTriggers()
+    {
+        if (minigameTriggers == null)
+            return;
+
+        foreach (MinigameTrigger trigger in minigameTriggers)
+        {
+            if (trigger != null)
+            {
+                trigger.CancelDanger();
+            }
+        }
     }
 
     private void HandleAttackState()
@@ -172,6 +219,7 @@ public class RoomController : MonoBehaviour
         damageTimer = damageInterval;
         hungerTimer = hungerDrainInterval;
 
+        CancelAllMinigameTriggers();
         UpdateNotificationInstant();
     }
 

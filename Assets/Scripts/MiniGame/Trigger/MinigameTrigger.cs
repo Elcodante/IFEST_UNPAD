@@ -14,23 +14,28 @@ public class MinigameTrigger : MonoBehaviour
 
     private bool isDangerActive = false;
 
+    /// <summary>
+    /// Status saat ini apakah trigger ini sedang menampilkan warning (belum diklik player).
+    /// </summary>
+    public bool IsDangerActive => isDangerActive;
+
     private void Start()
     {
-        if(_minigameUI != null)
+        if (_minigameUI != null)
         {
             _minigameUI.SetActive(false);
         }
     }
 
     private void Update()
-    {  
-        // Catatan : Code dibawah ini untuk testing
+    {
+        //Catatan: Code dibawah ini untuk testing
         //if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame && !isDangerActive)
         //{
         //    ActivateDanger();
         //}
-        
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame )
+
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             DetectClick();
         }
@@ -45,7 +50,7 @@ public class MinigameTrigger : MonoBehaviour
 
         isDangerActive = true;
 
-        if(_minigameUI != null)
+        if (_minigameUI != null)
         {
             _minigameUI.SetActive(true);
         }
@@ -54,12 +59,29 @@ public class MinigameTrigger : MonoBehaviour
     }
 
     /// <summary>
+    /// Membatalkan warning tanpa memicu minigame. Dipanggil misalnya oleh RoomController
+    /// saat room di-reset atau attack diselesaikan lewat trigger lain di room yang sama,
+    /// supaya warning yang belum sempat diklik player tidak nyangkut menyala.
+    /// </summary>
+    public void CancelDanger()
+    {
+        if (!isDangerActive) return;
+
+        isDangerActive = false;
+
+        if (_minigameUI != null)
+        {
+            _minigameUI.SetActive(false);
+        }
+    }
+
+    /// <summary>
     /// Logika deteksi klik kursor pada dunia 2D
     /// </summary>
 
     private void DetectClick()
     {
-        
+
         if (!isDangerActive) return;
 
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
@@ -71,7 +93,7 @@ public class MinigameTrigger : MonoBehaviour
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
 
         Collider2D hitCollider = Physics2D.OverlapPoint(worldPosition);
-       
+
         if (hitCollider != null && hitCollider.gameObject == this.gameObject)
         {
             AcknowledgeWarning();
@@ -86,7 +108,7 @@ public class MinigameTrigger : MonoBehaviour
     {
         isDangerActive = false;
 
-        if(_minigameUI != null)
+        if (_minigameUI != null)
         {
             _minigameUI.SetActive(false);
         }

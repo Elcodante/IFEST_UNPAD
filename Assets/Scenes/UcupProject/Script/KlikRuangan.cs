@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 public class KlikRuangan : MonoBehaviour
 {
     public int idRuangan;
@@ -13,7 +14,11 @@ public class KlikRuangan : MonoBehaviour
 
     void Update()
     {
-        // Mendeteksi klik kiri mouse (0 = klik kiri)
+        if (Time.timeScale == 0f) return;
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             // Mengubah posisi klik di layar komputermu menjadi titik koordinat 2D di dalam game

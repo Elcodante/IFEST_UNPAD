@@ -1,12 +1,20 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class SoldierManager : MonoBehaviour
 {
     public static SoldierManager instance;
     public GameObject panelUI;
     public int ruanganTerpilih;
+    public GameObject prefabTentara;
 
-    public GameObject prefabTentara; // Wadah cetakan Titik Hijau
+    public bool sedangCooldown = false;
+    public float waktuCooldown = 20f;
+    private float timerCooldown = 0f;
+
+    public Button tombolKirim;
+    public TextMeshProUGUI teksTombolKirim;
 
     void Awake()
     {
@@ -16,6 +24,22 @@ public class SoldierManager : MonoBehaviour
     void Start()
     {
         if (panelUI != null) panelUI.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (sedangCooldown)
+        {
+            timerCooldown -= Time.deltaTime;
+            if (teksTombolKirim != null) teksTombolKirim.text = "Tunggu " + Mathf.Ceil(timerCooldown).ToString() + "s";
+
+            if (timerCooldown <= 0)
+            {
+                sedangCooldown = false;
+                if (tombolKirim != null) tombolKirim.interactable = true;
+                if (teksTombolKirim != null) teksTombolKirim.text = "Kirim Tentara";
+            }
+        }
     }
 
     public void MunculkanUI(int idRuangan)
@@ -31,23 +55,25 @@ public class SoldierManager : MonoBehaviour
 
     public void TombolKirimDitekan()
     {
+        if (sedangCooldown) return; // Cegah spam klik
+
         panelUI.SetActive(false);
 
-        // Cari tahu letak koordinat ruangan yang dipilih dari RoomManager
         if (RoomManager.instance != null)
         {
             RoomManager.Room targetRuang = RoomManager.instance.rooms.Find(r => r.roomID == ruanganTerpilih);
 
             if (targetRuang != null && prefabTentara != null)
             {
-                Debug.Log("Tentara meluncur ke Ruangan: " + ruanganTerpilih);
-
                 Vector3 posisiBersebelahan = targetRuang.lokasiRuangan.position + new Vector3(0.5f, 0f, 0f);
                 GameObject tentaraBaru = Instantiate(prefabTentara, posisiBersebelahan, Quaternion.identity);
 
-                // Beritahu tentara ini dia sedang berada di ruangan mana
                 SoldierController sc = tentaraBaru.GetComponent<SoldierController>();
                 if (sc != null) sc.myRoomID = ruanganTerpilih;
+
+                sedangCooldown = true;
+                timerCooldown = waktuCooldown;
+                if (tombolKirim != null) tombolKirim.interactable = false;
             }
         }
     }

@@ -47,6 +47,6 @@ MonoBehaviour:
   targetRoomID: 1
   titikSekarang: 0
   maksimalTitik: 5
-  waktuTumbuh: 10
+  waktuTumbuh: 1
   prefabTitikMerah: {fileID: 5026554852279678331, guid: 252def12bf9e84f41ad5a245257e3ce1, type: 3}
   lokasiSpawn: {fileID: 0}

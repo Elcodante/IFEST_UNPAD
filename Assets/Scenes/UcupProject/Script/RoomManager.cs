@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoomManager : MonoBehaviour
 {
-    public static RoomManager instance; // Kunci akses antar script
+    public static RoomManager instance;
 
     public enum RoomState { Aman, Diinvasi, Hancur }
 
@@ -17,27 +18,48 @@ public class RoomManager : MonoBehaviour
     }
 
     public List<Room> rooms = new List<Room>();
-    public GameObject prefabEventInvasi; // Wadah untuk men-spawn invasi baru
+    public GameObject prefabEventInvasi;
+
+    public GameObject panelGameOver; // Wadah untuk UI Layar Hitam
 
     void Awake()
     {
-        // Menyimpan diri sendiri sebagai instance utama saat game dimulai
         instance = this;
     }
 
     void Start()
     {
-        Debug.Log("Room Manager aktif! Total ruangan terdaftar: " + rooms.Count);
+        // Matikan layar Game Over saat game baru mulai
+        if (panelGameOver != null) panelGameOver.SetActive(false);
     }
 
-    // Fungsi otomatis untuk menyebarkan zombie
+    // Fungsi untuk memunculkan layar hitam
+    public void MunculkanGameOver()
+    {
+        if (panelGameOver != null) panelGameOver.SetActive(true);
+        Time.timeScale = 0f; // Bekukan game
+    }
+
+    // Fungsi untuk tombol Restart
+    public void TombolRestartDitekan()
+    {
+        Time.timeScale = 1f; // Cairkan waktu kembali
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Fungsi untuk tombol Main Menu (Quit)
+    public void TombolQuitDitekan()
+    {
+        Time.timeScale = 1f;
+        Debug.Log("Kembali ke Main Menu!");
+        // SceneManager.LoadScene("NamaSceneMenu"); // Temanmu akan mengaktifkan ini nanti
+    }
+
     public void SebarkanZombieDari(int idAsal)
     {
-        // Ruangan yang hancur
         Room ruangAsal = rooms.Find(r => r.roomID == idAsal);
         if (ruangAsal != null) ruangAsal.currentState = RoomState.Hancur;
 
-        //Jumlah room sebelah yang aman
         List<Room> targetAman = new List<Room>();
         foreach (int idTetangga in ruangAsal.neighborIDs)
         {
@@ -48,16 +70,12 @@ public class RoomManager : MonoBehaviour
             }
         }
 
-        // Room tetangga yang aman bakal di invasi
         if (targetAman.Count > 0)
         {
             int acak = Random.Range(0, targetAman.Count);
             Room target = targetAman[acak];
-            target.currentState = RoomState.Diinvasi; // Ubah status agar tidak diserang ganda
+            target.currentState = RoomState.Diinvasi;
 
-            Debug.Log("Penyebaran: Ruangan " + idAsal + " menular ke Ruangan " + target.roomID);
-
-            // 4. Munculkan mesin invasi baru di ruangan target tersebut
             if (prefabEventInvasi != null)
             {
                 GameObject invasiBaru = Instantiate(prefabEventInvasi);
@@ -65,10 +83,6 @@ public class RoomManager : MonoBehaviour
                 zc.targetRoomID = target.roomID;
                 zc.lokasiSpawn = target.lokasiRuangan;
             }
-        }
-        else
-        {
-            Debug.Log("Ruangan " + idAsal + " hancur, tapi semua tetangga sudah terinfeksi/hancur.");
         }
     }
 }

@@ -104,5 +104,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dc52e99f90572478168bb9a394f378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoldierController
-  myRoomID: 6
+  myRoomID: 0
   waktuSerang: 2

@@ -32,6 +32,16 @@ public class ZombieController : MonoBehaviour
             MunculkanSatuTitik();
             titikSekarang++;
 
+            if (targetRoomID == 6 && titikSekarang >= 1)
+            {
+                Debug.Log("GAME OVER! Zombie menerobos masuk ke Security Room!");
+
+                // BARIS INI YANG AKAN MENYALAKAN PANEL UI-NYA:
+                if (RoomManager.instance != null) RoomManager.instance.MunculkanGameOver();
+
+                yield break; // Hentikan mesin zombie
+            }
+
             if (titikSekarang >= maksimalTitik)
             {
                 Debug.Log("Ruangan " + targetRoomID + " HANCUR (100%)! Pintu jebol.");

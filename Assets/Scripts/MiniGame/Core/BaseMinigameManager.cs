@@ -30,7 +30,7 @@ public abstract class BaseMinigameManager : MonoBehaviour
 
         isGameInProgress = false;
         OnMinigameCompleted?.Invoke();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     protected abstract void ResetMinigame();

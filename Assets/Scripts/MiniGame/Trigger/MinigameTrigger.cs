@@ -29,11 +29,11 @@ public class MinigameTrigger : MonoBehaviour
 
     private void Update()
     {
-        //Catatan: Code dibawah ini untuk testing
-        //if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame && !isDangerActive)
-        //{
-        //    ActivateDanger();
-        //}
+    //Catatan: Code dibawah ini untuk testing
+        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame && !isDangerActive)
+        {
+            ActivateDanger();
+        }
 
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {

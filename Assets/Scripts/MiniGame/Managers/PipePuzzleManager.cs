@@ -8,16 +8,22 @@ public class PipeLevel
 {
     public string levelName = "Variasi Level";
     public GameObject levelContainerUI;
+
+    [Header("Ukuran Grid")]
+    [Tooltip("Contoh: 6 untuk grid 6x4")]
+    public int jumlahKolom = 6;
+    [Tooltip("Contoh: 4 untuk grid 6x4")]
+    public int jumlahBaris = 4;
+
     public PipeNode[] gridPipes;
 
     [Header("Titik Masuk (Start)")]
     public int startIndex;
     public GasDirection masukDariArah;
 
-    [Header("Titik Keluar (exit)")]
+    [Header("Titik Keluar (Exit)")]
     public int endIndex;
     public GasDirection keluarKeArah;
-
 }
 
 public class PipePuzzleManager : BaseMinigameManager
@@ -59,19 +65,15 @@ public class PipePuzzleManager : BaseMinigameManager
 
     public void EvaluateFlow()
     {
-        if (levelAktif == null)
-        {
-            return;
-        }
+        if (levelAktif == null) return;
 
         PipeNode[] pipes = levelAktif.gridPipes;
+        int cols = levelAktif.jumlahKolom;
+        int rows = levelAktif.jumlahBaris;
 
         foreach (PipeNode pipe in pipes)
         {
-            if (pipe != null)
-            {
-                pipe.SetFlowState(false);
-            }
+            if (pipe != null) pipe.SetFlowState(false);
         }
 
         if (!CekArah(pipes[levelAktif.startIndex], levelAktif.masukDariArah))
@@ -94,33 +96,32 @@ public class PipePuzzleManager : BaseMinigameManager
 
             if (current == levelAktif.endIndex) reachedEnd = true;
 
-            int x = current % 3;
-            int y = current / 3;
+            int x = current % cols;
+            int y = current / cols;
             PipeNode currentPipe = pipes[current];
 
-            // Cek Atas
-            if (y > 0 && currentPipe.HasTop() && !visited.Contains(current - 3) && pipes[current - 3].HasBottom())
+            // Cek Atas (Kurangi indeks dengan jumlah kolom)
+            if (y > 0 && currentPipe.HasTop() && !visited.Contains(current - cols) && pipes[current - cols].HasBottom())
             {
-                visited.Add(current - 3); queue.Enqueue(current - 3);
+                visited.Add(current - cols); queue.Enqueue(current - cols);
             }
-            // Cek Bawah
-            if (y < 2 && currentPipe.HasBottom() && !visited.Contains(current + 3) && pipes[current + 3].HasTop())
+            // Cek Bawah (Tambahkan indeks dengan jumlah kolom)
+            if (y < rows - 1 && currentPipe.HasBottom() && !visited.Contains(current + cols) && pipes[current + cols].HasTop())
             {
-                visited.Add(current + 3); queue.Enqueue(current + 3);
+                visited.Add(current + cols); queue.Enqueue(current + cols);
             }
-            // Cek Kiri
+            // Cek Kiri (Kurangi indeks dengan 1)
             if (x > 0 && currentPipe.HasLeft() && !visited.Contains(current - 1) && pipes[current - 1].HasRight())
             {
                 visited.Add(current - 1); queue.Enqueue(current - 1);
             }
-            // Cek Kanan
-            if (x < 2 && currentPipe.HasRight() && !visited.Contains(current + 1) && pipes[current + 1].HasLeft())
+            // Cek Kanan (Tambahkan indeks dengan 1)
+            if (x < cols - 1 && currentPipe.HasRight() && !visited.Contains(current + 1) && pipes[current + 1].HasLeft())
             {
                 visited.Add(current + 1); queue.Enqueue(current + 1);
             }
         }
 
-        // Cek apakah gas sampai ke ujung DAN menghadap ke tangki luar dengan benar
         bool isOutputConnected = CekArah(pipes[levelAktif.endIndex], levelAktif.keluarKeArah);
 
         if (reachedEnd && isOutputConnected)

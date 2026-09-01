@@ -1,0 +1,756 @@
+fileFormatVersion: 2
+guid: e76f649f62fe02d4c938ecb0bb276199
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5236273879206528328
+    second: tata letak referensi_0
+  - first:
+      213: -4129207295350697555
+    second: tata letak referensi_1
+  - first:
+      213: -7734895958865708103
+    second: tata letak referensi_2
+  - first:
+      213: -5525980822518754018
+    second: tata letak referensi_3
+  - first:
+      213: -4945073295977096198
+    second: tata letak referensi_4
+  - first:
+      213: 6086169949425453501
+    second: tata letak referensi_5
+  - first:
+      213: 7221779553742789055
+    second: tata letak referensi_6
+  - first:
+      213: -2162498772214782055
+    second: tata letak referensi_7
+  - first:
+      213: -8514832821558746465
+    second: tata letak referensi_8
+  - first:
+      213: 4414046212335157689
+    second: tata letak referensi_9
+  - first:
+      213: 2971363938517651981
+    second: tata letak referensi_10
+  - first:
+      213: -13348283019427541
+    second: tata letak referensi_11
+  - first:
+      213: 7957717152960688010
+    second: tata letak referensi_12
+  - first:
+      213: -3651414247178439083
+    second: tata letak referensi_13
+  - first:
+      213: 5754246522084676124
+    second: tata letak referensi_14
+  - first:
+      213: 1849297867217591817
+    second: tata letak referensi_15
+  - first:
+      213: -8554532719144712172
+    second: tata letak referensi_16
+  - first:
+      213: -5953364825900634307
+    second: tata letak referensi_17
+  - first:
+      213: -3657684871265187066
+    second: tata letak referensi_18
+  - first:
+      213: 3897236824532962447
+    second: tata letak referensi_19
+  - first:
+      213: 4914750431900568155
+    second: tata letak referensi_20
+  - first:
+      213: 3759401106805193727
+    second: tata letak referensi_21
+  - first:
+      213: -1060573374849834586
+    second: tata letak referensi_22
+  - first:
+      213: 3269299837662255962
+    second: tata letak referensi_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tata letak referensi_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 122
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84503c4a95bfaa840800000000000000
+      internalID: 5236273879206528328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 122
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da19ba4a7db12b6c0800000000000000
+      internalID: -4129207295350697555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 122
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bb743d4b1128a490800000000000000
+      internalID: -7734895958865708103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_3
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 122
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e15162648b5cf43b0800000000000000
+      internalID: -5525980822518754018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 122
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afbd30599029f5bb0800000000000000
+      internalID: -4945073295977096198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_5
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 122
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db94926b25b667450800000000000000
+      internalID: 6086169949425453501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 90
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb99403dd3ae83460800000000000000
+      internalID: 7221779553742789055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_7
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 90
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9976be6f2d24df1e0800000000000000
+      internalID: -2162498772214782055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 90
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f92672d89ac35d980800000000000000
+      internalID: -8514832821558746465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_9
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 90
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b1456cb4a7d14d30800000000000000
+      internalID: 4414046212335157689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_10
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 90
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0210c552c76c3920800000000000000
+      internalID: 2971363938517651981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_11
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 90
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b21044caec390dff0800000000000000
+      internalID: -13348283019427541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 58
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8f214db69d7f6e60800000000000000
+      internalID: 7957717152960688010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_13
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 58
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 556f0259612935dc0800000000000000
+      internalID: -3651414247178439083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 58
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1252ea79b03bdf40800000000000000
+      internalID: 5754246522084676124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_15
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 58
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90e546bbc960aa910800000000000000
+      internalID: 1849297867217591817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_16
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 58
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4184ce7d0d1384980800000000000000
+      internalID: -8554532719144712172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_17
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 58
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3f23edab36616da0800000000000000
+      internalID: -5953364825900634307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_18
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 26
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60b0be32dfa4d3dc0800000000000000
+      internalID: -3657684871265187066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_19
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 26
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8ccbd35e34c51630800000000000000
+      internalID: 3897236824532962447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_20
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 26
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5a81257a73b43440800000000000000
+      internalID: 4914750431900568155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_21
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 26
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffb755373631c2430800000000000000
+      internalID: 3759401106805193727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_22
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 26
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a1a6dd72261841f0800000000000000
+      internalID: -1060573374849834586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tata letak referensi_23
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 26
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5bd91081e2ee5d20800000000000000
+      internalID: 3269299837662255962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 455b7cfb514e0af4faa4f5aef6e3bc70
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      tata letak referensi_0: 5236273879206528328
+      tata letak referensi_1: -4129207295350697555
+      tata letak referensi_10: 2971363938517651981
+      tata letak referensi_11: -13348283019427541
+      tata letak referensi_12: 7957717152960688010
+      tata letak referensi_13: -3651414247178439083
+      tata letak referensi_14: 5754246522084676124
+      tata letak referensi_15: 1849297867217591817
+      tata letak referensi_16: -8554532719144712172
+      tata letak referensi_17: -5953364825900634307
+      tata letak referensi_18: -3657684871265187066
+      tata letak referensi_19: 3897236824532962447
+      tata letak referensi_2: -7734895958865708103
+      tata letak referensi_20: 4914750431900568155
+      tata letak referensi_21: 3759401106805193727
+      tata letak referensi_22: -1060573374849834586
+      tata letak referensi_23: 3269299837662255962
+      tata letak referensi_3: -5525980822518754018
+      tata letak referensi_4: -4945073295977096198
+      tata letak referensi_5: 6086169949425453501
+      tata letak referensi_6: 7221779553742789055
+      tata letak referensi_7: -2162498772214782055
+      tata letak referensi_8: -8514832821558746465
+      tata letak referensi_9: 4414046212335157689
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

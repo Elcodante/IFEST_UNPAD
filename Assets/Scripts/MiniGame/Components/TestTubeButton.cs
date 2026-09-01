@@ -2,23 +2,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+
 public class TestTubeButton : MonoBehaviour, IPointerDownHandler
 {
     [HideInInspector] public int tubeID;
     [HideInInspector] public AntidoteSequenceManager manager;
 
-    [Header("Visual Feedback")]
-    public Color glowColor = Color.white;
+    [Header("Visual Feedback (Sprites)")]
+    [Tooltip("Masukkan gambar botol saat mati (contoh: biru meninggoy)")]
+    public Sprite idleSprite;
+
+    [Tooltip("Masukkan gambar botol saat menyala (contoh: biru nyala)")]
+    public Sprite glowSprite;
+
     public float flashDuration = 0.4f;
 
     private Image tubeImage;
-    private Color originalColor;
     private Coroutine flashRoutine;
 
     private void Awake()
     {
         tubeImage = GetComponent<Image>();
-        originalColor = tubeImage.color;
+
+        // Pastikan botol dimulai dalam keadaan mati
+        if (tubeImage != null && idleSprite != null)
+        {
+            tubeImage.sprite = idleSprite;
+        }
     }
 
     public void FlashTube()
@@ -29,14 +39,29 @@ public class TestTubeButton : MonoBehaviour, IPointerDownHandler
         }
         flashRoutine = StartCoroutine(FlashRoutine());
     }
+
     private IEnumerator FlashRoutine()
     {
-        tubeImage.color = glowColor;
+        // 1. Ganti ke gambar menyala
+        if (tubeImage != null && idleSprite != null)
+        {
+            tubeImage.sprite = idleSprite;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (tubeImage != null && glowSprite != null)
+        {
+            tubeImage.sprite = glowSprite;
+        }
+
         yield return new WaitForSeconds(flashDuration);
-        tubeImage.color = originalColor;
+
+        if (tubeImage != null && idleSprite != null)
+        {
+            tubeImage.sprite = idleSprite;
+        }
     }
-
-
 
     public void OnPointerDown(PointerEventData eventData)
     {

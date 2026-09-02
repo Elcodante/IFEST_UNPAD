@@ -29,19 +29,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Curvature: 6
+    - _Curvature: 5.5
     - _FlickerDuration: 0.1
     - _FlickerInterval: 4
-    - _FlickerStrength: 0.05
+    - _FlickerStrength: 0.1
     - _GlitchSpeed: 0.25
-    - _GlitchStrength: 0.12
+    - _GlitchStrength: 0.1
     - _NoiseStrength: 0.035
     - _ScanlineDensity: 450
     - _ScanlineSpeed: 1
-    - _ScanlineStrength: 0.16
+    - _ScanlineStrength: 0.1
     - _TintDarkness: 0.05
-    - _VignetteSmoothness: 0.45
-    - _VignetteStrength: 0.85
+    - _VignetteSmoothness: 1
+    - _VignetteStrength: 0.9
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

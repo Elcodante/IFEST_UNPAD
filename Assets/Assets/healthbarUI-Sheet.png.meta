@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 3cf44a5a06a6c2d489f4d357996d89d4
+guid: 226d3a0be44fab340b07c677a9990774
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 293097588169308396
-    second: electricalZombies_0
+      213: 4740981124884203065
+    second: healthbarUI-Sheet_0
+  - first:
+      213: -7453659019860422872
+    second: healthbarUI-Sheet_1
+  - first:
+      213: -5650543484974071174
+    second: healthbarUI-Sheet_2
+  - first:
+      213: -8343975638063662798
+    second: healthbarUI-Sheet_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +106,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -110,7 +119,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -139,45 +148,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: electricalZombies_0
+      name: healthbarUI-Sheet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 112
-        height: 112
+        x: 12
+        y: 80
+        width: 56
+        height: 56
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce8fa5b14ba411400800000000000000
-      internalID: 293097588169308396
+      spriteID: 9360e8bd6395bc140800000000000000
+      internalID: 4740981124884203065
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: electricalZombies_1
+      name: healthbarUI-Sheet_1
       rect:
         serializedVersion: 2
-        x: 112
-        y: 0
-        width: 112
-        height: 112
+        x: 79
+        y: 83
+        width: 210
+        height: 50
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 6b909500ddd32c54da7395aee1e14556
-      internalID: -224600388
+      spriteID: 82f4554dc984f8890800000000000000
+      internalID: -7453659019860422872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healthbarUI-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 80
+        width: 56
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a72093663ac3591b0800000000000000
+      internalID: -5650543484974071174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healthbarUI-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 83
+        width: 210
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 239b3be8d5e343c80800000000000000
+      internalID: -8343975638063662798
       vertices: []
       indices: 
       edges: []
@@ -186,7 +239,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7bd6ec13e4aef6246a66324d82d68ed3
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -194,12 +247,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":112.0,"y":112.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      electricalZombies_0: 293097588169308396
-      electricalZombies_1: -224600388
+      healthbarUI-Sheet_0: 4740981124884203065
+      healthbarUI-Sheet_1: -7453659019860422872
+      healthbarUI-Sheet_2: -5650543484974071174
+      healthbarUI-Sheet_3: -8343975638063662798
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -35,7 +35,13 @@ public class RoomController : MonoBehaviour
 
     [Header("UI Notification")]
     [SerializeField] private GameObject attackedNotification;
+    [SerializeField] private GameObject attackedNotification1;
+
     [SerializeField] private GameObject controlledNotification;
+    [SerializeField] private GameObject controlledNotification1;
+
+    [Tooltip("Waktu pergantian notification.")]
+    [SerializeField] private float blinkInterval = 0.5f;
 
     [Header("Minigame Triggers")]
     [Tooltip("Semua MinigameTrigger yang ada di room ini. Saat room diserang, salah satu akan dipilih secara acak untuk diaktifkan.")]
@@ -46,11 +52,15 @@ public class RoomController : MonoBehaviour
     private float damageTimer;
     private float hungerTimer;
 
+    // Blink
+    private float blinkTimer;
+    private bool blinkState;
+
     public RoomStatus CurrentStatus => currentStatus;
     public string RoomName => roomName;
 
     /// <summary>
-    /// Trigger yang sedang aktif (dipilih random) untuk serangan saat ini, kalau ada.
+    /// Trigger yang sedang aktif (dipilih random) untuk serangan saat ini.
     /// Null kalau room sedang Aman/Dikuasai atau minigame-nya sudah diklik/diselesaikan.
     /// </summary>
     public MinigameTrigger CurrentActiveTrigger { get; private set; }
@@ -64,7 +74,7 @@ public class RoomController : MonoBehaviour
     {
         HandleAttackState();
         HandleControlledState();
-        HandleNotification();
+        HandleNotificationBlink();
     }
 
     // =========================================================
@@ -80,17 +90,52 @@ public class RoomController : MonoBehaviour
             return;
         }
 
+        // Jika status sama, tidak perlu update/kirim notif
+        if (currentStatus == newStatus)
+            return;
+
         currentStatus = newStatus;
+
+        // Reset blink setiap status berubah
+        blinkTimer = 0f;
+        blinkState = false;
 
         if (currentStatus == RoomStatus.Diserang)
         {
             captureTimer = captureCooldown;
             hungerTimer = hungerDrainInterval;
-        }
 
-        if (currentStatus == RoomStatus.Dikuasai)
+            // Log: [Room Name] is under attack
+            SendLogNotification(
+                $"! {roomName} is under attack",
+                new Color(1f, 0.6f, 0f)
+            );
+        }
+        else if (currentStatus == RoomStatus.Dikuasai)
         {
             damageTimer = damageInterval;
+
+            // Log: [Room Name] is out of control
+            SendLogNotification(
+                $"!!! {roomName} is out of control",
+                Color.red
+            );
+        }
+        else if (currentStatus == RoomStatus.Aman)
+        {
+            // Log: [Room Name] is safe
+            SendLogNotification(
+                $"{roomName} is safe",
+                Color.green
+            );
+        }
+    }
+
+    private void SendLogNotification(string message, Color color)
+    {
+        if (NotificationLogUI.Instance != null)
+        {
+            NotificationLogUI.Instance.ShowLog(message, color);
         }
     }
 
@@ -100,6 +145,8 @@ public class RoomController : MonoBehaviour
             return;
 
         SetStatus(RoomStatus.Diserang);
+
+        // Tetap menjalankan danger/minigame seperti kode asli
         ActivateRandomMinigameTrigger();
     }
 
@@ -124,7 +171,7 @@ public class RoomController : MonoBehaviour
     /// Memilih salah satu MinigameTrigger di room ini secara acak dan mengaktifkan
     /// warning-nya. Dipanggil setiap kali room mulai diserang.
     /// </summary>
-private void ActivateRandomMinigameTrigger()
+    private void ActivateRandomMinigameTrigger()
     {
         if (minigameTriggers == null || minigameTriggers.Length == 0)
             return;
@@ -142,10 +189,9 @@ private void ActivateRandomMinigameTrigger()
 
     /// <summary>
     /// Mematikan warning pada semua MinigameTrigger di room ini tanpa memicu minigame.
-    /// Dipanggil saat attack sudah diselesaikan atau room di-reset, supaya tidak ada
-    /// warning yang nyangkut menyala.
+    /// Dipanggil saat attack sudah diselesaikan atau room di-reset.
     /// </summary>
-private void CancelAllMinigameTriggers()
+    private void CancelAllMinigameTriggers()
     {
         CurrentActiveTrigger = null;
 
@@ -160,6 +206,10 @@ private void CancelAllMinigameTriggers()
             }
         }
     }
+
+    // =========================================================
+    // ATTACK STATE
+    // =========================================================
 
     private void HandleAttackState()
     {
@@ -189,6 +239,10 @@ private void CancelAllMinigameTriggers()
             }
         }
     }
+
+    // =========================================================
+    // CONTROLLED STATE
+    // =========================================================
 
     private void HandleControlledState()
     {
@@ -229,6 +283,9 @@ private void CancelAllMinigameTriggers()
         damageTimer = damageInterval;
         hungerTimer = hungerDrainInterval;
 
+        blinkTimer = 0f;
+        blinkState = false;
+
         CancelAllMinigameTriggers();
         UpdateNotificationInstant();
     }
@@ -246,11 +303,76 @@ private void CancelAllMinigameTriggers()
             );
         }
 
+        if (attackedNotification1 != null)
+        {
+            attackedNotification1.SetActive(
+                currentStatus == RoomStatus.Diserang
+            );
+        }
+
         if (controlledNotification != null)
         {
             controlledNotification.SetActive(
                 currentStatus == RoomStatus.Dikuasai
             );
+        }
+
+        if (controlledNotification1 != null)
+        {
+            controlledNotification1.SetActive(
+                currentStatus == RoomStatus.Dikuasai
+            );
+        }
+    }
+
+    // =========================================================
+    // BLINK
+    // =========================================================
+
+    private void HandleNotificationBlink()
+    {
+        // Kalau status Aman, matikan semua notification dan hentikan blink
+        if (currentStatus != RoomStatus.Diserang &&
+            currentStatus != RoomStatus.Dikuasai)
+        {
+            if (attackedNotification != null) attackedNotification.SetActive(false);
+            if (attackedNotification1 != null) attackedNotification1.SetActive(false);
+            if (controlledNotification != null) controlledNotification.SetActive(false);
+            if (controlledNotification1 != null) controlledNotification1.SetActive(false);
+            return;
+        }
+
+        blinkTimer += Time.deltaTime;
+
+        if (blinkTimer < blinkInterval)
+            return;
+
+        blinkTimer = 0f;
+        blinkState = !blinkState;
+
+        if (currentStatus == RoomStatus.Diserang)
+        {
+            if (attackedNotification != null)
+                attackedNotification.SetActive(!blinkState);
+
+            if (attackedNotification1 != null)
+                attackedNotification1.SetActive(blinkState);
+
+            // Pastikan notification status lain mati
+            if (controlledNotification != null) controlledNotification.SetActive(false);
+            if (controlledNotification1 != null) controlledNotification1.SetActive(false);
+        }
+        else if (currentStatus == RoomStatus.Dikuasai)
+        {
+            if (controlledNotification != null)
+                controlledNotification.SetActive(!blinkState);
+
+            if (controlledNotification1 != null)
+                controlledNotification1.SetActive(blinkState);
+
+            // Pastikan notification status lain mati
+            if (attackedNotification != null) attackedNotification.SetActive(false);
+            if (attackedNotification1 != null) attackedNotification1.SetActive(false);
         }
     }
 
@@ -263,11 +385,21 @@ private void CancelAllMinigameTriggers()
             );
         }
 
+        if (attackedNotification1 != null)
+        {
+            attackedNotification1.SetActive(false);
+        }
+
         if (controlledNotification != null)
         {
             controlledNotification.SetActive(
                 currentStatus == RoomStatus.Dikuasai
             );
+        }
+
+        if (controlledNotification1 != null)
+        {
+            controlledNotification1.SetActive(false);
         }
     }
 

@@ -25,6 +25,11 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private MonoBehaviour playerController;
     [SerializeField] private GameplaySystemsController gameplaySystemsController;
 
+    [Header("Gameplay UI")]
+    [SerializeField] private GameObject slider1;
+    [SerializeField] private GameObject slider2;
+    [SerializeField] private GameObject gameplayButton;
+
     private Vector2[] originalPositions;
     private bool isTransitioning;
 
@@ -44,8 +49,19 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
+        // Player belum boleh bergerak saat Main Menu
         if (playerController != null)
             playerController.enabled = false;
+
+        // Gameplay UI disembunyikan saat Main Menu
+        if (slider1 != null)
+            slider1.SetActive(false);
+
+        if (slider2 != null)
+            slider2.SetActive(false);
+
+        if (gameplayButton != null)
+            gameplayButton.SetActive(false);
     }
 
     public void PlayGame()
@@ -54,15 +70,17 @@ public class MainMenuController : MonoBehaviour
             return;
 
         StartCoroutine(HideMenu());
-        gameplaySystemsController.StartGameplay();
     }
 
     private IEnumerator HideMenu()
     {
         isTransitioning = true;
 
-        mainMenuGroup.interactable = false;
-        mainMenuGroup.blocksRaycasts = false;
+        if (mainMenuGroup != null)
+        {
+            mainMenuGroup.interactable = false;
+            mainMenuGroup.blocksRaycasts = false;
+        }
 
         float elapsed = 0f;
 
@@ -110,13 +128,16 @@ public class MainMenuController : MonoBehaviour
                 }
             }
 
-            // Fade keseluruhan menu sedikit lebih cepat
-            mainMenuGroup.alpha =
-                Mathf.Lerp(
-                    1f,
-                    0f,
-                    Mathf.Clamp01(elapsed / duration)
-                );
+            // Fade keseluruhan menu
+            if (mainMenuGroup != null)
+            {
+                mainMenuGroup.alpha =
+                    Mathf.Lerp(
+                        1f,
+                        0f,
+                        Mathf.Clamp01(elapsed / duration)
+                    );
+            }
 
             if (finished)
                 break;
@@ -124,16 +145,37 @@ public class MainMenuController : MonoBehaviour
             yield return null;
         }
 
-        mainMenuGroup.alpha = 0f;
-        mainMenuGroup.gameObject.SetActive(false);
+        // Pastikan menu benar-benar hilang
+        if (mainMenuGroup != null)
+        {
+            mainMenuGroup.alpha = 0f;
+            mainMenuGroup.gameObject.SetActive(false);
+        }
 
         StartGameplay();
+
+        isTransitioning = false;
     }
 
     private void StartGameplay()
     {
+        // Aktifkan Gameplay UI
+        if (slider1 != null)
+            slider1.SetActive(true);
+
+        if (slider2 != null)
+            slider2.SetActive(true);
+
+        if (gameplayButton != null)
+            gameplayButton.SetActive(true);
+
+        // Aktifkan player
         if (playerController != null)
             playerController.enabled = true;
+
+        // Beritahu system gameplay bahwa game sudah dimulai
+        if (gameplaySystemsController != null)
+            gameplaySystemsController.StartGameplay();
     }
 
     private float EaseOutCubic(float t)

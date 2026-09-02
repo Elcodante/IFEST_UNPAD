@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3cf44a5a06a6c2d489f4d357996d89d4
+guid: 516760c0049b3ac49bf822b6c0a00815
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 293097588169308396
-    second: electricalZombies_0
+      213: 8198254781030213768
+    second: O2 Room_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -110,7 +110,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -139,45 +139,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: electricalZombies_0
+      name: O2 Room_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 112
-        height: 112
+        x: 110
+        y: 15
+        width: 196
+        height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce8fa5b14ba411400800000000000000
-      internalID: 293097588169308396
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: electricalZombies_1
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 0
-        width: 112
-        height: 112
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b909500ddd32c54da7395aee1e14556
-      internalID: -224600388
+      spriteID: 8882471894d06c170800000000000000
+      internalID: 8198254781030213768
       vertices: []
       indices: 
       edges: []
@@ -186,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7bd6ec13e4aef6246a66324d82d68ed3
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -194,12 +172,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":112.0,"y":112.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      electricalZombies_0: 293097588169308396
-      electricalZombies_1: -224600388
+      O2 Room_0: 8198254781030213768
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

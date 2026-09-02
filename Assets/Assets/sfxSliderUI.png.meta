@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 3cf44a5a06a6c2d489f4d357996d89d4
+guid: a2908a7e4fc0a874b81971ab67a69b47
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 293097588169308396
-    second: electricalZombies_0
+      213: 7739046372218113518
+    second: sfxSliderUI_0
+  - first:
+      213: -9007253908819814899
+    second: sfxSliderUI_1
+  - first:
+      213: -8363376820300788641
+    second: sfxSliderUI_2
+  - first:
+      213: -4363932429225100005
+    second: sfxSliderUI_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +106,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -110,7 +119,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -139,45 +148,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: electricalZombies_0
+      name: sfxSliderUI_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 112
-        height: 112
+        x: 113
+        y: 77
+        width: 8
+        height: 44
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce8fa5b14ba411400800000000000000
-      internalID: 293097588169308396
+      spriteID: eed065c1cad966b60800000000000000
+      internalID: 7739046372218113518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: electricalZombies_1
+      name: sfxSliderUI_1
       rect:
         serializedVersion: 2
-        x: 112
-        y: 0
-        width: 112
-        height: 112
+        x: 121
+        y: 53
+        width: 56
+        height: 92
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 6b909500ddd32c54da7395aee1e14556
-      internalID: -224600388
+      spriteID: d06db0bda4ecff280800000000000000
+      internalID: -9007253908819814899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfxSliderUI_2
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 69
+        width: 14
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5c4c3fc7115feb80800000000000000
+      internalID: -8363376820300788641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sfxSliderUI_3
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 63
+        width: 14
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1dfa34a3923073c0800000000000000
+      internalID: -4363932429225100005
       vertices: []
       indices: 
       edges: []
@@ -186,7 +239,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7bd6ec13e4aef6246a66324d82d68ed3
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -194,12 +247,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":112.0,"y":112.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      electricalZombies_0: 293097588169308396
-      electricalZombies_1: -224600388
+      sfxSliderUI_0: 7739046372218113518
+      sfxSliderUI_1: -9007253908819814899
+      sfxSliderUI_2: -8363376820300788641
+      sfxSliderUI_3: -4363932429225100005
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

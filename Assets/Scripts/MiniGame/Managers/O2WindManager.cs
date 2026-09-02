@@ -16,34 +16,23 @@ public class O2WindManager : MinigameDragManager
 
     [Header("Wind Visuals")]
     public GameObject windWarningUI;
+    [Tooltip("Masukkan objek partikel angin atau gambar animasi badai di sini")]
+    public GameObject windParticlesObject; // --- TAMBAHAN ---
 
     public static O2WindManager Instance;
-
     private Coroutine windRoutine;
 
     private void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
+        if (Instance == null) Instance = this;
     }
 
     protected override void OnEnable()
     {
-        base.OnEnable(); 
+        base.OnEnable();
+        ResetWindState();
 
-        isWindBlowing = false;
-        if (windWarningUI != null)
-        {
-            windWarningUI.SetActive(false);
-        }
-
-        if (windRoutine != null)
-        {
-            StopCoroutine(windRoutine);
-        }
-
+        if (windRoutine != null) StopCoroutine(windRoutine);
         windRoutine = StartCoroutine(WindCycleRoutine());
     }
 
@@ -52,32 +41,32 @@ public class O2WindManager : MinigameDragManager
         if (windRoutine != null)
         {
             StopCoroutine(windRoutine);
-            windRoutine = null; 
+            windRoutine = null;
         }
+        ResetWindState();
+    }
 
-        if(windWarningUI != null)
-        {
-            windWarningUI.SetActive(false);
-        }
+    private void ResetWindState()
+    {
+        isWindBlowing = false;
+        if (windWarningUI != null) windWarningUI.SetActive(false);
+        if (windParticlesObject != null) windParticlesObject.SetActive(false);
     }
 
     private IEnumerator WindCycleRoutine()
     {
         while (true)
         {
-            isWindBlowing = false;
-            if (windWarningUI != null)
-            {
-                windWarningUI.SetActive(false);
-            }
+            ResetWindState();
 
             float calmDuration = Random.Range(minCalmTime, maxCalmTime);
             yield return new WaitForSeconds(calmDuration);
 
-            if(windWarningUI != null)
+            // Fase Peringatan (Kedip-kedip)
+            if (windWarningUI != null)
             {
                 float blinkTimer = 0f;
-                while(blinkTimer < warningDuration)
+                while (blinkTimer < warningDuration)
                 {
                     windWarningUI.SetActive(!windWarningUI.activeSelf);
                     yield return new WaitForSeconds(blinkInterval);
@@ -85,14 +74,15 @@ public class O2WindManager : MinigameDragManager
                 }
             }
 
+            // Fase Badai (Angin Bertiup)
             isWindBlowing = true;
-            if(windWarningUI != null)
-            {
-                windWarningUI.SetActive(true);
-            }
+            if (windWarningUI != null) windWarningUI.SetActive(true);
+
+            // JUICE: Nyalakan efek partikel angin kencang melintasi layar
+            if (windParticlesObject != null) windParticlesObject.SetActive(true);
+
             float windDuration = Random.Range(minWindTime, maxWindTime);
             yield return new WaitForSeconds(windDuration);
         }
     }
-
 }

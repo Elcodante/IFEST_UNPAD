@@ -22,10 +22,15 @@ public class RoomManager : MonoBehaviour
     public GameObject prefabEventInvasi;
     public GameObject panelGameOver;
 
-    [Header("PENGATURAN WAVE / HARI")]
-    public float waktuTungguAwal = 5f;   
-    public float jedaAntarInvasi = 30f; 
-    public int jumlahInvasiDay2 = 3;    
+    [Header("PENGATURAN SPAM ZOMBIE")]
+    public float waktuTungguAwal = 5f;
+    public float jedaAntarInvasi = 20f;
+
+    [Header("BATAS INVASI SCENE INI")]
+    // Tambahan baru: Batas maksimal zombie yang keluar di hari ini
+    public int batasMaksimalInvasi = 4;
+
+    private bool invasiBerjalan = true;
 
     void Awake()
     {
@@ -39,24 +44,35 @@ public class RoomManager : MonoBehaviour
         Room ruangAwal = rooms.Find(r => r.roomID == 1);
         if (ruangAwal != null) ruangAwal.currentState = RoomState.Diinvasi;
 
-        StartCoroutine(SistemWaveOtomatis());
+        StartCoroutine(MesinSpamZombie());
     }
 
-    IEnumerator SistemWaveOtomatis()
+    IEnumerator MesinSpamZombie()
     {
-        Debug.Log("WAVE SYSTEM: Game dimulai. Menunggu gelombang serangan...");
+        Debug.Log("WAVE SYSTEM: Menunggu persiapan awal...");
         yield return new WaitForSeconds(waktuTungguAwal);
 
-        for (int i = 0; i < jumlahInvasiDay2; i++)
+        // Hanya akan melempar zombie sebanyak angka 'batasMaksimalInvasi'
+        for (int i = 0; i < batasMaksimalInvasi; i++)
         {
+            // Cek apakah game belum game over/menang
+            if (!invasiBerjalan) yield break;
+
             SpawnZombieDiRuangAcak();
-            if (i < jumlahInvasiDay2 - 1)
+
+            // Tunggu jeda sebelum melempar zombie berikutnya (jika belum yang terakhir)
+            if (i < batasMaksimalInvasi - 1)
             {
                 yield return new WaitForSeconds(jedaAntarInvasi);
             }
         }
 
-        Debug.Log("WAVE SYSTEM: Semua invasi gelombang ini telah selesai dipanggil!");
+        Debug.Log("WAVE SYSTEM: Seluruh " + batasMaksimalInvasi + " invasi untuk hari ini telah selesai dijatuhkan!");
+    }
+
+    public void HentikanInvasi()
+    {
+        invasiBerjalan = false;
     }
 
     public void JadikanRuanganAman(int id)
@@ -65,12 +81,15 @@ public class RoomManager : MonoBehaviour
         if (r != null)
         {
             r.currentState = RoomState.Aman;
-            Debug.Log("Sistem: Ruangan " + id + " sekarang kembali AMAN dan kosong.");
+            Debug.Log("Sistem: Ruangan " + id + " sekarang kembali AMAN.");
         }
     }
 
     public void MunculkanGameOver()
     {
+        HentikanInvasi();
+        if (DayManager.instance != null) DayManager.instance.waktuBerjalan = false;
+
         if (panelGameOver != null) panelGameOver.SetActive(true);
         Time.timeScale = 0f;
     }
@@ -79,12 +98,6 @@ public class RoomManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void TombolQuitDitekan()
-    {
-        Time.timeScale = 1f;
-        Debug.Log("Kembali ke Main Menu!");
     }
 
     public void SebarkanZombieDari(int idAsal)
@@ -123,7 +136,6 @@ public class RoomManager : MonoBehaviour
         List<Room> daftarRuangAman = new List<Room>();
         foreach (Room r in rooms)
         {
-            // PENGECUALIAN RUANG 6: Harus Aman DAN BUKAN Ruang 6
             if (r.currentState == RoomState.Aman && r.roomID != 6)
             {
                 daftarRuangAman.Add(r);
@@ -146,10 +158,6 @@ public class RoomManager : MonoBehaviour
 
                 Debug.Log("WAVE SYSTEM: Muncul invasi baru secara acak di Ruangan " + target.roomID);
             }
-        }
-        else
-        {
-            Debug.Log("WAVE SYSTEM: Gagal spawn! Semua ruangan (selain markas) sudah terinfeksi!");
         }
     }
 }

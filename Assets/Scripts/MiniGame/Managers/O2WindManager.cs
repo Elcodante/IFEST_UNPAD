@@ -10,6 +10,10 @@ public class O2WindManager : MinigameDragManager
     public float minWindTime = 1f;
     public float maxWindTime = 1f;
 
+    [Header("Warning settings")]
+    public float warningDuration = 1f;
+    public float blinkInterval = 0.2f;
+
     [Header("Wind Visuals")]
     public GameObject windWarningUI;
 
@@ -50,6 +54,11 @@ public class O2WindManager : MinigameDragManager
             StopCoroutine(windRoutine);
             windRoutine = null; 
         }
+
+        if(windWarningUI != null)
+        {
+            windWarningUI.SetActive(false);
+        }
     }
 
     private IEnumerator WindCycleRoutine()
@@ -65,12 +74,22 @@ public class O2WindManager : MinigameDragManager
             float calmDuration = Random.Range(minCalmTime, maxCalmTime);
             yield return new WaitForSeconds(calmDuration);
 
+            if(windWarningUI != null)
+            {
+                float blinkTimer = 0f;
+                while(blinkTimer < warningDuration)
+                {
+                    windWarningUI.SetActive(!windWarningUI.activeSelf);
+                    yield return new WaitForSeconds(blinkInterval);
+                    blinkTimer += blinkInterval;
+                }
+            }
+
             isWindBlowing = true;
             if(windWarningUI != null)
             {
                 windWarningUI.SetActive(true);
             }
-
             float windDuration = Random.Range(minWindTime, maxWindTime);
             yield return new WaitForSeconds(windDuration);
         }

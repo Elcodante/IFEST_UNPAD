@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static RoomManager;
 
 public class KlikRuangan : MonoBehaviour
 {
@@ -8,33 +9,44 @@ public class KlikRuangan : MonoBehaviour
 
     void Start()
     {
-        // Mengambil data kotak hijau di ruangan ini
         areaSentuh = GetComponent<BoxCollider2D>();
     }
 
     void Update()
     {
         if (Time.timeScale == 0f) return;
+
+        // Cegah klik tembus jika pemain sedang menekan UI/Tombol lain
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 posisiMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            // Mengecek apakah titik klik tersebut berada tepat di dalam kotak hijau ruangan ini
             if (areaSentuh == Physics2D.OverlapPoint(posisiMouse))
             {
-                Debug.Log("JURUS PAMUNGKAS BERHASIL: Ruangan " + idRuangan + " diklik!");
+                // FILTER BARU: Cek status ruangan di RoomManager
+                if (RoomManager.instance != null)
+                {
+                    RoomManager.Room dataRuang = RoomManager.instance.rooms.Find(r => r.roomID == idRuangan);
 
-                if (SoldierManager.instance != null)
-                {
-                    SoldierManager.instance.MunculkanUI(idRuangan);
-                }
-                else
-                {
-                    Debug.LogError("Error: Soldier Manager belum terpasang di layar!");
+                    // Hanya munculkan UI jika ruangan dalam kondisi 'Diinvasi'
+                    if (dataRuang != null && dataRuang.currentState == RoomState.Diinvasi)
+                    {
+                        Debug.Log("AKSI: Ruangan " + idRuangan + " terinfeksi! Membuka UI Tentara.");
+
+                        if (SoldierManager.instance != null)
+                        {
+                            SoldierManager.instance.MunculkanUI(idRuangan);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("ABORT: Ruangan " + idRuangan + " masih aman/bersih. UI tidak muncul.");
+                    }
                 }
             }
         }

@@ -1,65 +1,65 @@
-using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine;
 
 public class ZombieController : MonoBehaviour
 {
-    public int targetRoomID;
+    public int targetRoomID = 1;
     public int titikSekarang = 0;
     public int maksimalTitik = 5;
+
+    [Header("PENGATURAN WAKTU")]
+    // Tambahan baru: Menahan titik pertama muncul agar pemain tidak kaget
+    public float jedaAwal = 0f;
     public float waktuTumbuh = 10f;
 
+    [Header("REFERENSI")]
     public GameObject prefabTitikMerah;
     public Transform lokasiSpawn;
 
-    private Vector3[] offsetPosisi = new Vector3[] {
-        new Vector3(0, 0, 0),
-        new Vector3(0.3f, 0.3f, 0),
-        new Vector3(-0.3f, 0.3f, 0),
-        new Vector3(0.3f, -0.3f, 0),
-        new Vector3(-0.3f, -0.3f, 0)
-    };
-
     void Start()
     {
-        titikSekarang = 0;
-        StartCoroutine(TumbuhTerus());
+        StartCoroutine(ProsesTumbuh());
     }
 
-    IEnumerator TumbuhTerus()
+    IEnumerator ProsesTumbuh()
     {
+        // 1. TAHAN MUNCUL: Tunggu beberapa detik sesuai pengaturan di Inspector
+        if (jedaAwal > 0f)
+        {
+            yield return new WaitForSeconds(jedaAwal);
+        }
+
         while (titikSekarang < maksimalTitik)
         {
-            MunculkanSatuTitik();
-            titikSekarang++;
-
-            if (targetRoomID == 6 && titikSekarang >= 1)
+            if (prefabTitikMerah != null && lokasiSpawn != null)
             {
-                Debug.Log("GAME OVER! Zombie menerobos masuk ke Security Room!");
-                if (RoomManager.instance != null) RoomManager.instance.MunculkanGameOver();
-                yield break;
-            }
+                GameObject titikBaru = Instantiate(prefabTitikMerah, lokasiSpawn);
 
-            if (titikSekarang >= maksimalTitik)
-            {
-                Debug.Log("Ruangan " + targetRoomID + " HANCUR (100%)! Pintu jebol.");
-                if (RoomManager.instance != null)
+                Vector3 posisiTitik = Vector3.zero;
+                float jarak = 0.28f;
+
+                switch (titikSekarang)
                 {
-                    RoomManager.instance.SebarkanZombieDari(targetRoomID);
+                    case 0: posisiTitik = new Vector3(0, 0, 0); break;           // Titik 1: Tengah
+                    case 1: posisiTitik = new Vector3(-jarak, jarak, 0); break;  // Titik 2: Kiri Atas
+                    case 2: posisiTitik = new Vector3(jarak, jarak, 0); break;   // Titik 3: Kanan Atas
+                    case 3: posisiTitik = new Vector3(-jarak, -jarak, 0); break; // Titik 4: Kiri Bawah
+                    case 4: posisiTitik = new Vector3(jarak, -jarak, 0); break;  // Titik 5: Kanan Bawah
                 }
-                break;
+
+                titikBaru.transform.localPosition = posisiTitik;
+                titikSekarang++;
             }
 
-            yield return new WaitForSeconds(waktuTumbuh);
+            if (titikSekarang < maksimalTitik)
+            {
+                yield return new WaitForSeconds(waktuTumbuh);
+            }
         }
-    }
 
-    void MunculkanSatuTitik()
-    {
-        if (prefabTitikMerah != null && lokasiSpawn != null)
+        if (RoomManager.instance != null)
         {
-            Vector3 posisiFix = lokasiSpawn.position + offsetPosisi[titikSekarang];
-            Instantiate(prefabTitikMerah, posisiFix, Quaternion.identity, this.transform);
+            RoomManager.instance.SebarkanZombieDari(targetRoomID);
         }
     }
 
@@ -69,23 +69,99 @@ public class ZombieController : MonoBehaviour
         {
             titikSekarang--;
 
-            int jumlahAnak = transform.childCount;
-            if (jumlahAnak > 0)
+            if (lokasiSpawn != null && lokasiSpawn.childCount > 0)
             {
-                Destroy(transform.GetChild(jumlahAnak - 1).gameObject);
+                Destroy(lokasiSpawn.GetChild(lokasiSpawn.childCount - 1).gameObject);
             }
 
             if (titikSekarang <= 0)
             {
-                // Memanggil fungsi baru di RoomManager agar ruangan kembali Aman
                 if (RoomManager.instance != null)
                 {
                     RoomManager.instance.JadikanRuanganAman(targetRoomID);
                 }
-
-                Debug.Log("Invasi di Ruangan " + targetRoomID + " berhasil dihentikan!");
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
     }
 }
+
+
+//using System.Collections;
+//using UnityEngine;
+
+//public class ZombieController : MonoBehaviour
+//{
+//    public int targetRoomID = 1;
+//    public int titikSekarang = 0;
+//    public int maksimalTitik = 5;
+//    public float waktuTumbuh = 10f;
+//    public GameObject prefabTitikMerah;
+//    public Transform lokasiSpawn;
+
+//    void Start()
+//    {
+//        StartCoroutine(ProsesTumbuh());
+//    }
+
+//    IEnumerator ProsesTumbuh()
+//    {
+//        while (titikSekarang < maksimalTitik)
+//        {
+//            if (prefabTitikMerah != null && lokasiSpawn != null)
+//            {
+//                GameObject titikBaru = Instantiate(prefabTitikMerah, lokasiSpawn);
+
+//                // MENGATUR POSISI TITIK (POLA DADU 5)
+//                Vector3 posisiTitik = Vector3.zero;
+
+//                // Angka jarak rentangan titik (Silakan ubah misal 0.3f atau 0.5f jika kurang pas)
+//                float jarak = 0.3f;
+
+//                switch (titikSekarang)
+//                {
+//                    case 0: posisiTitik = new Vector3(0, 0, 0); break;           
+//                    case 1: posisiTitik = new Vector3(-jarak, jarak, 0); break;  
+//                    case 2: posisiTitik = new Vector3(jarak, jarak, 0); break;  
+//                    case 3: posisiTitik = new Vector3(-jarak, -jarak, 0); break; 
+//                    case 4: posisiTitik = new Vector3(jarak, -jarak, 0); break;  
+//                }
+
+//                titikBaru.transform.localPosition = posisiTitik;
+//                titikSekarang++;
+//            }
+
+//            if (titikSekarang < maksimalTitik)
+//            {
+//                yield return new WaitForSeconds(waktuTumbuh);
+//            }
+//        }
+
+//        if (RoomManager.instance != null)
+//        {
+//            RoomManager.instance.SebarkanZombieDari(targetRoomID);
+//        }
+//    }
+
+//    public void KurangiSatuTitik()
+//    {
+//        if (titikSekarang > 0)
+//        {
+//            titikSekarang--;
+
+//            if (lokasiSpawn != null && lokasiSpawn.childCount > 0)
+//            {
+//                Destroy(lokasiSpawn.GetChild(lokasiSpawn.childCount - 1).gameObject);
+//            }
+
+//            if (titikSekarang <= 0)
+//            {
+//                if (RoomManager.instance != null)
+//                {
+//                    RoomManager.instance.JadikanRuanganAman(targetRoomID);
+//                }
+//                Destroy(gameObject);
+//            }
+//        }
+//    }
+//}

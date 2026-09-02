@@ -27,7 +27,6 @@ public class RoomManager : MonoBehaviour
     public float jedaAntarInvasi = 20f;
 
     [Header("BATAS INVASI SCENE INI")]
-    // Tambahan baru: Batas maksimal zombie yang keluar di hari ini
     public int batasMaksimalInvasi = 4;
 
     private bool invasiBerjalan = true;
@@ -52,22 +51,19 @@ public class RoomManager : MonoBehaviour
         Debug.Log("WAVE SYSTEM: Menunggu persiapan awal...");
         yield return new WaitForSeconds(waktuTungguAwal);
 
-        // Hanya akan melempar zombie sebanyak angka 'batasMaksimalInvasi'
         for (int i = 0; i < batasMaksimalInvasi; i++)
         {
-            // Cek apakah game belum game over/menang
             if (!invasiBerjalan) yield break;
 
             SpawnZombieDiRuangAcak();
 
-            // Tunggu jeda sebelum melempar zombie berikutnya (jika belum yang terakhir)
             if (i < batasMaksimalInvasi - 1)
             {
                 yield return new WaitForSeconds(jedaAntarInvasi);
             }
         }
 
-        Debug.Log("WAVE SYSTEM: Seluruh " + batasMaksimalInvasi + " invasi untuk hari ini telah selesai dijatuhkan!");
+        Debug.Log("WAVE SYSTEM: Seluruh " + batasMaksimalInvasi + " invasi selesai!");
     }
 
     public void HentikanInvasi()
@@ -108,6 +104,13 @@ public class RoomManager : MonoBehaviour
         List<Room> targetAman = new List<Room>();
         foreach (int idTetangga in ruangAsal.neighborIDs)
         {
+            // --- FILTER PINTU KARANTINA ---
+            if (PintuController.CekJalurDiblokir(idAsal, idTetangga))
+            {
+                Debug.Log($"VIRUS GAGAL MENYEBAR! Jalur {idAsal} ke {idTetangga} sedang dikarantina.");
+                continue; // Lewati ruangan ini, cari target ruangan lain
+            }
+
             Room tetangga = rooms.Find(r => r.roomID == idTetangga);
             if (tetangga != null && tetangga.currentState == RoomState.Aman)
             {
@@ -146,7 +149,6 @@ public class RoomManager : MonoBehaviour
         {
             int indexAcak = Random.Range(0, daftarRuangAman.Count);
             Room target = daftarRuangAman[indexAcak];
-
             target.currentState = RoomState.Diinvasi;
 
             if (prefabEventInvasi != null)
@@ -155,8 +157,6 @@ public class RoomManager : MonoBehaviour
                 ZombieController zc = invasiBaru.GetComponent<ZombieController>();
                 zc.targetRoomID = target.roomID;
                 zc.lokasiSpawn = target.lokasiRuangan;
-
-                Debug.Log("WAVE SYSTEM: Muncul invasi baru secara acak di Ruangan " + target.roomID);
             }
         }
     }

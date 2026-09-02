@@ -2,9 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using TMPro;
+
 public class AntidoteSequenceManager : BaseMinigameManager
 {
-    [Header("Andtidote Settings")]
+    [Header("Antidote Settings")]
     public TestTubeButton[] testTubes;
     public int sequenceLenght = 5;
     public float timeToInput = 8f;
@@ -42,13 +43,12 @@ public class AntidoteSequenceManager : BaseMinigameManager
         playerInputIndex = 0;
         currentSequence.Clear();
 
-        if (statusText != null)
-        {
-            statusText.text = "ANALISIS POLA...";
-        }
+        if (statusText != null) statusText.text = "ANALISIS POLA...";
         if (timerText != null)
         {
             timerText.text = "--.--";
+            timerText.color = Color.white; // Reset warna
+            timerText.transform.localScale = Vector3.one; // Reset skala
         }
 
         for (int i = 0; i < sequenceLenght; i++)
@@ -66,7 +66,6 @@ public class AntidoteSequenceManager : BaseMinigameManager
         foreach (int id in currentSequence)
         {
             testTubes[id].FlashTube();
-
             yield return new WaitForSeconds(0.6f);
         }
 
@@ -74,10 +73,7 @@ public class AntidoteSequenceManager : BaseMinigameManager
         isWaitingForInput = true;
         currentTimer = timeToInput;
 
-        if (statusText != null)
-        {
-            statusText.text = "Masukkan Penawar!";
-        }
+        if (statusText != null) statusText.text = "MASUKKAN PENAWAR!";
     }
 
     private void Update()
@@ -89,22 +85,32 @@ public class AntidoteSequenceManager : BaseMinigameManager
             if (timerText != null)
             {
                 timerText.text = currentTimer.ToString("F2") + "s";
+
+                // JUICE: Efek Jantung Berdebar saat sisa waktu 3 detik
+                if (currentTimer <= 3.0f)
+                {
+                    timerText.color = Color.red;
+                    float pulse = 1f + Mathf.PingPong(Time.time * 5f, 0.2f);
+                    timerText.transform.localScale = new Vector3(pulse, pulse, 1f);
+                }
+                else
+                {
+                    timerText.color = Color.white;
+                    timerText.transform.localScale = Vector3.one;
+                }
             }
 
             if (currentTimer <= 0)
             {
                 currentTimer = 0;
-                FailSequence("Waktu Habis");
+                FailSequence("WAKTU HABIS!");
             }
         }
     }
 
     public void ReceivePlayerInput(int clickedTubeID)
     {
-        if (isMachinePlaying || !isWaitingForInput)
-        {
-            return;
-        }
+        if (isMachinePlaying || !isWaitingForInput) return;
 
         testTubes[clickedTubeID].FlashTube();
 
@@ -116,23 +122,31 @@ public class AntidoteSequenceManager : BaseMinigameManager
             {
                 isWaitingForInput = false;
                 if (statusText != null) statusText.text = "SINTESIS BERHASIL!";
+
+                // Matikan detak jantung timer saat menang
+                if (timerText != null) timerText.transform.localScale = Vector3.one;
+
                 TriggerWinCondition();
             }
         }
         else
         {
-            FailSequence("Urutan Salah");
+            FailSequence("URUTAN SALAH!");
         }
     }
 
     private void FailSequence(string failReason)
     {
         isWaitingForInput = false;
-        if (statusText != null)
-        {
-            statusText.text = failReason;
-        }
+        if (statusText != null) statusText.text = failReason;
+
         Debug.LogWarning($"[Antidote] Gagal: {failReason}");
+
+        // JUICE: Getarkan layar karena ledakan kimia akibat urutan yang salah!
+        if (UIShaker.Instance != null)
+        {
+            UIShaker.Instance.Shake(0.35f, 20f);
+        }
 
         StartCoroutine(RestartAfterDelay());
     }
@@ -140,6 +154,6 @@ public class AntidoteSequenceManager : BaseMinigameManager
     private IEnumerator RestartAfterDelay()
     {
         yield return new WaitForSeconds(1.5f);
-        ResetMinigame(); 
+        ResetMinigame();
     }
 }

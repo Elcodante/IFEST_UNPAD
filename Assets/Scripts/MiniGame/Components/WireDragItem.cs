@@ -8,14 +8,16 @@ public class WireDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     [Header("Wire Properties")]
     public string itemID;
 
+    [Header("Juice Effects")]
+    [Tooltip("Masukkan objek Partikel Listrik di sini")]
+    public GameObject sparkEffect;
+
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Canvas mainCanvas;
 
     private Vector2 originalPosition;
     private float originalWidth;
-
-    // Tambahan variabel untuk mencegah Race Condition
     private bool isInitialized = false;
 
     private void Awake()
@@ -23,13 +25,9 @@ public class WireDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         InitData();
     }
 
-    /// <summary>
-    /// Mengambil komponen dan menyimpan data awal. 
-    /// Dipisahkan dari Awake agar bisa dipanggil paksa oleh Manajer.
-    /// </summary>
     private void InitData()
     {
-        if (isInitialized) return; // Cegah inisialisasi ganda
+        if (isInitialized) return;
 
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
@@ -39,6 +37,12 @@ public class WireDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         originalWidth = rectTransform.sizeDelta.x;
 
         isInitialized = true;
+    }
+
+    private void OnEnable()
+    {
+        // PASTIKAN LISTRIK MENYALA SEJAK AWAL KABEL MUNCUL
+        if (sparkEffect != null) sparkEffect.SetActive(true);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -77,11 +81,14 @@ public class WireDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void ReturnToStart()
     {
-        InitData(); // SANGAT PENTING: Pastikan data sudah terambil sebelum direset
+        InitData();
 
         rectTransform.sizeDelta = new Vector2(originalWidth, rectTransform.sizeDelta.y);
         rectTransform.rotation = Quaternion.identity;
 
         canvasGroup.blocksRaycasts = true;
+
+        // KEMBALIKAN LISTRIK MENYALA JIKA KABEL GAGAL TERSAMBUNG / DI-RESET
+        if (sparkEffect != null) sparkEffect.SetActive(true);
     }
 }

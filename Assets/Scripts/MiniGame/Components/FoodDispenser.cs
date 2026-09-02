@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 
 public class FoodDispenser : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -9,25 +10,41 @@ public class FoodDispenser : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Sprite dragIconSprite;
 
     [Header("Display Settings")]
-    [Tooltip("Berapa kali lipat gambar ingin dibesarkan dari ukuran aslinya? (Default: 10)")]
-    public float scaleMultiplier = 3f; // Variabel pengali otomatis
+    public float scaleMultiplier = 3f;
 
     private GameObject ghostIcon;
+    private Vector3 originalScale;
+
+    private void Awake()
+    {
+        originalScale = transform.localScale;
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        // JUICE: Mainkan efek wadah memipih saat kursor mulai menarik
+        StopCoroutine("SquishAnimation");
+        StartCoroutine(SquishAnimation());
+
         ghostIcon = new GameObject($"Ghost_{foodID}");
 
-        ghostIcon.transform.SetParent(this.transform.root);
+        // --- PERBAIKAN SKALA ---
+        // Tambahkan kata 'false' agar Unity tidak merusak ukuran aslinya
+        ghostIcon.transform.SetParent(this.transform.root, false);
+
+        // Kunci paksa skala ke ukuran normal (1x)
+        ghostIcon.transform.localScale = Vector3.one;
+        // -----------------------
+
         ghostIcon.transform.SetAsLastSibling();
 
         Image img = ghostIcon.AddComponent<Image>();
         img.sprite = dragIconSprite;
 
-        // 1. Baca ukuran asli dari gambarnya (misal: 10x13 atau 12x12)
+        // Baca ukuran asli gambar pixel-mu
         img.SetNativeSize();
 
-        // 2. Kalikan ukuran tersebut dengan scaleMultiplier (misal: dikali 10)
+        // Kalikan dengan multiplier (Cek Inspector, jika 3 masih terlalu besar, ubah jadi 1 atau 2)
         RectTransform rt = ghostIcon.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(rt.sizeDelta.x * scaleMultiplier, rt.sizeDelta.y * scaleMultiplier);
 
@@ -56,5 +73,27 @@ public class FoodDispenser : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             ghostIcon.transform.localPosition = localPos;
         }
+    }
+
+    // Coroutine untuk membuat wadah memipih sebentar (Squish)
+    private IEnumerator SquishAnimation()
+    {
+        float duration = 0.15f;
+        float time = 0;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = time / duration;
+
+            // X melebar sedikit (1.1), Y memendek (0.8)
+            float scaleX = Mathf.Lerp(originalScale.x, originalScale.x * 1.1f, Mathf.PingPong(t * 2, 1));
+            float scaleY = Mathf.Lerp(originalScale.y, originalScale.y * 0.8f, Mathf.PingPong(t * 2, 1));
+
+            transform.localScale = new Vector3(scaleX, scaleY, 1f);
+            yield return null;
+        }
+
+        transform.localScale = originalScale;
     }
 }

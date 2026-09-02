@@ -11,9 +11,7 @@ public class PipeNode : MonoBehaviour, IPointerDownHandler
 
     [Header("Visual State")]
     public Image pipeImage;
-    public Color dryColor = Color.gray;
-    public Color activeColor = Color.cyan;
-
+  
     [HideInInspector] public PipePuzzleManager manager;
     private int currentRotationIndex = 0;
 
@@ -67,9 +65,6 @@ public class PipeNode : MonoBehaviour, IPointerDownHandler
 
     public void SetFlowState(bool hasGas)
     {
-        if (pipeImage != null)
-        {
-            pipeImage.color = hasGas ? activeColor : dryColor;
-        }
+        
     }
  }

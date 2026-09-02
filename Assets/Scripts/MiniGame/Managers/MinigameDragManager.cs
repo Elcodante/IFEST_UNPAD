@@ -97,31 +97,39 @@ public class MinigameDragManager : BaseMinigameManager
     private void RandomizeAndPlaceItems()
     {
         int targetCount = Random.Range(minSpawnCount, maxSpawnCount + 1);
-
         totalRequiredMatches = targetCount;
-
         List<Rect> placedRects = new List<Rect>();
 
-        for (int i = 0; i < allDraggableItems.Length; i++)
+        // --- TAMBAHAN: Acak urutan barang agar jenis yang muncul benar-benar random ---
+        List<DraggableItem> shuffledItems = new List<DraggableItem>(allDraggableItems);
+        for (int i = 0; i < shuffledItems.Count; i++)
         {
-            DraggableItem item = allDraggableItems[i];
+            DraggableItem temp = shuffledItems[i];
+            int randomIndex = Random.Range(i, shuffledItems.Count);
+            shuffledItems[i] = shuffledItems[randomIndex];
+            shuffledItems[randomIndex] = temp;
+        }
+        // -----------------------------------------------------------------------------
+
+        for (int i = 0; i < shuffledItems.Count; i++)
+        {
+            DraggableItem item = shuffledItems[i];
             if (item == null) continue;
 
             if (i < targetCount)
             {
-                item.gameObject.SetActive(true);
+                item.gameObject.SetActive(true); // Barang ini terpilih untuk jatuh ke lantai
 
                 RectTransform itemRT = item.GetComponent<RectTransform>();
                 Vector2 newPos = GetRandomNonOverlappingPosition(itemRT, placedRects);
 
                 item.transform.SetParent(floorSpawnArea, false);
                 item.SetNewStartData(floorSpawnArea, newPos);
-
                 item.ReturnToStart();
             }
             else
             {
-                item.gameObject.SetActive(false);
+                item.gameObject.SetActive(false); // Barang ini tidak muncul di ronde ini
             }
         }
     }

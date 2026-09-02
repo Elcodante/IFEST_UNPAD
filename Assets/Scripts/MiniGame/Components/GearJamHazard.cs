@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+
 public class GearJamHazard : MonoBehaviour, IPointerDownHandler
 {
     public DropZone parentDropZone;
@@ -11,16 +12,27 @@ public class GearJamHazard : MonoBehaviour, IPointerDownHandler
     {
         gameObject.SetActive(true);
         transform.SetAsLastSibling();
-        if(jamRoutine != null )
+        if (jamRoutine != null)
         {
-            StopCoroutine(jamRoutine);            
+            StopCoroutine(jamRoutine);
         }
         jamRoutine = StartCoroutine(JamTimer());
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("[Hazard] Kerikil berhasil dibersihkan!");
+        // 1. Lapor ke Manajer DULU
+        if (parentDropZone != null && parentDropZone.minigameManager is GeneratorGearManager gearManager)
+        {
+            gearManager.HazardCleared();
+        }
+        else
+        {
+            Debug.LogError("[Hazard Error] parentDropZone belum tersambung ke kerikil ini!");
+        }
+
+        // 2. Baru matikan visualnya
+        Debug.Log("[Hazard] Kerikil berhasil dibersihkan dari UI!");
         ClearHazard();
     }
 

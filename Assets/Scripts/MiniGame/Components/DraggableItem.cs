@@ -83,6 +83,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         InitData(); // Pastikan sudah inisialisasi sebelum reset
 
+        gameObject.SetActive(true); // Pastikan item terlihat saat dikembalikan
+
         transform.SetParent(originalParent, false); // Tambah false agar skala tidak rusak
         rectTransform.anchoredPosition = originalPosition;
 

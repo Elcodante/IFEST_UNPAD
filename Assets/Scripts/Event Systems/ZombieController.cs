@@ -34,15 +34,15 @@ public class ZombieController : MonoBehaviour
                 GameObject titikBaru = Instantiate(prefabTitikMerah, lokasiSpawn);
 
                 Vector3 posisiTitik = Vector3.zero;
-                float jarak = 0.28f;
+                float jarak = 25f;
 
                 switch (titikSekarang)
                 {
                     case 0: posisiTitik = new Vector3(0, 0, 0); break;           // Titik 1: Tengah
-                    case 1: posisiTitik = new Vector3(-jarak, jarak, 0); break;  // Titik 2: Kiri Atas
-                    case 2: posisiTitik = new Vector3(jarak, jarak, 0); break;   // Titik 3: Kanan Atas
-                    case 3: posisiTitik = new Vector3(-jarak, -jarak, 0); break; // Titik 4: Kiri Bawah
-                    case 4: posisiTitik = new Vector3(jarak, -jarak, 0); break;  // Titik 5: Kanan Bawah
+                    case 1: posisiTitik = new Vector3(-jarak, jarak, 2); break;  // Titik 2: Kiri Atas
+                    case 2: posisiTitik = new Vector3(jarak, jarak, 2); break;   // Titik 3: Kanan Atas
+                    case 3: posisiTitik = new Vector3(-jarak, -jarak, 2); break; // Titik 4: Kiri Bawah
+                    case 4: posisiTitik = new Vector3(jarak, -jarak, 2); break;  // Titik 5: Kanan Bawah
                 }
 
                 titikBaru.transform.localPosition = posisiTitik;

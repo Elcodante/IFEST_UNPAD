@@ -1,22 +1,35 @@
 using UnityEngine;
+using UnityEngine.Audio;
+using System.Collections;
+using System; // Dibutuhkan untuk fungsi Array.Find
+
+// 1. Buat struktur data khusus agar rapi di Inspector Unity
+[Serializable]
+public struct SoundData
+{
+    public string soundID;  // Contoh: "SFX_Benar", "BGM_Kabel"
+    public AudioClip clip;
+}
 
 public class AudioManager : MonoBehaviour
 {
-    // Singleton Instance agar bisa diakses global
     public static AudioManager Instance { get; private set; }
 
-    [Header("Audio Source")]
-    [SerializeField] private AudioSource sfxSource;
+    [Header("Audio Routing")]
+    public AudioMixerGroup bgmMixer;
+    public AudioMixerGroup sfxMixer;
 
-    [Header("Daftar SFX (Opsional, bisa diatur lewat Inspector)")]
-    public AudioClip jumpSound;
-    public AudioClip attackSound;
-    public AudioClip coinSound;
-    public AudioClip hitSound;
+    // 2. Array untuk menyimpan seluruh Audio di game
+    [Header("Audio Database")]
+    public SoundData[] bgmList;
+    public SoundData[] sfxList;
+
+    private AudioSource bgmSource;
+    private AudioSource sfxSource;
+    private Coroutine crossfadeRoutine;
 
     private void Awake()
     {
-        // Memastikan hanya ada 1 AudioManager di seluruh game
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -24,48 +37,103 @@ public class AudioManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Tidak hancur saat ganti scene
+        DontDestroyOnLoad(gameObject);
+        SetupAudioSources();
+    }
 
-        // Ambil atau buat AudioSource otomatis jika belum dipasang
-        if (sfxSource == null)
+    private void SetupAudioSources()
+    {
+        bgmSource = gameObject.AddComponent<AudioSource>();
+        bgmSource.loop = true;
+        bgmSource.spatialBlend = 0f;
+        bgmSource.outputAudioMixerGroup = bgmMixer;
+
+        sfxSource = gameObject.AddComponent<AudioSource>();
+        sfxSource.spatialBlend = 0f;
+        sfxSource.outputAudioMixerGroup = sfxMixer;
+    }
+
+    // ==========================================
+    // FUNGSI PENCARI AUDIO BERDASARKAN ID
+    // ==========================================
+    private AudioClip GetSFXClip(string id)
+    {
+        SoundData data = Array.Find(sfxList, sound => sound.soundID == id);
+        if (data.clip != null) return data.clip;
+
+        Debug.LogWarning($"[AudioManager] SFX dengan ID '{id}' tidak ditemukan!");
+        return null;
+    }
+
+    private AudioClip GetBGMClip(string id)
+    {
+        SoundData data = Array.Find(bgmList, sound => sound.soundID == id);
+        if (data.clip != null) return data.clip;
+
+        Debug.LogWarning($"[AudioManager] BGM dengan ID '{id}' tidak ditemukan!");
+        return null;
+    }
+
+    // ==========================================
+    // PEMUTAR SFX
+    // ==========================================
+    public void PlaySFX(string id, float volume = 1f)
+    {
+        AudioClip clipToPlay = GetSFXClip(id);
+        if (clipToPlay != null)
         {
-            sfxSource = GetComponent<AudioSource>();
-            if (sfxSource == null)
+            sfxSource.PlayOneShot(clipToPlay, volume);
+        }
+    }
+
+    public void PlaySFXRandomPitch(string id, float minPitch = 0.85f, float maxPitch = 1.15f, float volume = 1f)
+    {
+        AudioClip clipToPlay = GetSFXClip(id);
+        if (clipToPlay != null)
+        {
+            sfxSource.pitch = UnityEngine.Random.Range(minPitch, maxPitch);
+            sfxSource.PlayOneShot(clipToPlay, volume);
+            sfxSource.pitch = 1f;
+        }
+    }
+
+    // ==========================================
+    // PEMUTAR BGM (DENGAN CROSSFADE)
+    // ==========================================
+    public void PlayBGM(string id, float fadeDuration = 1.5f)
+    {
+        AudioClip clipToPlay = GetBGMClip(id);
+        if (clipToPlay == null || bgmSource.clip == clipToPlay) return;
+
+        if (crossfadeRoutine != null) StopCoroutine(crossfadeRoutine);
+        crossfadeRoutine = StartCoroutine(CrossfadeBGM(clipToPlay, fadeDuration));
+    }
+
+    private IEnumerator CrossfadeBGM(AudioClip newClip, float duration)
+    {
+        float currentTime = 0;
+        float startVolume = bgmSource.volume;
+
+        if (bgmSource.clip != null)
+        {
+            while (currentTime < duration)
             {
-                sfxSource = gameObject.AddComponent<AudioSource>();
+                currentTime += Time.deltaTime;
+                bgmSource.volume = Mathf.Lerp(startVolume, 0f, currentTime / duration);
+                yield return null;
             }
         }
 
-        // Setting default AudioSource untuk SFX 2D
-        sfxSource.playOnAwake = false;
-        sfxSource.spatialBlend = 0f; // 0f = 2D Sound murni
-    }
+        bgmSource.clip = newClip;
+        bgmSource.Play();
+        currentTime = 0;
 
-    /// <summary>
-    /// Memutar SFX langsung menggunakan AudioClip.
-    /// </summary>
-    public void PlaySFX(AudioClip clip, float volume = 1f)
-    {
-        if (clip != null)
+        while (currentTime < duration)
         {
-            sfxSource.PlayOneShot(clip, volume);
+            currentTime += Time.deltaTime;
+            bgmSource.volume = Mathf.Lerp(0f, 1f, currentTime / duration);
+            yield return null;
         }
-        else
-        {
-            Debug.LogWarning("AudioClip kosong/null!");
-        }
-    }
-
-    /// <summary>
-    /// Memutar SFX dengan variasi Pitch acak (sangat bagus untuk 2D agar suara tidak monoton).
-    /// </summary>
-    public void PlaySFXRandomPitch(AudioClip clip, float minPitch = 0.85f, float maxPitch = 1.15f, float volume = 1f)
-    {
-        if (clip != null)
-        {
-            sfxSource.pitch = Random.Range(minPitch, maxPitch);
-            sfxSource.PlayOneShot(clip, volume);
-            sfxSource.pitch = 1f; // Reset pitch
-        }
+        bgmSource.volume = 1f;
     }
 }

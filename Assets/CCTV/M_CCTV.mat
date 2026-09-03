@@ -30,15 +30,15 @@ Material:
     m_Ints: []
     m_Floats:
     - _Curvature: 5.5
-    - _FlickerDuration: 0.1
+    - _FlickerDuration: 0.15
     - _FlickerInterval: 4
-    - _FlickerStrength: 0.1
+    - _FlickerStrength: 0.2
     - _GlitchSpeed: 0.25
-    - _GlitchStrength: 0.1
-    - _NoiseStrength: 0.035
+    - _GlitchStrength: 0.15
+    - _NoiseStrength: 0.03
     - _ScanlineDensity: 450
     - _ScanlineSpeed: 1
-    - _ScanlineStrength: 0.1
+    - _ScanlineStrength: 0.2
     - _TintDarkness: 0.05
     - _VignetteSmoothness: 1
     - _VignetteStrength: 0.9

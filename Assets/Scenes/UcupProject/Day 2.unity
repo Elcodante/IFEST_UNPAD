@@ -3271,7 +3271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9add8b13556b04d8350aeb582c9b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PintuController
-  ruangA: 0
+  ruangA: 6
   ruangB: 0
   gambarTerbuka: {fileID: -6970605930380249500, guid: f434a90eb80062a459242ff23d2523ca, type: 3}
   gambarTertutup: {fileID: -5270801502211104949, guid: 7e6221a7d4521f044a5193cda96bd3c9, type: 3}
@@ -3735,6 +3735,10 @@ PrefabInstance:
     - target: {fileID: 2743949754392073193, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
       propertyPath: waktuTumbuh
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743949754392073193, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
+      propertyPath: targetRoomID
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3463894118187994509, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
       propertyPath: m_Name

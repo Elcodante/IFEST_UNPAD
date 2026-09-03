@@ -8,7 +8,6 @@ public class ZombieController : MonoBehaviour
     public int maksimalTitik = 5;
 
     [Header("PENGATURAN WAKTU")]
-    // Tambahan baru: Menahan titik pertama muncul agar pemain tidak kaget
     public float jedaAwal = 0f;
     public float waktuTumbuh = 10f;
 
@@ -23,7 +22,6 @@ public class ZombieController : MonoBehaviour
 
     IEnumerator ProsesTumbuh()
     {
-        // 1. TAHAN MUNCUL: Tunggu beberapa detik sesuai pengaturan di Inspector
         if (jedaAwal > 0f)
         {
             yield return new WaitForSeconds(jedaAwal);
@@ -56,6 +54,8 @@ public class ZombieController : MonoBehaviour
                 yield return new WaitForSeconds(waktuTumbuh);
             }
         }
+
+        yield return new WaitForSeconds(0.5f);
 
         if (RoomManager.instance != null)
         {

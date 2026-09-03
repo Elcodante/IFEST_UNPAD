@@ -44,9 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53099e0c05f78df4e868bca83ab06503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieController
-  targetRoomID: 1
+  targetRoomID: 0
   titikSekarang: 0
   maksimalTitik: 5
+  jedaAwal: 0
   waktuTumbuh: 10
   prefabTitikMerah: {fileID: 5026554852279678331, guid: 252def12bf9e84f41ad5a245257e3ce1, type: 3}
   lokasiSpawn: {fileID: 0}

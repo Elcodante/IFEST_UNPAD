@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -28,7 +29,9 @@ public class MainMenuController : MonoBehaviour
     [Header("Gameplay UI")]
     [SerializeField] private GameObject slider1;
     [SerializeField] private GameObject slider2;
-    [SerializeField] private GameObject gameplayButton;
+    [SerializeField] private GameObject pintu;
+    [SerializeField] private GameObject timer;
+    [SerializeField] private GameObject day;
 
     private Vector2[] originalPositions;
     private bool isTransitioning;
@@ -60,8 +63,14 @@ public class MainMenuController : MonoBehaviour
         if (slider2 != null)
             slider2.SetActive(false);
 
-        if (gameplayButton != null)
-            gameplayButton.SetActive(false);
+        if (pintu != null)
+            pintu.SetActive(false);
+
+        if (timer != null)
+            timer.SetActive(false);
+
+        if (day != null)
+            day.SetActive(false);
     }
 
     public void PlayGame()
@@ -166,8 +175,14 @@ public class MainMenuController : MonoBehaviour
         if (slider2 != null)
             slider2.SetActive(true);
 
-        if (gameplayButton != null)
-            gameplayButton.SetActive(true);
+        if (pintu != null)
+            pintu.SetActive(true);
+
+        if (timer != null)
+            timer.SetActive(true);
+
+        if (day != null)
+            day.SetActive(true);
 
         // Aktifkan player
         if (playerController != null)

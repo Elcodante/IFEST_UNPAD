@@ -44,40 +44,24 @@ public class MainMenuController : MonoBehaviour
         {
             if (elements[i] != null && elements[i].rect != null)
             {
-                originalPositions[i] =
-                    elements[i].rect.anchoredPosition;
+                originalPositions[i] = elements[i].rect.anchoredPosition;
             }
         }
     }
 
     private void Start()
     {
-        // Player belum boleh bergerak saat Main Menu
-        if (playerController != null)
-            playerController.enabled = false;
-
-        // Gameplay UI disembunyikan saat Main Menu
-        if (slider1 != null)
-            slider1.SetActive(false);
-
-        if (slider2 != null)
-            slider2.SetActive(false);
-
-        if (pintu != null)
-            pintu.SetActive(false);
-
-        if (timer != null)
-            timer.SetActive(false);
-
-        if (day != null)
-            day.SetActive(false);
+        if (playerController != null) playerController.enabled = false;
+        if (slider1 != null) slider1.SetActive(false);
+        if (slider2 != null) slider2.SetActive(false);
+        if (pintu != null) pintu.SetActive(false);
+        if (timer != null) timer.SetActive(false);
+        if (day != null) day.SetActive(false);
     }
 
     public void PlayGame()
     {
-        if (isTransitioning)
-            return;
-
+        if (isTransitioning) return;
         StartCoroutine(HideMenu());
     }
 
@@ -96,65 +80,39 @@ public class MainMenuController : MonoBehaviour
         while (true)
         {
             elapsed += Time.unscaledDeltaTime;
-
             bool finished = true;
 
             for (int i = 0; i < elements.Length; i++)
             {
                 MenuElement element = elements[i];
+                if (element == null) continue;
 
-                if (element == null)
-                    continue;
-
-                float t =
-                    Mathf.Clamp01(
-                        (elapsed - element.delay) / duration
-                    );
-
-                if (t < 1f)
-                    finished = false;
+                float t = Mathf.Clamp01((elapsed - element.delay) / duration);
+                if (t < 1f) finished = false;
 
                 t = EaseOutCubic(t);
-
-                Vector2 target =
-                    originalPositions[i] +
-                    Vector2.left * slideDistance;
+                Vector2 target = originalPositions[i] + Vector2.left * slideDistance;
 
                 if (element.rect != null)
                 {
-                    element.rect.anchoredPosition =
-                        Vector2.Lerp(
-                            originalPositions[i],
-                            target,
-                            t
-                        );
+                    element.rect.anchoredPosition = Vector2.Lerp(originalPositions[i], target, t);
                 }
 
                 if (element.canvasGroup != null)
                 {
-                    element.canvasGroup.alpha =
-                        Mathf.Lerp(1f, 0f, t);
+                    element.canvasGroup.alpha = Mathf.Lerp(1f, 0f, t);
                 }
             }
 
-            // Fade keseluruhan menu
             if (mainMenuGroup != null)
             {
-                mainMenuGroup.alpha =
-                    Mathf.Lerp(
-                        1f,
-                        0f,
-                        Mathf.Clamp01(elapsed / duration)
-                    );
+                mainMenuGroup.alpha = Mathf.Lerp(1f, 0f, Mathf.Clamp01(elapsed / duration));
             }
 
-            if (finished)
-                break;
-
+            if (finished) break;
             yield return null;
         }
 
-        // Pastikan menu benar-benar hilang
         if (mainMenuGroup != null)
         {
             mainMenuGroup.alpha = 0f;
@@ -162,35 +120,22 @@ public class MainMenuController : MonoBehaviour
         }
 
         StartGameplay();
-
         isTransitioning = false;
     }
 
     private void StartGameplay()
     {
-        // Aktifkan Gameplay UI
-        if (slider1 != null)
-            slider1.SetActive(true);
+        if (slider1 != null) slider1.SetActive(true);
+        if (slider2 != null) slider2.SetActive(true);
+        if (pintu != null) pintu.SetActive(true);
+        if (timer != null) timer.SetActive(true);
+        if (day != null) day.SetActive(true);
 
-        if (slider2 != null)
-            slider2.SetActive(true);
+        if (playerController != null) playerController.enabled = true;
+        if (gameplaySystemsController != null) gameplaySystemsController.StartGameplay();
 
-        if (pintu != null)
-            pintu.SetActive(true);
-
-        if (timer != null)
-            timer.SetActive(true);
-
-        if (day != null)
-            day.SetActive(true);
-
-        // Aktifkan player
-        if (playerController != null)
-            playerController.enabled = true;
-
-        // Beritahu system gameplay bahwa game sudah dimulai
-        if (gameplaySystemsController != null)
-            gameplaySystemsController.StartGameplay();
+        // PERBAIKAN: Nyalakan waktu saat masuk ke game
+        if (DayManager.instance != null) DayManager.instance.waktuBerjalan = true;
     }
 
     private float EaseOutCubic(float t)

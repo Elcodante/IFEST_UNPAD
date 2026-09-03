@@ -11,7 +11,6 @@ public class DayManager : MonoBehaviour
     public float targetWaktuMenang = 180f;
     public string namaSceneBerikutnya = "Day3";
 
-    // TAMBAHAN BARU: Agar kamu bisa isi angka 2 untuk scene Day 2
     public int hariSaatIni = 1;
 
     [Header("UI & TIMER")]
@@ -20,7 +19,9 @@ public class DayManager : MonoBehaviour
     public GameObject panelWin;
 
     private float detikBertahan = 0f;
-    public bool waktuBerjalan = true;
+
+    // PERBAIKAN: Dimatikan dari awal agar menunggu Main Menu
+    public bool waktuBerjalan = false;
 
     void Awake()
     {
@@ -30,8 +31,6 @@ public class DayManager : MonoBehaviour
     void Start()
     {
         if (panelWin != null) panelWin.SetActive(false);
-
-        // HAPUS hariSaatIni = 1 di sini. Biarkan dia mengambil dari Inspector
         UpdateUIHari();
     }
 

@@ -2177,7 +2177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
-  roomID: 4
+  roomID: 5
   roomName: O2
   initialStatus: 0
   captureCooldown: 10
@@ -2763,7 +2763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
-  roomID: 1
+  roomID: 2
   roomName: Cafetaria
   initialStatus: 0
   captureCooldown: 10
@@ -3258,7 +3258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf2b988efba3b74298e52d59cb51a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KlikRuangan
-  idRuangan: 5
+  idRuangan: 6
 --- !u!61 &181474533
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4234,7 +4234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
-  roomID: 3
+  roomID: 4
   roomName: Medical
   initialStatus: 0
   captureCooldown: 10
@@ -6795,7 +6795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
-  roomID: 0
+  roomID: 1
   roomName: Security
   initialStatus: 0
   captureCooldown: 10
@@ -28537,7 +28537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
-  roomID: 2
+  roomID: 3
   roomName: Engine
   initialStatus: 0
   captureCooldown: 10
@@ -43081,7 +43081,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -100, y: -25}
+  m_AnchoredPosition: {x: -83, y: -59}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1128144539
@@ -43106,8 +43106,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'DAY : '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0207939733bc1bb4bb5bd4d22ccf9cf8, type: 2}
+  m_sharedMaterial: {fileID: -7906712341161036285, guid: 0207939733bc1bb4bb5bd4d22ccf9cf8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -44592,7 +44592,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -12}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1232468250
@@ -44617,8 +44617,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0207939733bc1bb4bb5bd4d22ccf9cf8, type: 2}
+  m_sharedMaterial: {fileID: -7906712341161036285, guid: 0207939733bc1bb4bb5bd4d22ccf9cf8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -57362,7 +57362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
-  roomID: 0
+  roomID: 6
   roomName: Security
   initialStatus: 0
   captureCooldown: 10
@@ -57913,24 +57913,32 @@ MonoBehaviour:
   - roomID: 1
     currentState: 0
     neighborIDs: 02000000
-    lokasiRuangan: {fileID: 938985852}
+    lokasiRuangan: {fileID: 1395955404}
   - roomID: 2
     currentState: 0
     neighborIDs: 03000000
-    lokasiRuangan: {fileID: 1302521873}
+    lokasiRuangan: {fileID: 938985852}
   - roomID: 3
     currentState: 0
     neighborIDs: 04000000
-    lokasiRuangan: {fileID: 1384057069}
+    lokasiRuangan: {fileID: 1302521873}
   - roomID: 4
     currentState: 0
-    neighborIDs: 01000000
+    neighborIDs: 0300000004000000
+    lokasiRuangan: {fileID: 1384057069}
+  - roomID: 5
+    currentState: 0
+    neighborIDs: 0300000004000000
     lokasiRuangan: {fileID: 1943203489}
+  - roomID: 6
+    currentState: 0
+    neighborIDs: 04000000
+    lokasiRuangan: {fileID: 181474531}
   prefabEventInvasi: {fileID: 3463894118187994509, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
   panelGameOver: {fileID: 1425286406}
-  waktuTungguAwal: 10
-  jedaAntarInvasi: 30
-  batasMaksimalInvasi: 1
+  waktuTungguAwal: 3
+  jedaAntarInvasi: 7
+  batasMaksimalInvasi: 2
 --- !u!4 &1428028367
 Transform:
   m_ObjectHideFlags: 0
@@ -58791,11 +58799,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f26c186e496384eaf2c20c04b2425b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  sfxSource: {fileID: 0}
-  jumpSound: {fileID: 8300000, guid: 1fefc8f6a6fd09e4c82e8b9c3f6e3a48, type: 3}
-  attackSound: {fileID: 8300000, guid: 5063f26ef20845947b2da54a846a1ae7, type: 3}
-  coinSound: {fileID: 8300000, guid: 3a6e1eebd7987bc42974dcfae0f053ea, type: 3}
-  hitSound: {fileID: 0}
+  bgmMixer: {fileID: 0}
+  sfxMixer: {fileID: 0}
+  bgmList: []
+  sfxList: []
 --- !u!1 &1492661990
 GameObject:
   m_ObjectHideFlags: 0
@@ -68331,7 +68338,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -474.23795, y: 183}
+  m_AnchoredPosition: {x: -474.23798, y: 183}
   m_SizeDelta: {x: -1242.305, y: -1015.331}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1773441100

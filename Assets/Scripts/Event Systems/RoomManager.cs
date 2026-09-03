@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
-
     public enum RoomState { Aman, Diinvasi, Hancur }
 
     [System.Serializable]
@@ -48,7 +47,15 @@ public class RoomManager : MonoBehaviour
 
     IEnumerator MesinSpamZombie()
     {
-        Debug.Log("WAVE SYSTEM: Menunggu persiapan awal...");
+        Debug.Log("WAVE SYSTEM: Menunggu player menekan Play...");
+
+        // PERBAIKAN: Tunggu sampai game benar-benar di-play
+        while (DayManager.instance != null && !DayManager.instance.waktuBerjalan)
+        {
+            yield return null;
+        }
+
+        Debug.Log("WAVE SYSTEM: Game dimulai! Menunggu persiapan awal...");
         yield return new WaitForSeconds(waktuTungguAwal);
 
         for (int i = 0; i < batasMaksimalInvasi; i++)
@@ -104,11 +111,10 @@ public class RoomManager : MonoBehaviour
         List<Room> targetAman = new List<Room>();
         foreach (int idTetangga in ruangAsal.neighborIDs)
         {
-            // --- FILTER PINTU KARANTINA ---
             if (PintuController.CekJalurDiblokir(idAsal, idTetangga))
             {
                 Debug.Log($"VIRUS GAGAL MENYEBAR! Jalur {idAsal} ke {idTetangga} sedang dikarantina.");
-                continue; // Lewati ruangan ini, cari target ruangan lain
+                continue;
             }
 
             Room tetangga = rooms.Find(r => r.roomID == idTetangga);

@@ -67,15 +67,17 @@ public class GameManager : MonoBehaviour
     {
         while (!gameOver)
         {
-            float delay = Random.Range(
-                minAttackDelay,
-                maxAttackDelay
-            );
+            // PERBAIKAN: Tahan proses jika game belum di-play (masih di menu)
+            while (DayManager.instance != null && !DayManager.instance.waktuBerjalan)
+            {
+                yield return null;
+            }
 
+            float delay = Random.Range(minAttackDelay, maxAttackDelay);
             yield return new WaitForSeconds(delay);
 
-            if (gameOver)
-                yield break;
+            if (gameOver || (DayManager.instance != null && !DayManager.instance.waktuBerjalan))
+                continue;
 
             AttackRandomRoom();
         }
@@ -129,62 +131,36 @@ public class GameManager : MonoBehaviour
     }
 
     // =========================================================
-    // RESOURCE
+    // RESOURCE & RESET
     // =========================================================
 
     public void RemoveHealth(float amount)
     {
-        if (playerResources == null)
-            return;
-
-        playerResources.RemoveHealth(amount);
+        if (playerResources != null) playerResources.RemoveHealth(amount);
     }
 
     public void RemoveHunger(float amount)
     {
-        if (playerResources == null)
-            return;
-
-        playerResources.RemoveHunger(amount);
+        if (playerResources != null) playerResources.RemoveHunger(amount);
     }
-
-    // =========================================================
-    // RESET
-    // =========================================================
 
     public void ResetGame()
     {
         gameOver = false;
-
         Time.timeScale = 1f;
 
-        if (gameOverUI != null)
-        {
-            gameOverUI.SetActive(false);
-        }
-
-        if (playerResources != null)
-        {
-            playerResources.ResetResources();
-        }
+        if (gameOverUI != null) gameOverUI.SetActive(false);
+        if (playerResources != null) playerResources.ResetResources();
 
         foreach (RoomController room in rooms)
         {
-            if (room != null)
-            {
-                room.ResetRoom();
-            }
+            if (room != null) room.ResetRoom();
         }
     }
 
-    // =========================================================
-    // GAME OVER
-    // =========================================================
-
     public void TriggerGameOver()
     {
-        if (gameOver)
-            return;
+        if (gameOver) return;
 
         gameOver = true;
 
@@ -194,20 +170,14 @@ public class GameManager : MonoBehaviour
             attackRoutine = null;
         }
 
-        if (gameOverUI != null)
-        {
-            gameOverUI.SetActive(true);
-        }
-
+        if (gameOverUI != null) gameOverUI.SetActive(true);
         Time.timeScale = 0f;
     }
 
     public void RestartLevel()
     {
         Time.timeScale = 1f;
-
         Scene currentScene = SceneManager.GetActiveScene();
-
         SceneManager.LoadScene(currentScene.buildIndex);
     }
 }

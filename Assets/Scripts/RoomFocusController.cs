@@ -63,10 +63,6 @@ public class RoomFocusController : MonoBehaviour
         UpdateStatusTombolRuangan();
     }
 
-    /// <summary>
-    /// Mengecek apakah ada zombie di ruangan. Jika ada, nonaktifkan interaksi tombol di CCTV
-    /// agar pemain tidak bisa memilih minigame di ruangan tersebut.
-    /// </summary>
     private void UpdateStatusTombolRuangan()
     {
         if (RoomManager.instance == null) return;
@@ -75,7 +71,6 @@ public class RoomFocusController : MonoBehaviour
         {
             if (entry == null || entry.room == null) continue;
 
-            // Cari status ruangan di RoomManager berdasarkan RoomID
             RoomManager.Room dataRuang = RoomManager.instance.rooms.Find(r => r.roomID == entry.room.RoomID);
 
             if (dataRuang != null)
@@ -83,16 +78,15 @@ public class RoomFocusController : MonoBehaviour
                 bool adaZombie = (dataRuang.currentState == RoomManager.RoomState.Diinvasi ||
                                   dataRuang.currentState == RoomManager.RoomState.Hancur);
 
-                // Jika zombie muncul saat pemain sedang fokus di ruangan ini, kembalikan ke CCTV
                 if (adaZombie && currentFocusedEntry == entry)
                 {
                     Debug.Log($"Ruangan {entry.room.RoomName} diserang zombie! Pemain dikembalikan ke CCTV.");
                     ReturnToCCTV();
                 }
 
-                // Matikan / hidupkan Button UI pada RoomController
-                Button btn = entry.room.GetComponent<Button>();
-                if (btn != null)
+                // Matikan SEMUA komponen Button jika ada zombie
+                Button[] semuaTombol = entry.room.GetComponentsInChildren<Button>(true);
+                foreach (Button btn in semuaTombol)
                 {
                     btn.interactable = !adaZombie;
                 }
@@ -130,29 +124,30 @@ public class RoomFocusController : MonoBehaviour
 
     private void FocusEntry(RoomFocusEntry entry)
     {
-        // Cegah masuk jika ruangan sedang diserang zombie
-        if (RoomManager.instance != null && entry.room != null)
+        // --- GEMBOK BAJA: CEK FISIK ZOMBIE ---
+        if (entry.room != null)
         {
-            RoomManager.Room dataRuang = RoomManager.instance.rooms.Find(r => r.roomID == entry.room.RoomID);
-            if (dataRuang != null && dataRuang.currentState != RoomManager.RoomState.Aman)
+            int idTarget = entry.room.RoomID;
+
+            ZombieController[] semuaZombie = Object.FindObjectsByType<ZombieController>(FindObjectsSortMode.None);
+            foreach (var z in semuaZombie)
             {
-                Debug.LogWarning($"Akses minigame ditolak! Ruangan {entry.room.RoomName} sedang ada zombie.");
-                return;
+                if (z.targetRoomID == idTarget)
+                {
+                    Debug.Log($"[DITOLAK] Ruangan {entry.room.RoomName} sedang ada zombie! Transisi interior digagalkan paksa.");
+                    return;
+                }
             }
         }
+        // ------------------------------------
 
         currentFocusedEntry = entry;
 
-        // Sembunyikan semua trigger
         foreach (MinigameTrigger trigger in allTriggers)
         {
-            if (trigger != null)
-            {
-                trigger.gameObject.SetActive(false);
-            }
+            if (trigger != null) trigger.gameObject.SetActive(false);
         }
 
-        // Pindahkan trigger room terpilih ke depan kamera
         if (entry.triggers != null)
         {
             for (int i = 0; i < entry.triggers.Length; i++)
@@ -169,15 +164,11 @@ public class RoomFocusController : MonoBehaviour
             }
         }
 
-        if (cctvPanel != null)
-        {
-            cctvPanel.SetActive(false);
-        }
+        if (cctvPanel != null) cctvPanel.SetActive(false);
+        if (backButtonUI != null) backButtonUI.SetActive(true);
 
-        if (backButtonUI != null)
-        {
-            backButtonUI.SetActive(true);
-        }
+        // PERBAIKAN: Sembunyikan pintu & zombie
+        AturVisualDunia(false);
     }
 
     public void ReturnToCCTV()
@@ -186,10 +177,7 @@ public class RoomFocusController : MonoBehaviour
         {
             foreach (GameObject panel in allMinigamePanels)
             {
-                if (panel != null)
-                {
-                    panel.SetActive(false);
-                }
+                if (panel != null) panel.SetActive(false);
             }
         }
 
@@ -220,14 +208,31 @@ public class RoomFocusController : MonoBehaviour
 
         currentFocusedEntry = null;
 
-        if (cctvPanel != null)
+        if (cctvPanel != null) cctvPanel.SetActive(true);
+        if (backButtonUI != null) backButtonUI.SetActive(false);
+
+        // PERBAIKAN: Tampilkan kembali pintu & zombie
+        AturVisualDunia(true);
+    }
+
+    private void AturVisualDunia(bool tampilkan)
+    {
+        foreach (var pintu in PintuController.semuaPintu)
         {
-            cctvPanel.SetActive(true);
+            if (pintu != null)
+            {
+                SpriteRenderer sr = pintu.GetComponent<SpriteRenderer>();
+                if (sr != null) sr.enabled = tampilkan;
+            }
         }
 
-        if (backButtonUI != null)
+        ZombieController[] semuaZombie = Object.FindObjectsByType<ZombieController>(FindObjectsSortMode.None);
+        foreach (var z in semuaZombie)
         {
-            backButtonUI.SetActive(false);
+            if (z != null && z.lokasiSpawn != null)
+            {
+                z.lokasiSpawn.gameObject.SetActive(tampilkan);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static RoomManager;
 
 public class KlikRuangan : MonoBehaviour
@@ -42,11 +43,9 @@ public class KlikRuangan : MonoBehaviour
             return;
         }
 
-        // 1. Cari data ruangan di RoomManager
         RoomManager.Room dataRuang = RoomManager.instance.rooms.Find(r => r.roomID == idRuangan);
         string statusRuang = (dataRuang != null) ? dataRuang.currentState.ToString() : "TIDAK TERDAFTAR";
 
-        // 2. Cari semua zombie di scene dan catat target ruangannya
         ZombieController[] semuaZombie = Object.FindObjectsByType<ZombieController>(FindObjectsSortMode.None);
         bool adaZombieDiRuanganIni = false;
 
@@ -64,25 +63,24 @@ public class KlikRuangan : MonoBehaviour
         Debug.Log($"[STATUS SCENE] Daftar Zombie Aktif: {infoSemuaZombie}");
         Debug.Log($"[STATUS RUANGAN] Room_{idRuangan} status di RoomManager: <b>{statusRuang}</b>");
 
-        // 3. Syarat membuka panel: jika ruangan Diinvasi ATAU ada zombie yang menargetkan ruangan ini
-        if (adaZombieDiRuanganIni || (dataRuang != null && dataRuang.currentState == RoomState.Diinvasi))
+        // PERBAIKAN: Logika Prioritas Zombie! Jika ada zombie, paksa panggil tentara!
+        if (adaZombieDiRuanganIni || (dataRuang != null && dataRuang.currentState != RoomState.Aman))
         {
+            Debug.Log($"<color=green>[PRIORITAS]</color> Ruangan {idRuangan} diserang! Akses interior ditutup, memanggil UI Tentara.");
+
             if (dataRuang != null) dataRuang.currentState = RoomState.Diinvasi;
 
             if (SoldierManager.instance != null)
             {
-                Debug.Log($"<color=green>[BERHASIL]</color> Membuka Panel Tentara untuk Room_{idRuangan}!");
                 SoldierManager.instance.MunculkanUI(idRuangan);
             }
-            else
-            {
-                Debug.LogError("[ERROR] SoldierManager.instance bernilai NULL!");
-            }
+            return; // Hentikan script di sini agar tidak memicu transisi minigame!
         }
         else
         {
-            Debug.LogWarning($"[DITOLAK] Kamu mengklik Room_{idRuangan}, padahal zombie sedang berada di ruangan lain!");
+            Debug.Log($"[AMAN] Ruangan {idRuangan} tidak memiliki zombie. Klik diteruskan ke sistem Minigame.");
         }
+
         Debug.Log($"<color=white>==========================================</color>");
     }
 }

@@ -1,18 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-/// <summary>
-/// Menangani perpindahan tampilan dari panel CCTV utama ke "fokus" pada satu room.
-/// Alih-alih menggerakkan kamera, script ini memindahkan MinigameTrigger milik room
-/// yang dipilih ke posisi di depan kamera (targetFocusPosition), menyembunyikan
-/// trigger milik room lain supaya tidak ikut terlihat, dan mengembalikan semuanya
-/// ke posisi/status asal saat player kembali ke CCTV.
-///
-/// Pasang script ini pada satu GameObject saja di scene (mis. "Room Focus Controller"),
-/// lalu isi array roomEntries lewat Inspector: setiap RoomController dipasangkan dengan
-/// 2 MinigameTrigger miliknya (harus sama persis dengan yang diisi di field
-/// "Minigame Triggers" pada RoomController itu).
-/// </summary>
 public class RoomFocusController : MonoBehaviour
 {
     [System.Serializable]
@@ -23,25 +12,18 @@ public class RoomFocusController : MonoBehaviour
     }
 
     [Header("Room Setup")]
-    [Tooltip("Satu entry per room: RoomController-nya, dan MinigameTrigger yang akan dipindahkan ke depan kamera saat room ini difokus.")]
+    [Tooltip("Satu entry per room: RoomController-nya dan MinigameTrigger miliknya.")]
     [SerializeField] private RoomFocusEntry[] roomEntries;
 
     [Header("Focus Position")]
-    [Tooltip("Posisi di depan kamera tempat trigger akan ditempatkan saat room difokus.")]
     [SerializeField] private Vector3 targetFocusPosition = Vector3.zero;
-
-    [Tooltip("Jarak antar trigger saat keduanya ditampilkan bersamaan di posisi fokus, supaya tidak saling menumpuk.")]
     [SerializeField] private float spacingBetweenTriggers = 2f;
 
     [Header("UI References")]
-    [Tooltip("Panel CCTV utama (berisi tombol-tombol room). Akan disembunyikan saat fokus aktif.")]
     [SerializeField] private GameObject cctvPanel;
-
-    [Tooltip("Opsional: tombol atau panel 'Kembali ke CCTV' yang muncul hanya saat sedang fokus ke room.")]
     [SerializeField] private GameObject backButtonUI;
 
     [Header("Minigame Panels")]
-    [Tooltip("Semua Panel_Minigame_* yang ada di scene. Dipakai supaya tombol Exit/Kembali bisa menutup minigame yang sedang terbuka, dari mana saja, kapan saja (termasuk saat exit di tengah permainan).")]
     [SerializeField] private GameObject[] allMinigamePanels;
 
     private readonly Dictionary<MinigameTrigger, Vector3> originalPositions = new Dictionary<MinigameTrigger, Vector3>();
@@ -50,8 +32,6 @@ public class RoomFocusController : MonoBehaviour
 
     private void Awake()
     {
-        // Simpan posisi asal semua trigger di awal, sebelum ada yang dipindah,
-        // dan kumpulkan semua trigger jadi satu daftar supaya mudah disembunyikan/ditampilkan.
         foreach (RoomFocusEntry entry in roomEntries)
         {
             if (entry?.triggers == null) continue;
@@ -78,11 +58,48 @@ public class RoomFocusController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        UpdateStatusTombolRuangan();
+    }
+
     /// <summary>
-    /// Dipanggil dari tombol room di panel CCTV (mis. lewat OnClick Button -> RoomFocusController.FocusRoom).
-    /// Karena UnityEvent Button tidak bisa langsung mengirim parameter RoomController secara umum di Inspector
-    /// tanpa referensi spesifik, sediakan juga varian FocusRoomByName di bawah untuk dipanggil dengan string.
+    /// Mengecek apakah ada zombie di ruangan. Jika ada, nonaktifkan interaksi tombol di CCTV
+    /// agar pemain tidak bisa memilih minigame di ruangan tersebut.
     /// </summary>
+    private void UpdateStatusTombolRuangan()
+    {
+        if (RoomManager.instance == null) return;
+
+        foreach (RoomFocusEntry entry in roomEntries)
+        {
+            if (entry == null || entry.room == null) continue;
+
+            // Cari status ruangan di RoomManager berdasarkan RoomID
+            RoomManager.Room dataRuang = RoomManager.instance.rooms.Find(r => r.roomID == entry.room.RoomID);
+
+            if (dataRuang != null)
+            {
+                bool adaZombie = (dataRuang.currentState == RoomManager.RoomState.Diinvasi ||
+                                  dataRuang.currentState == RoomManager.RoomState.Hancur);
+
+                // Jika zombie muncul saat pemain sedang fokus di ruangan ini, kembalikan ke CCTV
+                if (adaZombie && currentFocusedEntry == entry)
+                {
+                    Debug.Log($"Ruangan {entry.room.RoomName} diserang zombie! Pemain dikembalikan ke CCTV.");
+                    ReturnToCCTV();
+                }
+
+                // Matikan / hidupkan Button UI pada RoomController
+                Button btn = entry.room.GetComponent<Button>();
+                if (btn != null)
+                {
+                    btn.interactable = !adaZombie;
+                }
+            }
+        }
+    }
+
     public void FocusRoom(RoomController room)
     {
         if (room == null) return;
@@ -98,10 +115,6 @@ public class RoomFocusController : MonoBehaviour
         FocusEntry(entry);
     }
 
-    /// <summary>
-    /// Alternatif pemanggilan lewat nama room (roomName di RoomController), supaya bisa langsung
-    /// di-assign di Inspector Button.OnClick tanpa perlu drag referensi RoomController secara manual.
-    /// </summary>
     public void FocusRoomByName(string roomName)
     {
         RoomFocusEntry entry = System.Array.Find(roomEntries, e => e.room != null && e.room.RoomName == roomName);
@@ -117,9 +130,20 @@ public class RoomFocusController : MonoBehaviour
 
     private void FocusEntry(RoomFocusEntry entry)
     {
+        // Cegah masuk jika ruangan sedang diserang zombie
+        if (RoomManager.instance != null && entry.room != null)
+        {
+            RoomManager.Room dataRuang = RoomManager.instance.rooms.Find(r => r.roomID == entry.room.RoomID);
+            if (dataRuang != null && dataRuang.currentState != RoomManager.RoomState.Aman)
+            {
+                Debug.LogWarning($"Akses minigame ditolak! Ruangan {entry.room.RoomName} sedang ada zombie.");
+                return;
+            }
+        }
+
         currentFocusedEntry = entry;
 
-        // Sembunyikan dulu SEMUA trigger di scene, supaya hanya milik room yang difokus yang terlihat.
+        // Sembunyikan semua trigger
         foreach (MinigameTrigger trigger in allTriggers)
         {
             if (trigger != null)
@@ -128,7 +152,7 @@ public class RoomFocusController : MonoBehaviour
             }
         }
 
-        // Tampilkan dan pindahkan trigger milik room yang difokus ke depan kamera.
+        // Pindahkan trigger room terpilih ke depan kamera
         if (entry.triggers != null)
         {
             for (int i = 0; i < entry.triggers.Length; i++)
@@ -138,7 +162,6 @@ public class RoomFocusController : MonoBehaviour
 
                 trigger.gameObject.SetActive(true);
 
-                // Sebar horizontal supaya 2 trigger tidak saling menumpuk persis di titik yang sama.
                 float offsetX = (i - (entry.triggers.Length - 1) / 2f) * spacingBetweenTriggers;
                 Vector3 destination = targetFocusPosition + new Vector3(offsetX, 0f, 0f);
 
@@ -157,15 +180,8 @@ public class RoomFocusController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Dipanggil dari tombol "Kembali"/"Exit" untuk kembali ke panel CCTV - baik dari tampilan
-    /// room (belum buka minigame) maupun dari tengah-tengah minigame yang sedang dimainkan.
-    /// Menutup semua panel minigame yang mungkin sedang terbuka, mengembalikan semua trigger
-    /// ke posisi asalnya di denah, dan menampilkan lagi panel CCTV.
-    /// </summary>
-public void ReturnToCCTV()
+    public void ReturnToCCTV()
     {
-        // Tutup semua panel minigame yang mungkin sedang aktif, apa pun yang sedang dimainkan.
         if (allMinigamePanels != null)
         {
             foreach (GameObject panel in allMinigamePanels)
@@ -177,11 +193,6 @@ public void ReturnToCCTV()
             }
         }
 
-        // Kembalikan semua trigger ke posisi asal dan tampilkan lagi. Kalau room pemilik trigger
-        // itu masih berstatus Diserang dan trigger tersebut adalah trigger yang sedang aktif untuk
-        // serangan ini (CurrentActiveTrigger, dipilih random oleh RoomController), nyalakan ulang
-        // warning-nya (ActivateDanger) supaya player tetap bisa lanjut mengerjakan minigame yang
-        // SAMA nanti - bukan menyalakan kedua trigger sekaligus.
         foreach (RoomFocusEntry entry in roomEntries)
         {
             if (entry?.triggers == null) continue;

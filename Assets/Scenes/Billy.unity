@@ -2177,6 +2177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
+  roomID: 4
   roomName: O2
   initialStatus: 0
   captureCooldown: 10
@@ -2762,6 +2763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
+  roomID: 1
   roomName: Cafetaria
   initialStatus: 0
   captureCooldown: 10
@@ -4232,6 +4234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
+  roomID: 3
   roomName: Medical
   initialStatus: 0
   captureCooldown: 10
@@ -6792,6 +6795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
+  roomID: 0
   roomName: Security
   initialStatus: 0
   captureCooldown: 10
@@ -14277,6 +14281,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -14402,6 +14407,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.Physics2DRaycaster
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &532532815
 GameObject:
   m_ObjectHideFlags: 0
@@ -28516,6 +28537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
+  roomID: 2
   roomName: Engine
   initialStatus: 0
   captureCooldown: 10
@@ -57340,6 +57362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae24fa19cc039f746a6e588285fad21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
+  roomID: 0
   roomName: Security
   initialStatus: 0
   captureCooldown: 10
@@ -57889,28 +57912,20 @@ MonoBehaviour:
   rooms:
   - roomID: 1
     currentState: 0
-    neighborIDs: 0200000003000000
-    lokasiRuangan: {fileID: 1395955404}
+    neighborIDs: 02000000
+    lokasiRuangan: {fileID: 938985852}
   - roomID: 2
     currentState: 0
-    neighborIDs: 0100000004000000
-    lokasiRuangan: {fileID: 938985852}
+    neighborIDs: 03000000
+    lokasiRuangan: {fileID: 1302521873}
   - roomID: 3
     currentState: 0
-    neighborIDs: 010000000400000005000000
-    lokasiRuangan: {fileID: 1302521873}
+    neighborIDs: 04000000
+    lokasiRuangan: {fileID: 1384057069}
   - roomID: 4
     currentState: 0
-    neighborIDs: 02000000030000000500000006000000
-    lokasiRuangan: {fileID: 1384057069}
-  - roomID: 5
-    currentState: 0
-    neighborIDs: 0300000004000000
+    neighborIDs: 01000000
     lokasiRuangan: {fileID: 1943203489}
-  - roomID: 6
-    currentState: 0
-    neighborIDs: 04000000
-    lokasiRuangan: {fileID: 0}
   prefabEventInvasi: {fileID: 3463894118187994509, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
   panelGameOver: {fileID: 1425286406}
   waktuTungguAwal: 10

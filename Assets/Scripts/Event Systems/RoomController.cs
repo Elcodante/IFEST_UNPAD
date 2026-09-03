@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class RoomController : MonoBehaviour
 {
     [Header("Room Identity")]
+    [SerializeField] private int roomID; // Hubungkan dengan ID di RoomManager
     [SerializeField] private string roomName = "Room";
 
     [Header("Initial Status")]
@@ -46,6 +47,8 @@ public class RoomController : MonoBehaviour
     [Header("Minigame Triggers")]
     [Tooltip("Semua MinigameTrigger yang ada di room ini. Saat room diserang, salah satu akan dipilih secara acak untuk diaktifkan.")]
     [SerializeField] private MinigameTrigger[] minigameTriggers;
+
+    public int RoomID => roomID;
 
     private RoomStatus currentStatus;
     private float captureTimer;

@@ -30,8 +30,13 @@ public class DayManager : MonoBehaviour
 
     void Start()
     {
+        waktuBerjalan = false;
+        detikBertahan = 0f;
+
         if (panelWin != null) panelWin.SetActive(false);
+
         UpdateUIHari();
+        UpdateTeksWaktu(); 
     }
 
     void Update()

@@ -80,10 +80,18 @@ public class GameManager : MonoBehaviour
             }
 
             float delay = Random.Range(minAttackDelay, maxAttackDelay);
-            yield return new WaitForSeconds(delay);
+            float timer = 0f;
 
-            if (gameOver || (DayManager.instance != null && !DayManager.instance.waktuBerjalan))
-                continue;
+            while (timer < delay)
+            {
+                if (DayManager.instance != null && DayManager.instance.waktuBerjalan)
+                {
+                    timer += Time.deltaTime;
+                }
+                yield return null;
+            }
+
+            if (gameOver) break;
 
             AttackRandomRoom();
         }

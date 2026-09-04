@@ -22,27 +22,35 @@ public class ZombieController : MonoBehaviour
 
     IEnumerator ProsesTumbuh()
     {
+        // 1. Tahan Jeda Awal jika game dipause (sedang buka minigame)
         if (jedaAwal > 0f)
         {
-            yield return new WaitForSeconds(jedaAwal);
+            float timerAwal = 0f;
+            while (timerAwal < jedaAwal)
+            {
+                if (DayManager.instance != null && DayManager.instance.waktuBerjalan) timerAwal += Time.deltaTime;
+                yield return null;
+            }
         }
 
         while (titikSekarang < maksimalTitik)
         {
+            // Tahan proses kalau player sedang berada di dalam minigame
+            while (DayManager.instance != null && !DayManager.instance.waktuBerjalan) yield return null;
+
             if (prefabTitikMerah != null && lokasiSpawn != null)
             {
                 GameObject titikBaru = Instantiate(prefabTitikMerah, lokasiSpawn);
-
                 Vector3 posisiTitik = Vector3.zero;
                 float jarak = 25f;
 
                 switch (titikSekarang)
                 {
-                    case 0: posisiTitik = new Vector3(0, 0, 0); break;           // Titik 1: Tengah
-                    case 1: posisiTitik = new Vector3(-jarak, jarak, 2); break;  // Titik 2: Kiri Atas
-                    case 2: posisiTitik = new Vector3(jarak, jarak, 2); break;   // Titik 3: Kanan Atas
-                    case 3: posisiTitik = new Vector3(-jarak, -jarak, 2); break; // Titik 4: Kiri Bawah
-                    case 4: posisiTitik = new Vector3(jarak, -jarak, 2); break;  // Titik 5: Kanan Bawah
+                    case 0: posisiTitik = new Vector3(0, 0, 0); break;
+                    case 1: posisiTitik = new Vector3(-jarak, jarak, 2); break;
+                    case 2: posisiTitik = new Vector3(jarak, jarak, 2); break;
+                    case 3: posisiTitik = new Vector3(-jarak, -jarak, 2); break;
+                    case 4: posisiTitik = new Vector3(jarak, -jarak, 2); break;
                 }
 
                 titikBaru.transform.localPosition = posisiTitik;
@@ -51,7 +59,13 @@ public class ZombieController : MonoBehaviour
 
             if (titikSekarang < maksimalTitik)
             {
-                yield return new WaitForSeconds(waktuTumbuh);
+                // 2. Timer Manual Waktu Tumbuh agar ikut berhenti saat minigame aktif
+                float timerTumbuh = 0f;
+                while (timerTumbuh < waktuTumbuh)
+                {
+                    if (DayManager.instance != null && DayManager.instance.waktuBerjalan) timerTumbuh += Time.deltaTime;
+                    yield return null;
+                }
             }
         }
 
@@ -76,10 +90,7 @@ public class ZombieController : MonoBehaviour
 
             if (titikSekarang <= 0)
             {
-                if (RoomManager.instance != null)
-                {
-                    RoomManager.instance.JadikanRuanganAman(targetRoomID);
-                }
+                if (RoomManager.instance != null) RoomManager.instance.JadikanRuanganAman(targetRoomID);
                 Destroy(gameObject);
             }
         }

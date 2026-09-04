@@ -28250,7 +28250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -6.5, y: -8.7}
+  m_AnchoredPosition: {x: -6.5, y: -8.699997}
   m_SizeDelta: {x: 36.5, y: 30}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &788941920
@@ -36891,7 +36891,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.7, y: 0}
+  m_AnchoredPosition: {x: 4.699997, y: 0}
   m_SizeDelta: {x: 9.4, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1025696840
@@ -43574,7 +43574,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -147.3, y: -59}
+  m_AnchoredPosition: {x: -147.29999, y: -59}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1128144539
@@ -58495,9 +58495,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 497d78c54adf41742b1b5accc44bc3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
-  targetWaktuMenang: 60
+  targetWaktuMenang: 120
   namaSceneBerikutnya: 3
-  hariSaatIni: 2
+  hariSaatIni: 1
   teksHariUI: {fileID: 1128144539}
   teksWaktuUI: {fileID: 1232468250}
   panelWin: {fileID: 1186056157}
@@ -58541,8 +58541,8 @@ MonoBehaviour:
     lokasiRuangan: {fileID: 181474531}
   prefabEventInvasi: {fileID: 3463894118187994509, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
   panelGameOver: {fileID: 1425286406}
-  waktuTungguAwal: 5
-  jedaAntarInvasi: 10
+  waktuTungguAwal: 30
+  jedaAntarInvasi: 30
   batasMaksimalInvasi: 2
 --- !u!4 &1428028367
 Transform:

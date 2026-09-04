@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class RoomFocusController : MonoBehaviour
 {
+    public static RoomFocusController Instance { get; private set; }
+
     [System.Serializable]
     public class RoomFocusEntry
     {
@@ -40,6 +42,13 @@ public class RoomFocusController : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         foreach (RoomFocusEntry entry in roomEntries)
         {
             if (entry.roomBackground != null)
@@ -141,12 +150,10 @@ public class RoomFocusController : MonoBehaviour
             entry.roomBackground.SetActive(true);
         }
 
-        // --- PERBAIKAN: Tutup Panel Tentara secara paksa saat masuk ke interior ---
         if (SoldierManager.instance != null)
         {
             SoldierManager.instance.TutupUI();
         }
-        // --------------------------------------------------------------------------
 
         foreach (MinigameTrigger trigger in allTriggers)
         {
@@ -176,6 +183,20 @@ public class RoomFocusController : MonoBehaviour
 
         if (pengawasVisual != null) StopCoroutine(pengawasVisual);
         pengawasVisual = StartCoroutine(AwasiVisualInterior());
+    }
+
+    /// <summary>
+    /// Menyelesaikan serangan pada ruangan yang sedang difokuskan,
+    /// mengubah statusnya menjadi Aman, lalu kembali ke CCTV.
+    /// </summary>
+    public void SelesaikanMinigameRuanganAktif()
+    {
+        if (currentFocusedEntry != null && currentFocusedEntry.room != null)
+        {
+            currentFocusedEntry.room.ResolveAttack();
+        }
+
+        ReturnToCCTV();
     }
 
     public void ReturnToCCTV()

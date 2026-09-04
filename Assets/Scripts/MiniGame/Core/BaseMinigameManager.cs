@@ -30,12 +30,26 @@ public abstract class BaseMinigameManager : MonoBehaviour
 
         isGameInProgress = false;
         OnMinigameCompleted?.Invoke();
-        //gameObject.SetActive(false);
+
+        // 1. Jika ada RoomFocusController, selesaikan serangan ruangan & kembali ke CCTV
+        if (RoomFocusController.Instance != null)
+        {
+            RoomFocusController.Instance.SelesaikanMinigameRuanganAktif();
+        }
+        else
+        {
+            // 2. Fallback manual jika RoomFocusController tidak digunakan
+            if (DayManager.instance != null)
+            {
+                DayManager.instance.LanjutkanSistemWaktu();
+            }
+        }
+
+        // 3. Pastikan panel minigame ini ditutup
+        gameObject.SetActive(false);
     }
 
     protected abstract void ResetMinigame();
-
-    //Fungsi jika dibutuhkan 
 
     public virtual void ForceResetState()
     {

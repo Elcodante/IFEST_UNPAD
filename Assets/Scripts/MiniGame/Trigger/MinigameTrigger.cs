@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Collider2D))]
 public class MinigameTrigger : MonoBehaviour
@@ -22,11 +21,6 @@ public class MinigameTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame && !isDangerActive)
-        {
-            ActivateDanger();
-        }
-
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             DetectClick();
@@ -51,17 +45,21 @@ public class MinigameTrigger : MonoBehaviour
     {
         if (!isDangerActive) return;
 
+        Camera cam = Camera.main;
+        if (cam == null) return;
+
         Vector3 mouseScreenPosition = Mouse.current.position.ReadValue();
-        mouseScreenPosition.z = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
-        Vector3 worldPos3D = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+        mouseScreenPosition.z = Mathf.Abs(cam.transform.position.z - transform.position.z);
+        Vector3 worldPos3D = cam.ScreenToWorldPoint(mouseScreenPosition);
         Vector2 worldPosition = new Vector2(worldPos3D.x, worldPos3D.y);
 
-        // PERBAIKAN: Gunakan OverlapPointAll untuk mendeteksi semua yang tertumpuk
+        // Ambil semua collider yang ada di bawah posisi kursor
         Collider2D[] hitColliders = Physics2D.OverlapPointAll(worldPosition);
 
         foreach (var hit in hitColliders)
         {
-            if (hit.gameObject == this.gameObject)
+            // Cek apakah collider milik objek ini atau child-nya
+            if (hit.gameObject == this.gameObject || hit.transform.IsChildOf(this.transform))
             {
                 Debug.Log("Berhasil klik Minigame: " + hit.gameObject.name);
                 AcknowledgeWarning();

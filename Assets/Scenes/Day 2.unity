@@ -59346,7 +59346,7 @@ MonoBehaviour:
     neighborIDs: 04000000
     lokasiRuangan: {fileID: 181474531}
   prefabEventInvasi: {fileID: 3463894118187994509, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
-  panelGameOver: {fileID: 0}
+  panelGameOver: {fileID: 901791617}
   namaSceneAwal: Day 1
   securityRoomID: 6
   waktuTungguAwal: 25

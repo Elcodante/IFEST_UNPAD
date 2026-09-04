@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static RoomManager;
 
 public class KlikRuangan : MonoBehaviour
 {
@@ -14,73 +13,68 @@ public class KlikRuangan : MonoBehaviour
 
     void Update()
     {
+        AturKondisiCollider();
+
         if (Input.GetMouseButtonDown(0))
         {
             if (Camera.main == null) return;
-
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (areaSentuh != null && areaSentuh == Physics2D.OverlapPoint(mousePos))
+            if (areaSentuh != null && areaSentuh.enabled)
             {
-                ProsesKlik();
+                // Gunakan OverlapPointAll agar klik menembus tumpukan collider
+                Collider2D[] semuaHit = Physics2D.OverlapPointAll(mousePos);
+                foreach (var hit in semuaHit)
+                {
+                    if (hit == areaSentuh)
+                    {
+                        ProsesKlik();
+                        break;
+                    }
+                }
             }
+        }
+    }
+
+    private void AturKondisiCollider()
+    {
+        if (RoomManager.instance == null || areaSentuh == null) return;
+
+        RoomManager.Room dataRuang = RoomManager.instance.rooms.Find(r => r.roomID == idRuangan);
+        bool adaZombie = false;
+
+        ZombieController[] semuaZombie = Object.FindObjectsByType<ZombieController>(FindObjectsSortMode.None);
+        foreach (var z in semuaZombie)
+        {
+            if (z.targetRoomID == idRuangan) adaZombie = true;
+        }
+
+        // LOGIKA TEMANMU: Collider ruangan HANYA NYALA jika ada zombie
+        if (adaZombie || (dataRuang != null && dataRuang.currentState != RoomManager.RoomState.Aman))
+        {
+            areaSentuh.enabled = true;
+        }
+        else
+        {
+            areaSentuh.enabled = false;
         }
     }
 
     private void OnMouseDown()
     {
-        ProsesKlik();
+        if (areaSentuh != null && areaSentuh.enabled) ProsesKlik();
     }
 
     private void ProsesKlik()
     {
-        Debug.Log($"<color=white>==========================================</color>");
-        Debug.Log($"[KLIK] Kamu mengklik: <b>Room_{idRuangan}</b>");
-
-        if (RoomManager.instance == null)
-        {
-            Debug.LogError("[ERROR] RoomManager.instance tidak ditemukan!");
-            return;
-        }
-
+        if (RoomManager.instance == null) return;
         RoomManager.Room dataRuang = RoomManager.instance.rooms.Find(r => r.roomID == idRuangan);
-        string statusRuang = (dataRuang != null) ? dataRuang.currentState.ToString() : "TIDAK TERDAFTAR";
 
-        ZombieController[] semuaZombie = Object.FindObjectsByType<ZombieController>(FindObjectsSortMode.None);
-        bool adaZombieDiRuanganIni = false;
+        if (dataRuang != null) dataRuang.currentState = RoomManager.RoomState.Diinvasi;
 
-        string infoSemuaZombie = "";
-        foreach (var z in semuaZombie)
+        if (SoldierManager.instance != null)
         {
-            infoSemuaZombie += $"[Zombie di Room_{z.targetRoomID}] ";
-            if (z.targetRoomID == idRuangan)
-            {
-                adaZombieDiRuanganIni = true;
-            }
+            SoldierManager.instance.MunculkanUI(idRuangan);
         }
-
-        if (semuaZombie.Length == 0) infoSemuaZombie = "TIDAK ADA ZOMBIE SAMA SEKALI DI SCENE";
-        Debug.Log($"[STATUS SCENE] Daftar Zombie Aktif: {infoSemuaZombie}");
-        Debug.Log($"[STATUS RUANGAN] Room_{idRuangan} status di RoomManager: <b>{statusRuang}</b>");
-
-        // PERBAIKAN: Logika Prioritas Zombie! Jika ada zombie, paksa panggil tentara!
-        if (adaZombieDiRuanganIni || (dataRuang != null && dataRuang.currentState != RoomState.Aman))
-        {
-            Debug.Log($"<color=green>[PRIORITAS]</color> Ruangan {idRuangan} diserang! Akses interior ditutup, memanggil UI Tentara.");
-
-            if (dataRuang != null) dataRuang.currentState = RoomState.Diinvasi;
-
-            if (SoldierManager.instance != null)
-            {
-                SoldierManager.instance.MunculkanUI(idRuangan);
-            }
-            return; // Hentikan script di sini agar tidak memicu transisi minigame!
-        }
-        else
-        {
-            Debug.Log($"[AMAN] Ruangan {idRuangan} tidak memiliki zombie. Klik diteruskan ke sistem Minigame.");
-        }
-
-        Debug.Log($"<color=white>==========================================</color>");
     }
 }

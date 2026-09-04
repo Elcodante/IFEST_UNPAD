@@ -14,6 +14,13 @@ public class AntidoteSequenceManager : BaseMinigameManager
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI statusText;
 
+    // --- TAMBAHAN AUDIO ---
+    [Header("Audio Settings")]
+    public string machineSequenceSoundID = "SFX_Antidote_Mesin";
+    public string successSoundID = "SFX_Antidote_Menang";
+    public string failSoundID = "SFX_Antidote_Gagal";
+    // ----------------------
+
     private List<int> currentSequence = new List<int>();
     private int playerInputIndex = 0;
 
@@ -47,8 +54,8 @@ public class AntidoteSequenceManager : BaseMinigameManager
         if (timerText != null)
         {
             timerText.text = "--.--";
-            timerText.color = Color.white; // Reset warna
-            timerText.transform.localScale = Vector3.one; // Reset skala
+            timerText.color = Color.white;
+            timerText.transform.localScale = Vector3.one;
         }
 
         for (int i = 0; i < sequenceLenght; i++)
@@ -65,6 +72,14 @@ public class AntidoteSequenceManager : BaseMinigameManager
 
         foreach (int id in currentSequence)
         {
+            // JUICE AUDIO 1: Suara botol mengatur urutan (Mesin). 
+            // Pitch dimanipulasi agar setiap botol punya nada berbeda!
+            if (AudioManager.Instance != null)
+            {
+                float nadaBotol = 0.8f + (id * 0.15f); // Menghasilkan pitch 0.8, 0.95, 1.1, dst.
+                AudioManager.Instance.PlaySFXRandomPitch(machineSequenceSoundID, nadaBotol, nadaBotol);
+            }
+
             testTubes[id].FlashTube();
             yield return new WaitForSeconds(0.6f);
         }
@@ -86,7 +101,6 @@ public class AntidoteSequenceManager : BaseMinigameManager
             {
                 timerText.text = currentTimer.ToString("F2") + "s";
 
-                // JUICE: Efek Jantung Berdebar saat sisa waktu 3 detik
                 if (currentTimer <= 3.0f)
                 {
                     timerText.color = Color.red;
@@ -122,9 +136,10 @@ public class AntidoteSequenceManager : BaseMinigameManager
             {
                 isWaitingForInput = false;
                 if (statusText != null) statusText.text = "SINTESIS BERHASIL!";
-
-                // Matikan detak jantung timer saat menang
                 if (timerText != null) timerText.transform.localScale = Vector3.one;
+
+                // JUICE AUDIO 2: Suara Menang
+                if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(successSoundID);
 
                 TriggerWinCondition();
             }
@@ -142,7 +157,9 @@ public class AntidoteSequenceManager : BaseMinigameManager
 
         Debug.LogWarning($"[Antidote] Gagal: {failReason}");
 
-        // JUICE: Getarkan layar karena ledakan kimia akibat urutan yang salah!
+        // JUICE AUDIO 3: Suara Gagal (Kaca pecah / kimia mendesis)
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(failSoundID);
+
         if (UIShaker.Instance != null)
         {
             UIShaker.Instance.Shake(0.35f, 20f);

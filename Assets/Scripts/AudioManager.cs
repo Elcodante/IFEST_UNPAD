@@ -210,4 +210,11 @@ public class AudioManager : MonoBehaviour
         // Pastikan kembali ke volume maksimal AudioSource (Mixer volume tetap diatur slider)
         bgmSource.volume = 1f;
     }
+
+    public float GetBGMDuration(string id)
+    {
+        AudioClip clip = GetBGMClip(id);
+        if (clip != null) return clip.length;
+        return 0f;
+    }
 }

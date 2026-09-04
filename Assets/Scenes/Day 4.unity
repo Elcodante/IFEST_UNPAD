@@ -458,6 +458,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 353cdd183ab6af344bff94960ba9df9f, type: 3}
   - soundID: Minigame_Ambil_Obat
     clip: {fileID: 8300000, guid: 0ce95c71161649c40abdd73e9f220bcb, type: 3}
+  - soundID: Minigame_Memasang_Gear
+    clip: {fileID: 8300000, guid: 1fbcffb48662a514fb6b3ea5dc4e3a40, type: 3}
+  - soundID: Minigame_Error_Gear
+    clip: {fileID: 8300000, guid: dd42237bdcb51a54b94cd81b310bb534, type: 3}
+  - soundID: Minigame_Berputar_Gear
+    clip: {fileID: 8300000, guid: dd42237bdcb51a54b94cd81b310bb534, type: 3}
 --- !u!4 &38492488
 Transform:
   m_ObjectHideFlags: 0
@@ -69602,7 +69608,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -474.23798, y: 183}
+  m_AnchoredPosition: {x: -474.23795, y: 183}
   m_SizeDelta: {x: -1242.305, y: -1015.331}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1773441100

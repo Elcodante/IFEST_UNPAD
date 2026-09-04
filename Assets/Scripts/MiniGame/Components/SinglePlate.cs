@@ -17,6 +17,12 @@ public class SinglePlate : MonoBehaviour, IDropHandler
     public FoodVisualMapping[] visualMappings;
     private Dictionary<string, GameObject> visualDict = new Dictionary<string, GameObject>();
 
+    // --- PENGATURAN AUDIO ---
+    [Header("Audio Settings")]
+    public string dropFoodSoundID = "SFX_Taruh_Makanan";
+    public string errorSoundID = "SFX_Salah";
+    public string slidePlateSoundID = "SFX_Geser_Piring";
+
     private void Awake()
     {
         foreach (var mapping in visualMappings)
@@ -40,46 +46,70 @@ public class SinglePlate : MonoBehaviour, IDropHandler
 
             if (accepted && visualDict.ContainsKey(dispenser.foodID))
             {
+                // JUICE AUDIO: Suara makanan mendarat di piring
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFXRandomPitch(dropFoodSoundID);
+                }
+
                 GameObject visual = visualDict[dispenser.foodID];
                 if (visual != null)
                 {
                     visual.SetActive(true);
 
-                    // JUICE: Hentikan animasi lama (jika ditumpuk cepat) lalu mulai animasi pantul
                     StopCoroutine("PopAnimation");
                     StartCoroutine(PopAnimation(visual.transform));
                 }
             }
             else
             {
-                // JUICE: Getarkan piring/layar saat pemain menaruh makanan yang salah
+                // JUICE AUDIO: Suara makanan salah/ditolak
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(errorSoundID);
+                }
+
                 if (UIShaker.Instance != null)
                 {
-                    UIShaker.Instance.Shake(0.2f, 10f); // Getaran pendek dan ringan
+                    UIShaker.Instance.Shake(0.2f, 10f);
                 }
             }
         }
     }
 
+    // Fungsi ini biasanya dipanggil oleh CafeteriaOrderManager saat pesanan selesai/direset
     public void ClearPlate()
     {
+        // JUICE AUDIO: Suara piring bergeser/ditarik 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(slidePlateSoundID);
+        }
+
         foreach (var visual in visualDict.Values)
         {
             if (visual != null)
             {
                 visual.SetActive(false);
-                visual.transform.localScale = Vector3.one; // Reset skala ke normal
+                visual.transform.localScale = Vector3.one;
             }
         }
     }
 
-    // Coroutine untuk membuat makanan memantul (membesar lalu mengecil) saat ditaruh
+    // (Opsional) Jika piring bergeser masuk saat level baru mulai, panggil fungsi ini dari Manajer
+    public void SlidePlateIn()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(slidePlateSoundID);
+        }
+    }
+
     private IEnumerator PopAnimation(Transform target)
     {
         float duration = 0.25f;
         float time = 0;
 
-        // Mulai dari ukuran 0 (hilang)
         target.localScale = Vector3.zero;
 
         while (time < duration)
@@ -87,7 +117,6 @@ public class SinglePlate : MonoBehaviour, IDropHandler
             time += Time.deltaTime;
             float t = time / duration;
 
-            // Kurva overshoot sederhana: membesar hingga 1.2x lalu menetap di 1.0x
             float scale = Mathf.LerpUnclamped(0f, 1.2f, Mathf.Sin(t * Mathf.PI));
             if (t > 0.5f) scale = Mathf.Lerp(1.2f, 1f, (t - 0.5f) * 2f);
 

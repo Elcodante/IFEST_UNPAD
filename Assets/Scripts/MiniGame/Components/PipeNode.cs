@@ -27,6 +27,8 @@ public class PipeNode : MonoBehaviour, IPointerDownHandler
     private bool isFilled = false;
     private Coroutine rotateRoutine;
 
+    public string turnSoundID = "SFX_Pipa_Putar";
+
     public void InitPipe(PipePuzzleManager puzzleManager)
     {
         manager = puzzleManager;
@@ -54,6 +56,11 @@ public class PipeNode : MonoBehaviour, IPointerDownHandler
         // JUICE 1: Hentikan putaran sebelumnya jika pemain mengklik brutal (spam click)
         if (rotateRoutine != null) StopCoroutine(rotateRoutine);
         rotateRoutine = StartCoroutine(SmoothRotateAndSquish());
+
+        if (AudioManager.Instance != null && !string.IsNullOrEmpty(turnSoundID))
+        {
+            AudioManager.Instance.PlaySFXRandomPitch(turnSoundID, 0.9f, 1.15f);
+        }
 
         // Panggil evaluasi logic (Logika mendahului visual, sehingga game terasa sangat responsif)
         if (manager != null)

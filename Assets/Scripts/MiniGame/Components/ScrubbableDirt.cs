@@ -90,7 +90,7 @@ public class ScrubbableDirt : MonoBehaviour, IDragHandler, IPointerDownHandler, 
 
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.PlayLoopingSFX("Minigame_Bersih_Air");
+            AudioManager.Instance.PlayLoopingSFX("Minigame_Bersih_Filter");
         }
 
         // 4. Perbarui Visual

@@ -378,7 +378,7 @@ RectTransform:
   m_Father: {fileID: 337634931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -430,6 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 38492488}
   - component: {fileID: 38492487}
+  - component: {fileID: 38492489}
   m_Layer: 0
   m_Name: Audio_Manager
   m_TagString: Untagged
@@ -452,12 +453,60 @@ MonoBehaviour:
   mainMixer: {fileID: 24100000, guid: 28a1fecb3242bc542bc898d0561aa768, type: 2}
   bgmMixer: {fileID: 6624617359241368562, guid: 28a1fecb3242bc542bc898d0561aa768, type: 2}
   sfxMixer: {fileID: -897000138862650034, guid: 28a1fecb3242bc542bc898d0561aa768, type: 2}
-  bgmList: []
+  bgmList:
+  - soundID: BGM_1
+    clip: {fileID: 8300000, guid: b1d80b875585c3645ba05ecff5cd10fe, type: 3}
+  - soundID: BGM_2
+    clip: {fileID: 8300000, guid: 3a6e1eebd7987bc42974dcfae0f053ea, type: 3}
   sfxList:
   - soundID: Minigame_Bersih_Air
     clip: {fileID: 8300000, guid: 353cdd183ab6af344bff94960ba9df9f, type: 3}
   - soundID: Minigame_Ambil_Obat
     clip: {fileID: 8300000, guid: 0ce95c71161649c40abdd73e9f220bcb, type: 3}
+  - soundID: Winning
+    clip: {fileID: 8300000, guid: e4fe4c5d3cb209b49b5860b4bf40a185, type: 3}
+  - soundID: Test
+    clip: {fileID: 8300000, guid: 5063f26ef20845947b2da54a846a1ae7, type: 3}
+  - soundID: Warning
+    clip: {fileID: 8300000, guid: 9ac4e95dcc7c03d40bff7f68cc46bfe6, type: 3}
+  - soundID: Minigame_Drop_Gear
+    clip: {fileID: 8300000, guid: 1fbcffb48662a514fb6b3ea5dc4e3a40, type: 3}
+  - soundID: Minigame_Warning_Gear
+    clip: {fileID: 8300000, guid: dd42237bdcb51a54b94cd81b310bb534, type: 3}
+  - soundID: Minigame_Spinning_Gear
+    clip: {fileID: 8300000, guid: 05b83ab893c816049ad545e9932e77a9, type: 3}
+  - soundID: Minigame_Bersih_Filter
+    clip: {fileID: 8300000, guid: e0dbd3336c0992c4dbaa9cdb86079404, type: 3}
+  - soundID: Minigame_Gagal_Listrik
+    clip: {fileID: 8300000, guid: 214a459f0f53d894dbc49fd8bbb48854, type: 3}
+  - soundID: Minigame_Putus_Listrik
+    clip: {fileID: 8300000, guid: a60a57ec929c5a341bffeaaf8fe9a61f, type: 3}
+  - soundID: Minigame_Success_Listrik
+    clip: {fileID: 8300000, guid: 559fe2c13ab09a64ca12118539c8401b, type: 3}
+  - soundID: SFX_Taruh_Makanan
+    clip: {fileID: 8300000, guid: c57dfbdaa070df442b53d1d02befb3c6, type: 3}
+  - soundID: SFX_Geser_Piring
+    clip: {fileID: 8300000, guid: d0014a9e6cb8b0449800a883ecd496c4, type: 3}
+  - soundID: Minigame_Ambil_Obat
+    clip: {fileID: 8300000, guid: f94cef5a9b2f98b4bbf1a47dbbd4e409, type: 3}
+  - soundID: SFX_O2_Warning
+    clip: {fileID: 8300000, guid: 6a555108984110e46ab2789b7693157b, type: 3}
+  - soundID: SFX_O2_Angin
+    clip: {fileID: 8300000, guid: 3f9416d42e3f1664192e5c99e5f89ae7, type: 3}
+  - soundID: SFX_O2_Succes
+    clip: {fileID: 8300000, guid: 9d33ecabe4545954d8be7ecb6478d137, type: 3}
+  - soundID: SFX_Pipa_Putar
+    clip: {fileID: 8300000, guid: 9861951b341d282468a297d5931ceedd, type: 3}
+  - soundID: SFX_Antidote_Gagal
+    clip: {fileID: 8300000, guid: 549e80ed84217764abb1e7bb48acae76, type: 3}
+  - soundID: SFX_Antidote_Menang
+    clip: {fileID: 8300000, guid: e7d87a22e1017064da9475503df393dd, type: 3}
+  - soundID: SFX_Antidote_Mesin
+    clip: {fileID: 8300000, guid: d2ce7635afcdadf49a18891f6e4ee24e, type: 3}
+  - soundID: SFX_Antidote_Klik
+    clip: {fileID: 8300000, guid: 57144618595fe914bbf5e4e13b4536c1, type: 3}
+  - soundID: Kalah
+    clip: {fileID: 8300000, guid: 7801ca7620b47ed438e1ac52e3e7f394, type: 3}
 --- !u!4 &38492488
 Transform:
   m_ObjectHideFlags: 0
@@ -473,6 +522,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &38492489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38492486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c278b177a8944429e008d67a9eeffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicBGMController
+  bgmUtamaID: BGM_1
+  bgmJarangID: BGM_2
+  peluangBGMUtama: 80
+  waktuCrossfade: 0.5
 --- !u!1 &39063525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,6 +1143,7 @@ MonoBehaviour:
   idleSprite: {fileID: 0}
   glowSprite: {fileID: 0}
   flashDuration: 0.4
+  tapSoundID: SFX_Antidote_Klik
 --- !u!225 &70122418
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1427,6 +1493,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: Minigame_Success_Listrik
+  errorSoundID: Minigame_Gagal_Listrik
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &82718389
 MonoBehaviour:
@@ -1898,6 +1967,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &107643383
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,6 +3036,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: Minigame_Success_Listrik
+  errorSoundID: Minigame_Gagal_Listrik
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &153526758
 MonoBehaviour:
@@ -3509,6 +3582,8 @@ MonoBehaviour:
   blinkInterval: 0.2
   windWarningUI: {fileID: 1265459088}
   windParticlesObject: {fileID: 1622327892}
+  warningSoundID: SFX_O2_Warning
+  windSoundID: SFX_O2_Angin
 --- !u!224 &188715715
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3684,6 +3759,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &192821559
 GameObject:
   m_ObjectHideFlags: 0
@@ -3786,7 +3862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
-  pickupSoundID: SFX_Ambil
+  pickupSoundID: SFX_O2_Succes
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -4080,6 +4156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireDragItem
   itemID: Biru
   sparkEffect: {fileID: 1025696840}
+  draggingSoundID: Minigame_Putus_Listrik
 --- !u!1 &224766371
 GameObject:
   m_ObjectHideFlags: 0
@@ -4252,6 +4329,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &230728680
 GameObject:
   m_ObjectHideFlags: 0
@@ -4882,6 +4960,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: SFX_Pasang_Gear
+  errorSoundID: SFX_Gear_Rusak
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &270761460
 MonoBehaviour:
@@ -5222,6 +5303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireDragItem
   itemID: Merah
   sparkEffect: {fileID: 1003648559}
+  draggingSoundID: Minigame_Putus_Listrik
 --- !u!1 &296840995
 GameObject:
   m_ObjectHideFlags: 0
@@ -5355,6 +5437,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &300164906
 GameObject:
   m_ObjectHideFlags: 0
@@ -6866,7 +6949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
-  pickupSoundID: SFX_Ambil
+  pickupSoundID: SFX_O2_Succes
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -6967,6 +7050,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &374939192
 GameObject:
   m_ObjectHideFlags: 0
@@ -7627,6 +7711,7 @@ MonoBehaviour:
   filledColor: {r: 0.2, g: 1, b: 0.2, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &402730957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8089,6 +8174,7 @@ MonoBehaviour:
   filledColor: {r: 0.2, g: 1, b: 0.2, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &421690837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8233,6 +8319,7 @@ MonoBehaviour:
   idleSprite: {fileID: 7560393144955176224, guid: 4dd1653b47d4c054d9e5ec1997f5de59, type: 3}
   glowSprite: {fileID: -3633554203766000356, guid: c38189735a15d5c43aa9c442db14f8e4, type: 3}
   flashDuration: 0.6
+  tapSoundID: SFX_Antidote_Klik
 --- !u!1 &427554921
 GameObject:
   m_ObjectHideFlags: 0
@@ -8429,6 +8516,7 @@ MonoBehaviour:
   filledColor: {r: 0.2, g: 1, b: 0.2, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &429653420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9131,6 +9219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireDragItem
   itemID: Hijau
   sparkEffect: {fileID: 759414300}
+  draggingSoundID: Minigame_Putus_Listrik
 --- !u!1 &474987547
 GameObject:
   m_ObjectHideFlags: 0
@@ -14183,6 +14272,7 @@ MonoBehaviour:
   idleSprite: {fileID: 6417793528251880262, guid: 1df36d1021086b542a828f68cfe559be, type: 3}
   glowSprite: {fileID: 6139135338095915500, guid: 57b631e2f265b8c49a6fef14a620861e, type: 3}
   flashDuration: 0.6
+  tapSoundID: SFX_Antidote_Klik
 --- !u!1 &494329465
 GameObject:
   m_ObjectHideFlags: 0
@@ -14501,7 +14591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
-  pickupSoundID: SFX_Ambil
+  pickupSoundID: SFX_O2_Succes
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -14870,6 +14960,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: Minigame_Success_Listrik
+  errorSoundID: Minigame_Gagal_Listrik
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &532532818
 MonoBehaviour:
@@ -16548,7 +16641,7 @@ RectTransform:
   m_Father: {fileID: 194408818}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17002,6 +17095,127 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638564189}
+  m_CullTransparentMesh: 1
+--- !u!1 &640901603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 640901604}
+  - component: {fileID: 640901607}
+  - component: {fileID: 640901606}
+  - component: {fileID: 640901605}
+  m_Layer: 5
+  m_Name: Btn_Back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &640901604
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640901603}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 1806624746}
+  m_Father: {fileID: 1186056158}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 81, y: -105}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &640901605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640901603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 640901606}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &640901606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640901603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &640901607
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640901603}
   m_CullTransparentMesh: 1
 --- !u!1 &660115584
 GameObject:
@@ -22397,6 +22611,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &695474020
 GameObject:
   m_ObjectHideFlags: 0
@@ -27839,6 +28054,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &764103008
 GameObject:
   m_ObjectHideFlags: 0
@@ -28394,6 +28610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireDragItem
   itemID: Kuning
   sparkEffect: {fileID: 1305449044}
+  draggingSoundID: Minigame_Putus_Listrik
 --- !u!1 &804595609
 GameObject:
   m_ObjectHideFlags: 0
@@ -29430,6 +29647,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &882497265
 GameObject:
   m_ObjectHideFlags: 0
@@ -30886,6 +31104,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &955656654
 GameObject:
   m_ObjectHideFlags: 0
@@ -31117,7 +31336,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &973772207
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31207,6 +31426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VolumeSettingsUI
   bgmSlider: {fileID: 1436673657}
   sfxSlider: {fileID: 1448611363}
+  testSoundID: Test
 --- !u!1 &977221044
 GameObject:
   m_ObjectHideFlags: 0
@@ -36543,6 +36763,7 @@ MonoBehaviour:
   filledColor: {r: 0.2, g: 1, b: 0.2, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &1013632839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42015,6 +42236,8 @@ MonoBehaviour:
   blinkInterval: 0.2
   windWarningUI: {fileID: 1133541485}
   windParticlesObject: {fileID: 0}
+  warningSoundID: SFX_O2_Warning
+  windSoundID: SFX_O2_Angin
 --- !u!114 &1041299988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42464,7 +42687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
-  pickupSoundID: SFX_Ambil
+  pickupSoundID: SFX_O2_Succes
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -42646,6 +42869,9 @@ MonoBehaviour:
     foodVisualObject: {fileID: 1413880644}
   - foodID: Burger
     foodVisualObject: {fileID: 445526103}
+  dropFoodSoundID: SFX_Taruh_Makanan
+  errorSoundID: 
+  slidePlateSoundID: SFX_Geser_Piring
 --- !u!1 &1072956864
 GameObject:
   m_ObjectHideFlags: 0
@@ -44069,6 +44295,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1186056157
 GameObject:
   m_ObjectHideFlags: 0
@@ -44101,6 +44328,7 @@ RectTransform:
   m_Children:
   - {fileID: 2075168050}
   - {fileID: 1732099985}
+  - {fileID: 640901604}
   m_Father: {fileID: 494329469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -44240,6 +44468,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 1306597643}
   rotationSpeed: -150
+  successSoundID: Minigame_Drop_Gear
+  errorSoundID: Minigame_Warning_Gear
+  gearSpinClip: {fileID: 8300000, guid: 05b83ab893c816049ad545e9932e77a9, type: 3}
   currentItem: {fileID: 0}
 --- !u!1 &1212101711
 GameObject:
@@ -44430,6 +44661,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: Minigame_Success_Listrik
+  errorSoundID: Minigame_Gagal_Listrik
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &1217030219
 MonoBehaviour:
@@ -44597,6 +44831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireDragItem
   itemID: Biru
   sparkEffect: {fileID: 0}
+  draggingSoundID: SFX_Kabel_Strum
 --- !u!225 &1221930496
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -45327,6 +45562,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1236986425
 GameObject:
   m_ObjectHideFlags: 0
@@ -45382,6 +45618,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: SFX_Pasang_Gear
+  errorSoundID: SFX_Gear_Rusak
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &1236986428
 MonoBehaviour:
@@ -46051,7 +46290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
-  pickupSoundID: SFX_Ambil
+  pickupSoundID: SFX_O2_Succes
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -56799,6 +57038,7 @@ MonoBehaviour:
   idleSprite: {fileID: 0}
   glowSprite: {fileID: 0}
   flashDuration: 0.4
+  tapSoundID: SFX_Antidote_Klik
 --- !u!225 &1330833175
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -57100,6 +57340,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 847751112}
   rotationSpeed: -150
+  successSoundID: SFX_Pasang_Gear
+  errorSoundID: SFX_Gear_Rusak
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!224 &1362974783
 RectTransform:
@@ -57562,6 +57805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireDragItem
   itemID: Hijau
   sparkEffect: {fileID: 0}
+  draggingSoundID: SFX_Kabel_Strum
 --- !u!225 &1385549971
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -57671,6 +57915,7 @@ MonoBehaviour:
   filledColor: {r: 0.2, g: 1, b: 0.2, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &1385629079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58463,7 +58708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
   targetWaktuMenang: 120
-  namaSceneBerikutnya: Day 2
+  namaSceneBerikutnya: 3
   hariSaatIni: 1
   teksHariUI: {fileID: 1128144539}
   teksWaktuUI: {fileID: 1232468250}
@@ -58511,8 +58756,8 @@ MonoBehaviour:
   namaSceneAwal: Day 1
   securityRoomID: 6
   waktuTungguAwal: 30
-  jedaAntarInvasi: 35
-  batasMaksimalInvasi: 3
+  jedaAntarInvasi: 30
+  batasMaksimalInvasi: 2
 --- !u!4 &1428028367
 Transform:
   m_ObjectHideFlags: 0
@@ -58733,6 +58978,7 @@ MonoBehaviour:
   idleSprite: {fileID: 0}
   glowSprite: {fileID: 0}
   flashDuration: 0.4
+  tapSoundID: SFX_Antidote_Klik
 --- !u!225 &1435698027
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -59293,6 +59539,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: SFX_Pasang_Gear
+  errorSoundID: SFX_Gear_Rusak
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &1472130733
 MonoBehaviour:
@@ -59748,8 +59997,8 @@ MonoBehaviour:
   - {fileID: 111787106}
   - {fileID: 835812606}
   enableRandomAttacks: 1
-  minAttackDelay: 30
-  maxAttackDelay: 35
+  minAttackDelay: 2
+  maxAttackDelay: 2
   excludeControlledRooms: 1
   playerResources: {fileID: 1827236784}
   gameOverUI: {fileID: 1218849719}
@@ -60474,6 +60723,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1544946559
 GameObject:
   m_ObjectHideFlags: 0
@@ -60830,6 +61080,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: SFX_Pasang_Gear
+  errorSoundID: SFX_Gear_Rusak
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &1559879004
 MonoBehaviour:
@@ -61110,6 +61363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireDragItem
   itemID: Ungu
   sparkEffect: {fileID: 683233086}
+  draggingSoundID: Minigame_Putus_Listrik
 --- !u!1 &1567252120
 GameObject:
   m_ObjectHideFlags: 0
@@ -61564,6 +61818,9 @@ MonoBehaviour:
   timeToInput: 8
   timerText: {fileID: 886075046}
   statusText: {fileID: 959741421}
+  machineSequenceSoundID: SFX_Antidote_Mesin
+  successSoundID: SFX_Antidote_Menang
+  failSoundID: SFX_Antidote_Gagal
 --- !u!114 &1587454051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66965,6 +67222,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1637799146
 GameObject:
   m_ObjectHideFlags: 0
@@ -67279,7 +67537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
-  pickupSoundID: SFX_Ambil
+  pickupSoundID: SFX_O2_Succes
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -67380,6 +67638,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1655211762
 GameObject:
   m_ObjectHideFlags: 0
@@ -68163,6 +68422,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1689704871
 GameObject:
   m_ObjectHideFlags: 0
@@ -68601,6 +68861,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1718577285
 GameObject:
   m_ObjectHideFlags: 0
@@ -68656,6 +68917,9 @@ MonoBehaviour:
   hideItemOnDrop: 1
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: SFX_O2_Succes
+  errorSoundID: 
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &1718577288
 MonoBehaviour:
@@ -69113,7 +69377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -46}
+  m_AnchoredPosition: {x: -158, y: -105}
   m_SizeDelta: {x: 215.61, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1732099986
@@ -69874,6 +70138,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1780684033
 GameObject:
   m_ObjectHideFlags: 0
@@ -70061,6 +70326,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1792971361
 GameObject:
   m_ObjectHideFlags: 0
@@ -70403,6 +70669,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1805638800
 GameObject:
   m_ObjectHideFlags: 0
@@ -70500,6 +70767,144 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
+--- !u!1 &1806624745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1806624746}
+  - component: {fileID: 1806624748}
+  - component: {fileID: 1806624747}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1806624746
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806624745}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 640901604}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 76.53, y: 0}
+  m_SizeDelta: {x: 91.07, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1806624747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806624745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: -> Main Menu
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 0207939733bc1bb4bb5bd4d22ccf9cf8, type: 2}
+  m_sharedMaterial: {fileID: -7906712341161036285, guid: 0207939733bc1bb4bb5bd4d22ccf9cf8, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 25
+  m_fontSizeBase: 25
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1806624748
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806624745}
+  m_CullTransparentMesh: 1
 --- !u!1 &1811807098
 GameObject:
   m_ObjectHideFlags: 0
@@ -71121,6 +71526,9 @@ MonoBehaviour:
   timeToInput: 8
   timerText: {fileID: 1673322704}
   statusText: {fileID: 1024182538}
+  machineSequenceSoundID: SFX_Antidote_Mesin
+  successSoundID: SFX_Antidote_Menang
+  failSoundID: SFX_Antidote_Gagal
 --- !u!224 &1838752632
 RectTransform:
   m_ObjectHideFlags: 0
@@ -71245,6 +71653,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 335815646}
   rotationSpeed: -150
+  successSoundID: SFX_Pasang_Gear
+  errorSoundID: SFX_Gear_Rusak
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!224 &1839115547
 RectTransform:
@@ -71567,6 +71978,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1842052979
 GameObject:
   m_ObjectHideFlags: 0
@@ -71788,6 +72200,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: SFX_Pasang_Gear
+  errorSoundID: SFX_Gear_Rusak
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &1848321431
 MonoBehaviour:
@@ -72028,6 +72443,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: SFX_Pasang_Gear
+  errorSoundID: SFX_Gear_Rusak
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &1859159671
 MonoBehaviour:
@@ -72103,6 +72521,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 1975511406}
   rotationSpeed: 150
+  successSoundID: Minigame_Drop_Gear
+  errorSoundID: Minigame_Warning_Gear
+  gearSpinClip: {fileID: 8300000, guid: 05b83ab893c816049ad545e9932e77a9, type: 3}
   currentItem: {fileID: 0}
 --- !u!224 &1865928772
 RectTransform:
@@ -72405,6 +72826,7 @@ MonoBehaviour:
   filledColor: {r: 0.2, g: 1, b: 0.2, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &1889283138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72694,6 +73116,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &1916740773
 GameObject:
   m_ObjectHideFlags: 0
@@ -72749,6 +73172,9 @@ MonoBehaviour:
   hideItemOnDrop: 0
   myHazard: {fileID: 0}
   rotationSpeed: -150
+  successSoundID: Minigame_Success_Listrik
+  errorSoundID: Minigame_Gagal_Listrik
+  gearSpinClip: {fileID: 0}
   currentItem: {fileID: 0}
 --- !u!114 &1916740776
 MonoBehaviour:
@@ -72955,6 +73381,7 @@ MonoBehaviour:
   filledColor: {r: 0.2, g: 1, b: 0.2, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &1942679726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73248,6 +73675,7 @@ MonoBehaviour:
   idleSprite: {fileID: -8800390071007853664, guid: eeadea080cd5dab4bb26753493e7cfe7, type: 3}
   glowSprite: {fileID: 6480610325034258845, guid: b55c47c83972e5c42a2ed440b1dff6b8, type: 3}
   flashDuration: 0.6
+  tapSoundID: SFX_Antidote_Klik
 --- !u!1 &1949506575
 GameObject:
   m_ObjectHideFlags: 0
@@ -73288,6 +73716,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &1949506577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73427,19 +73856,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1952415166}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 888066791}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: QuitGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1952415166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73989,6 +74406,7 @@ MonoBehaviour:
   filledColor: {r: 0.2, g: 1, b: 0.2, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &1978586989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74060,7 +74478,7 @@ RectTransform:
   m_Father: {fileID: 748715614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -74317,6 +74735,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireDragItem
   itemID: Merah
   sparkEffect: {fileID: 0}
+  draggingSoundID: SFX_Kabel_Strum
 --- !u!225 &2014588314
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -74569,6 +74988,7 @@ MonoBehaviour:
   idleSprite: {fileID: 0}
   glowSprite: {fileID: 0}
   flashDuration: 0.4
+  tapSoundID: SFX_Antidote_Klik
 --- !u!225 &2025854231
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -74652,7 +75072,7 @@ RectTransform:
   m_Father: {fileID: 1361996664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -75119,6 +75539,7 @@ MonoBehaviour:
   filledColor: {r: 0.2, g: 1, b: 0.2, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!114 &2052719382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75338,6 +75759,7 @@ MonoBehaviour:
   idleSprite: {fileID: -936103468104424685, guid: 1028c015b6919634a92830d121f9764a, type: 3}
   glowSprite: {fileID: -2319975563884858385, guid: 82bc5a163e43b6b4bab535e533717f90, type: 3}
   flashDuration: 0.6
+  tapSoundID: SFX_Antidote_Klik
 --- !u!1 &2057352335
 GameObject:
   m_ObjectHideFlags: 0
@@ -75510,6 +75932,7 @@ MonoBehaviour:
   filledColor: {r: 1, g: 1, b: 1, a: 1}
   rotationSpeed: 0.15
   manager: {fileID: 0}
+  turnSoundID: SFX_Pipa_Putar
 --- !u!1 &2070521197
 GameObject:
   m_ObjectHideFlags: 0
@@ -75866,6 +76289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireDragItem
   itemID: Kuning
   sparkEffect: {fileID: 0}
+  draggingSoundID: SFX_Kabel_Strum
 --- !u!225 &2077265263
 CanvasGroup:
   m_ObjectHideFlags: 0

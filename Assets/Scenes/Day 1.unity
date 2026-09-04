@@ -5216,7 +5216,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1428028366}
         m_TargetAssemblyTypeName: RoomManager, Assembly-CSharp
         m_MethodName: TombolRestartDitekan
         m_Mode: 1
@@ -45094,7 +45094,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1428028365}
         m_TargetAssemblyTypeName: DayManager, Assembly-CSharp
         m_MethodName: TombolNextDayDitekan
         m_Mode: 1
@@ -47208,7 +47208,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 888066791}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1

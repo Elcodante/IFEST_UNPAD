@@ -18,6 +18,10 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private CanvasGroup mainMenuGroup;
     [SerializeField] private MenuElement[] elements;
 
+    [Header("Settings UI")]
+    [Tooltip("Masukkan GameObject Container/Panel Settings di sini.")]
+    [SerializeField] private GameObject settingsPanel; // CONTAINER SETTINGS BARU
+
     [Header("Transition")]
     [SerializeField] private float duration = 0.55f;
     [SerializeField] private float slideDistance = 450f;
@@ -57,7 +61,65 @@ public class MainMenuController : MonoBehaviour
         if (pintu != null) pintu.SetActive(false);
         if (timer != null) timer.SetActive(false);
         if (day != null) day.SetActive(false);
+
+        // Pastikan settings tertutup di awal game
+        if (settingsPanel != null) settingsPanel.SetActive(false);
     }
+
+    // --- FUNGSI SETTINGS ---
+
+    public void OpenSettings()
+    {
+        if (isTransitioning) return; // Jangan buka settings kalau sedang transisi play
+
+        // Nyalakan panel settings
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(true);
+        }
+
+        // Sembunyikan main menu sementara tanpa merusak transisi PlayGame
+        if (mainMenuGroup != null)
+        {
+            mainMenuGroup.alpha = 0f;
+            mainMenuGroup.interactable = false;
+            mainMenuGroup.blocksRaycasts = false;
+        }
+    }
+
+    public void CloseSettings()
+    {
+        // Matikan panel settings
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(false);
+        }
+
+        // Munculkan main menu kembali
+        if (mainMenuGroup != null)
+        {
+            mainMenuGroup.alpha = 1f;
+            mainMenuGroup.interactable = true;
+            mainMenuGroup.blocksRaycasts = true;
+        }
+    }
+
+    // --- FUNGSI KELUAR GAME ---
+
+    public void QuitGame()
+    {
+        Debug.Log("Keluar dari game...");
+
+        // Menutup aplikasi pada saat game di-build
+        Application.Quit();
+
+        // Menghentikan mode play jika sedang di dalam Unity Editor
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
+    // --- FUNGSI GAMEPLAY (BAWAAN) ---
 
     public void PlayGame()
     {

@@ -60034,8 +60034,8 @@ MonoBehaviour:
   - {fileID: 111787106}
   - {fileID: 835812606}
   enableRandomAttacks: 1
-  minAttackDelay: 13
-  maxAttackDelay: 18
+  minAttackDelay: 10
+  maxAttackDelay: 15
   excludeControlledRooms: 1
   playerResources: {fileID: 1827236784}
   gameOverUI: {fileID: 1218849719}

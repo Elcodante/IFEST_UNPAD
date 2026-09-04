@@ -17,7 +17,13 @@ public class O2WindManager : MinigameDragManager
     [Header("Wind Visuals")]
     public GameObject windWarningUI;
     [Tooltip("Masukkan objek partikel angin atau gambar animasi badai di sini")]
-    public GameObject windParticlesObject; // --- TAMBAHAN ---
+    public GameObject windParticlesObject;
+
+    // --- TAMBAHAN AUDIO ---
+    [Header("Audio Settings")]
+    public string warningSoundID = "SFX_O2_Warning"; // Suara Beep/Alarm
+    public string windSoundID = "SFX_O2_Angin";      // Suara Badai/Tornado
+    // ----------------------
 
     public static O2WindManager Instance;
     private Coroutine windRoutine;
@@ -51,6 +57,12 @@ public class O2WindManager : MinigameDragManager
         isWindBlowing = false;
         if (windWarningUI != null) windWarningUI.SetActive(false);
         if (windParticlesObject != null) windParticlesObject.SetActive(false);
+
+        // AUDIO: Matikan suara angin (looping) jika angin sedang berhenti
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopLoopingSFX();
+        }
     }
 
     private IEnumerator WindCycleRoutine()
@@ -68,7 +80,16 @@ public class O2WindManager : MinigameDragManager
                 float blinkTimer = 0f;
                 while (blinkTimer < warningDuration)
                 {
-                    windWarningUI.SetActive(!windWarningUI.activeSelf);
+                    // Cek apakah UI akan menyala atau mati
+                    bool isTurningOn = !windWarningUI.activeSelf;
+                    windWarningUI.SetActive(isTurningOn);
+
+                    // JUICE AUDIO: Bunyikan nada Beep HANYA saat ikon peringatannya menyala
+                    if (isTurningOn && AudioManager.Instance != null)
+                    {
+                        AudioManager.Instance.PlaySFX(warningSoundID);
+                    }
+
                     yield return new WaitForSeconds(blinkInterval);
                     blinkTimer += blinkInterval;
                 }
@@ -77,9 +98,13 @@ public class O2WindManager : MinigameDragManager
             // Fase Badai (Angin Bertiup)
             isWindBlowing = true;
             if (windWarningUI != null) windWarningUI.SetActive(true);
-
-            // JUICE: Nyalakan efek partikel angin kencang melintasi layar
             if (windParticlesObject != null) windParticlesObject.SetActive(true);
+
+            // JUICE AUDIO: Nyalakan suara deru angin (Looping)
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayLoopingSFX(windSoundID);
+            }
 
             float windDuration = Random.Range(minWindTime, maxWindTime);
             yield return new WaitForSeconds(windDuration);

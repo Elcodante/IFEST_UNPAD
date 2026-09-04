@@ -12,6 +12,8 @@ public class WireDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     [Tooltip("Masukkan objek Partikel Listrik di sini")]
     public GameObject sparkEffect;
 
+    public string draggingSoundID = "SFX_Kabel_Strum";
+
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Canvas mainCanvas;
@@ -49,6 +51,11 @@ public class WireDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         canvasGroup.alpha = 0.8f;
         canvasGroup.blocksRaycasts = false;
+
+        if (AudioManager.Instance != null && !string.IsNullOrEmpty(draggingSoundID))
+        {
+            AudioManager.Instance.PlayLoopingSFX(draggingSoundID, 0.8f); // volume 0.8 agar tidak terlalu berisik
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -76,6 +83,11 @@ public class WireDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         if (canvasGroup.blocksRaycasts == false)
         {
             ReturnToStart();
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopLoopingSFX();
         }
     }
 

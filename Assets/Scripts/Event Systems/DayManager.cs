@@ -9,9 +9,12 @@ public class DayManager : MonoBehaviour
 
     [Header("PENGATURAN KEMENANGAN & HARI")]
     public float targetWaktuMenang = 180f;
-    public string namaSceneBerikutnya = "Day 2";
-
+    public string namaSceneBerikutnya = "Day3";
     public int hariSaatIni = 1;
+
+    [Header("AUDIO (SFX)")]
+    [Tooltip("Ketik nama file SFX Kemenangan di sini")]
+    public string winSfxID = "Win"; // Bisa diubah dari Inspector
 
     [Header("UI & TIMER")]
     public TextMeshProUGUI teksHariUI;
@@ -30,7 +33,6 @@ public class DayManager : MonoBehaviour
     {
         waktuBerjalan = false;
         detikBertahan = 0f;
-
         if (panelWin != null) panelWin.SetActive(false);
 
         UpdateUIHari();
@@ -74,12 +76,24 @@ public class DayManager : MonoBehaviour
         if (RoomManager.instance != null) RoomManager.instance.HentikanInvasi();
         if (panelWin != null) panelWin.SetActive(true);
         Time.timeScale = 0f;
+
+        // --- PENEMPATAN KODE AUDIO MENANG ---
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(winSfxID);
+        }
     }
 
     public void TombolNextDayDitekan()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(namaSceneBerikutnya);
+    }
+
+    public void TombolMainMenuDitekan()
+    {
+        Time.timeScale = 1f;
+        Debug.Log("Kembali ke Main Menu");
     }
 
     public void JedaSistemWaktu()

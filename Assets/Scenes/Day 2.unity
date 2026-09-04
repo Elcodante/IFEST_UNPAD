@@ -58855,9 +58855,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 497d78c54adf41742b1b5accc44bc3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
-  targetWaktuMenang: 180
+  targetWaktuMenang: 2
   namaSceneBerikutnya: Day 3
   hariSaatIni: 2
+  winSfxID: Winning
   teksHariUI: {fileID: 1128144539}
   teksWaktuUI: {fileID: 1232468250}
   panelWin: {fileID: 319771189}
@@ -58906,6 +58907,8 @@ MonoBehaviour:
   waktuTungguAwal: 30
   jedaAntarInvasi: 35
   batasMaksimalInvasi: 5
+  attackSfxID: Warning
+  gameOverSfxID: Kalah
 --- !u!4 &1428028367
 Transform:
   m_ObjectHideFlags: 0
@@ -60145,11 +60148,12 @@ MonoBehaviour:
   - {fileID: 111787106}
   - {fileID: 835812606}
   enableRandomAttacks: 1
-  minAttackDelay: 30
-  maxAttackDelay: 35
+  minAttackDelay: 20
+  maxAttackDelay: 30
   excludeControlledRooms: 1
   playerResources: {fileID: 1827236784}
   gameOverUI: {fileID: 1218849719}
+  attackSfxID: Minigame_Bersih_Filter
 --- !u!4 &1490465190
 Transform:
   m_ObjectHideFlags: 0

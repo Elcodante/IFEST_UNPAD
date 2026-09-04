@@ -25,13 +25,18 @@ public class RoomManager : MonoBehaviour
     public string namaSceneAwal = "Day 1";
 
     [Header("PENGATURAN LOSE CONDITION")]
-    [Tooltip("Masukkan Room ID untuk ruang Security")]
-    public int securityRoomID = 6; // Sesuaikan dengan ID Security di Inspector
+    public int securityRoomID = 6;
 
     [Header("PENGATURAN SPAM ZOMBIE")]
     public float waktuTungguAwal = 5f;
     public float jedaAntarInvasi = 20f;
     public int batasMaksimalInvasi = 4;
+
+    [Header("AUDIO (SFX)")]
+    [Tooltip("Ketik nama file SFX saat Zombie Muncul")]
+    public string attackSfxID = "Warning";
+    [Tooltip("Ketik nama file SFX saat Kalah/Game Over")]
+    public string gameOverSfxID = "Lose";
 
     private bool invasiBerjalan = true;
     private bool isGameOverTriggered = false;
@@ -53,7 +58,6 @@ public class RoomManager : MonoBehaviour
 
     void Update()
     {
-        // Memantau kondisi kalah secara *real-time* selama invasi berjalan
         if (invasiBerjalan && !isGameOverTriggered)
         {
             CekKondisiKalah();
@@ -83,19 +87,16 @@ public class RoomManager : MonoBehaviour
 
     private void CekKondisiKalah()
     {
-        // 1. KONDISI KALAH: Jika Zombie masuk ke Ruang Security (ID 6)
         Room ruangSecurity = rooms.Find(r => r.roomID == securityRoomID);
         if (ruangSecurity != null)
         {
             if (ruangSecurity.currentState == RoomState.Diinvasi || ruangSecurity.currentState == RoomState.Hancur)
             {
-                Debug.Log("GAME OVER: Ruang Security telah dikuasai zombie!");
                 TriggerGameOverCustom();
                 return;
             }
         }
 
-        // 2. KONDISI KALAH: Jika Room 2, 3, 4, dan 5 semuanya dikuasai (Diinvasi / Hancur)
         int[] targetRooms = { 2, 3, 4, 5 };
         bool semuaEmpatRuanganKalah = true;
 
@@ -104,7 +105,6 @@ public class RoomManager : MonoBehaviour
             Room r = rooms.Find(room => room.roomID == id);
             if (r != null)
             {
-                // Jika masih ada SATU saja dari ruangan ini yang "Aman", berarti belum kalah
                 if (r.currentState == RoomState.Aman)
                 {
                     semuaEmpatRuanganKalah = false;
@@ -115,7 +115,6 @@ public class RoomManager : MonoBehaviour
 
         if (semuaEmpatRuanganKalah)
         {
-            Debug.Log("GAME OVER: Room 2, 3, 4, dan 5 semuanya telah dikuasai zombie!");
             TriggerGameOverCustom();
             return;
         }
@@ -146,6 +145,12 @@ public class RoomManager : MonoBehaviour
 
         if (panelGameOver != null) panelGameOver.SetActive(true);
         Time.timeScale = 0f;
+
+        // --- PENEMPATAN KODE AUDIO GAME OVER ---
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(gameOverSfxID);
+        }
     }
 
     public void TombolRestartDitekan()
@@ -183,20 +188,24 @@ public class RoomManager : MonoBehaviour
                 ZombieController zc = invasiBaru.GetComponent<ZombieController>();
                 zc.targetRoomID = target.roomID;
                 zc.lokasiSpawn = target.lokasiRuangan;
+
+                // --- PENEMPATAN KODE AUDIO ZOMBIE MUNCUL ---
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(attackSfxID);
+                }
             }
         }
     }
 
     public void SpawnZombieDiRuangAcak()
     {
-        // Daftar ID ruangan yang boleh di-spawn zombie secara acak (Room 2, 3, 4, dan 5)
         int[] daftarRuangTarget = { 2, 3, 4, 5 };
         List<Room> daftarRuangAman = new List<Room>();
 
         foreach (int id in daftarRuangTarget)
         {
             Room r = rooms.Find(room => room.roomID == id);
-            // Masukkan ke daftar jika ruangannya ditemukan dan statusnya sedang Aman
             if (r != null && r.currentState == RoomState.Aman)
             {
                 daftarRuangAman.Add(r);
@@ -215,13 +224,13 @@ public class RoomManager : MonoBehaviour
                 ZombieController zc = invasiBaru.GetComponent<ZombieController>();
                 zc.targetRoomID = target.roomID;
                 zc.lokasiSpawn = target.lokasiRuangan;
-                
-                Debug.Log($"ZOMBIE MUNCUL DI: Room ID {target.roomID}");
+
+                // --- PENEMPATAN KODE AUDIO ZOMBIE MUNCUL ---
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(attackSfxID);
+                }
             }
-        }
-        else
-        {
-            Debug.Log("Semua ruang target sudah diinvasi atau hancur!");
         }
     }
 }

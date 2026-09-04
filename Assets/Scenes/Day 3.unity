@@ -58736,6 +58736,7 @@ MonoBehaviour:
   targetWaktuMenang: 180
   namaSceneBerikutnya: Day 4
   hariSaatIni: 3
+  winSfxID: Winning
   teksHariUI: {fileID: 1128144539}
   teksWaktuUI: {fileID: 1232468250}
   panelWin: {fileID: 1263809085}
@@ -58784,6 +58785,8 @@ MonoBehaviour:
   waktuTungguAwal: 25
   jedaAntarInvasi: 30
   batasMaksimalInvasi: 5
+  attackSfxID: Warning
+  gameOverSfxID: Kalah
 --- !u!4 &1428028367
 Transform:
   m_ObjectHideFlags: 0
@@ -60023,11 +60026,12 @@ MonoBehaviour:
   - {fileID: 111787106}
   - {fileID: 835812606}
   enableRandomAttacks: 1
-  minAttackDelay: 25
-  maxAttackDelay: 30
+  minAttackDelay: 15
+  maxAttackDelay: 25
   excludeControlledRooms: 1
   playerResources: {fileID: 1827236784}
   gameOverUI: {fileID: 1218849719}
+  attackSfxID: Minigame_Bersih_Filter
 --- !u!4 &1490465190
 Transform:
   m_ObjectHideFlags: 0

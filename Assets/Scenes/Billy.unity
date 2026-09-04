@@ -378,7 +378,7 @@ RectTransform:
   m_Father: {fileID: 337634931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -420,6 +420,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35703057}
   m_CullTransparentMesh: 1
+--- !u!1 &38492486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 38492488}
+  - component: {fileID: 38492487}
+  m_Layer: 0
+  m_Name: Audio_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &38492487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38492486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54f26c186e496384eaf2c20c04b2425b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  mainMixer: {fileID: 24100000, guid: 28a1fecb3242bc542bc898d0561aa768, type: 2}
+  bgmMixer: {fileID: 6624617359241368562, guid: 28a1fecb3242bc542bc898d0561aa768, type: 2}
+  sfxMixer: {fileID: -897000138862650034, guid: 28a1fecb3242bc542bc898d0561aa768, type: 2}
+  bgmList: []
+  sfxList:
+  - soundID: Minigame_Bersih_Air
+    clip: {fileID: 8300000, guid: 353cdd183ab6af344bff94960ba9df9f, type: 3}
+  - soundID: Minigame_Ambil_Obat
+    clip: {fileID: 8300000, guid: 0ce95c71161649c40abdd73e9f220bcb, type: 3}
+--- !u!4 &38492488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38492486}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 269.56708, y: 154.43396, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &39063525
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,6 +600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -2050,6 +2104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Barang Medis
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -3731,6 +3786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -4490,6 +4546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Barang Medis
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -5007,6 +5064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Barang Medis
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -6501,6 +6559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Barang Medis
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -6807,6 +6866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -13944,6 +14004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Apel
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -14440,6 +14501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -15435,6 +15497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Barang Medis
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -15590,6 +15653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Obat_Pil
+  pickupSoundID: Minigame_Ambil_Obat
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -16484,7 +16548,7 @@ RectTransform:
   m_Father: {fileID: 194408818}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -30328,6 +30392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -30483,6 +30548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Paint_Killer
+  pickupSoundID: Minigame_Ambil_Obat
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -30519,6 +30585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sup
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -31164,13 +31231,14 @@ GameObject:
   - component: {fileID: 973772210}
   - component: {fileID: 973772209}
   - component: {fileID: 973772208}
+  - component: {fileID: 973772211}
   m_Layer: 5
   m_Name: Settings Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &973772207
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31246,6 +31314,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973772206}
   m_CullTransparentMesh: 1
+--- !u!114 &973772211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973772206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 235275373ea38cd4a862b1e46a4d2084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VolumeSettingsUI
+  bgmSlider: {fileID: 1436673657}
+  sfxSlider: {fileID: 1448611363}
 --- !u!1 &977221044
 GameObject:
   m_ObjectHideFlags: 0
@@ -42397,6 +42479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Pil_Koplo
+  pickupSoundID: Minigame_Ambil_Obat
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -42502,6 +42585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -42735,6 +42819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Barang Medis
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -43056,6 +43141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Bandage
+  pickupSoundID: Minigame_Ambil_Obat
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -44891,6 +44977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -46086,6 +46173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -57397,6 +57485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -59754,7 +59843,6 @@ GameObject:
   - component: {fileID: 1490465190}
   - component: {fileID: 1490465189}
   - component: {fileID: 1490465191}
-  - component: {fileID: 1490465192}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -59816,22 +59904,6 @@ MonoBehaviour:
   - {fileID: 1490465189}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &1490465192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490465188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54f26c186e496384eaf2c20c04b2425b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  bgmMixer: {fileID: 0}
-  sfxMixer: {fileID: 0}
-  bgmList: []
-  sfxList: []
 --- !u!1 &1492661990
 GameObject:
   m_ObjectHideFlags: 0
@@ -60124,6 +60196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Gear_1
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -61934,6 +62007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Gear_1
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -67325,6 +67399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Sampah
+  pickupSoundID: SFX_Ambil
   affectedByWind: 1
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -67458,6 +67533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Gear_2
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -67832,6 +67908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Burger
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -68493,6 +68570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Barang Medis
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -69815,6 +69893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Hand_Sanitizer
+  pickupSoundID: Minigame_Ambil_Obat
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -74226,7 +74305,7 @@ RectTransform:
   m_Father: {fileID: 748715614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -74818,7 +74897,7 @@ RectTransform:
   m_Father: {fileID: 1361996664}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -76259,6 +76338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Gear_2
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -76501,6 +76581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Suntik
+  pickupSoundID: Minigame_Ambil_Obat
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -76920,6 +77001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Medkit
+  pickupSoundID: Minigame_Ambil_Obat
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -77013,6 +77095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableItem
   itemID: Soda
+  pickupSoundID: SFX_Ambil
   affectedByWind: 0
   dragTolerance: 2.5
   originalParent: {fileID: 0}
@@ -77090,6 +77173,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1490465190}
+  - {fileID: 38492488}
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 494329469}

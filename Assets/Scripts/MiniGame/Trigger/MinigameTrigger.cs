@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+
 [RequireComponent(typeof(Collider2D))]
 public class MinigameTrigger : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class MinigameTrigger : MonoBehaviour
 
     private void Update()
     {
-    //Catatan: Code dibawah ini untuk testing
+        // Catatan: Code dibawah ini untuk testing
         if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame && !isDangerActive)
         {
             ActivateDanger();
@@ -40,10 +41,10 @@ public class MinigameTrigger : MonoBehaviour
             DetectClick();
         }
     }
+
     /// <summary>
     /// Fungsi ini bisa dipanggil oleh sistem ruangan saat mesin tiba-tiba rusak.
     /// </summary>
-
     public void ActivateDanger()
     {
         if (isDangerActive) return;
@@ -59,9 +60,7 @@ public class MinigameTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// Membatalkan warning tanpa memicu minigame. Dipanggil misalnya oleh RoomController
-    /// saat room di-reset atau attack diselesaikan lewat trigger lain di room yang sama,
-    /// supaya warning yang belum sempat diklik player tidak nyangkut menyala.
+    /// Membatalkan warning tanpa memicu minigame.
     /// </summary>
     public void CancelDanger()
     {
@@ -78,7 +77,6 @@ public class MinigameTrigger : MonoBehaviour
     /// <summary>
     /// Logika deteksi klik kursor pada dunia 2D
     /// </summary>
-
     private void DetectClick()
     {
         if (!isDangerActive) return;
@@ -86,7 +84,7 @@ public class MinigameTrigger : MonoBehaviour
         // Ambil posisi mouse
         Vector3 mouseScreenPosition = Mouse.current.position.ReadValue();
 
-        // PENTING: Tentukan jarak Z dari kamera ke objek (biasanya jaraknya 10 unit)
+        // PENTING: Tentukan jarak Z dari kamera ke objek
         mouseScreenPosition.z = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
 
         // Konversi ke World Point dengan Z yang benar
@@ -114,7 +112,6 @@ public class MinigameTrigger : MonoBehaviour
     /// <summary>
     /// Memproses logika setelah pemain mengklik objek peringatan.
     /// </summary>
-
     private void AcknowledgeWarning()
     {
         isDangerActive = false;
@@ -125,6 +122,12 @@ public class MinigameTrigger : MonoBehaviour
         }
 
         Debug.Log($"[Danger UI] Dihilangkan. Memulai Minigame di: {gameObject.name}");
+
+        // --- HENTIKAN WAKTU & HILANGKAN TIMER SAAT MASUK KE MINIGAME ---
+        if (DayManager.instance != null)
+        {
+            DayManager.instance.JedaSistemWaktu();
+        }
 
         OnMinigameStarted?.Invoke();
     }

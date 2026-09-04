@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +31,9 @@ public class RoomFocusController : MonoBehaviour
     private readonly List<MinigameTrigger> allTriggers = new List<MinigameTrigger>();
     private RoomFocusEntry currentFocusedEntry;
 
+    private bool sedangDiInterior = false;
+    private Coroutine pengawasVisual;
+
     private void Awake()
     {
         foreach (RoomFocusEntry entry in roomEntries)
@@ -52,10 +56,7 @@ public class RoomFocusController : MonoBehaviour
             }
         }
 
-        if (backButtonUI != null)
-        {
-            backButtonUI.SetActive(false);
-        }
+        if (backButtonUI != null) backButtonUI.SetActive(false);
     }
 
     private void Update()
@@ -80,11 +81,9 @@ public class RoomFocusController : MonoBehaviour
 
                 if (adaZombie && currentFocusedEntry == entry)
                 {
-                    Debug.Log($"Ruangan {entry.room.RoomName} diserang zombie! Pemain dikembalikan ke CCTV.");
                     ReturnToCCTV();
                 }
 
-                // Matikan SEMUA komponen Button jika ada zombie
                 Button[] semuaTombol = entry.room.GetComponentsInChildren<Button>(true);
                 foreach (Button btn in semuaTombol)
                 {
@@ -97,49 +96,29 @@ public class RoomFocusController : MonoBehaviour
     public void FocusRoom(RoomController room)
     {
         if (room == null) return;
-
         RoomFocusEntry entry = System.Array.Find(roomEntries, e => e.room == room);
-
-        if (entry == null)
-        {
-            Debug.LogWarning($"[RoomFocusController] Tidak ada RoomFocusEntry untuk room '{room.RoomName}'.");
-            return;
-        }
-
+        if (entry == null) return;
         FocusEntry(entry);
     }
 
     public void FocusRoomByName(string roomName)
     {
         RoomFocusEntry entry = System.Array.Find(roomEntries, e => e.room != null && e.room.RoomName == roomName);
-
-        if (entry == null)
-        {
-            Debug.LogWarning($"[RoomFocusController] Tidak ada RoomFocusEntry dengan roomName '{roomName}'.");
-            return;
-        }
-
+        if (entry == null) return;
         FocusEntry(entry);
     }
 
     private void FocusEntry(RoomFocusEntry entry)
     {
-        // --- GEMBOK BAJA: CEK FISIK ZOMBIE ---
         if (entry.room != null)
         {
             int idTarget = entry.room.RoomID;
-
             ZombieController[] semuaZombie = Object.FindObjectsByType<ZombieController>(FindObjectsSortMode.None);
             foreach (var z in semuaZombie)
             {
-                if (z.targetRoomID == idTarget)
-                {
-                    Debug.Log($"[DITOLAK] Ruangan {entry.room.RoomName} sedang ada zombie! Transisi interior digagalkan paksa.");
-                    return;
-                }
+                if (z.targetRoomID == idTarget) return;
             }
         }
-        // ------------------------------------
 
         currentFocusedEntry = entry;
 
@@ -159,7 +138,6 @@ public class RoomFocusController : MonoBehaviour
 
                 float offsetX = (i - (entry.triggers.Length - 1) / 2f) * spacingBetweenTriggers;
                 Vector3 destination = targetFocusPosition + new Vector3(offsetX, 0f, 0f);
-
                 trigger.transform.position = destination;
             }
         }
@@ -167,8 +145,11 @@ public class RoomFocusController : MonoBehaviour
         if (cctvPanel != null) cctvPanel.SetActive(false);
         if (backButtonUI != null) backButtonUI.SetActive(true);
 
-        // PERBAIKAN: Sembunyikan pintu & zombie
+        sedangDiInterior = true;
         AturVisualDunia(false);
+
+        if (pengawasVisual != null) StopCoroutine(pengawasVisual);
+        pengawasVisual = StartCoroutine(AwasiVisualInterior());
     }
 
     public void ReturnToCCTV()
@@ -211,8 +192,16 @@ public class RoomFocusController : MonoBehaviour
         if (cctvPanel != null) cctvPanel.SetActive(true);
         if (backButtonUI != null) backButtonUI.SetActive(false);
 
-        // PERBAIKAN: Tampilkan kembali pintu & zombie
+        sedangDiInterior = false;
+        if (pengawasVisual != null) StopCoroutine(pengawasVisual);
+
         AturVisualDunia(true);
+
+        // --- KEMBALIKAN TIMER JIKA SEBELUMNYA DIJEDA OLEH MINIGAME ---
+        if (DayManager.instance != null)
+        {
+            DayManager.instance.LanjutkanSistemWaktu();
+        }
     }
 
     private void AturVisualDunia(bool tampilkan)
@@ -229,10 +218,64 @@ public class RoomFocusController : MonoBehaviour
         ZombieController[] semuaZombie = Object.FindObjectsByType<ZombieController>(FindObjectsSortMode.None);
         foreach (var z in semuaZombie)
         {
-            if (z != null && z.lokasiSpawn != null)
+            if (z != null && z.lokasiSpawn != null) z.lokasiSpawn.gameObject.SetActive(tampilkan);
+        }
+
+        SoldierController[] semuaTentara = Object.FindObjectsByType<SoldierController>(FindObjectsSortMode.None);
+        foreach (var s in semuaTentara)
+        {
+            if (s != null)
             {
-                z.lokasiSpawn.gameObject.SetActive(tampilkan);
+                SpriteRenderer[] sprites = s.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer sr in sprites) sr.enabled = tampilkan;
+
+                Canvas[] canvases = s.GetComponentsInChildren<Canvas>();
+                foreach (Canvas c in canvases) c.enabled = tampilkan;
             }
+        }
+    }
+
+    private IEnumerator AwasiVisualInterior()
+    {
+        while (sedangDiInterior)
+        {
+            ZombieController[] semuaZombie = Object.FindObjectsByType<ZombieController>(FindObjectsSortMode.None);
+            foreach (var z in semuaZombie)
+            {
+                if (z != null && z.lokasiSpawn != null && z.lokasiSpawn.gameObject.activeSelf)
+                {
+                    z.lokasiSpawn.gameObject.SetActive(false);
+                }
+            }
+
+            SoldierController[] semuaTentara = Object.FindObjectsByType<SoldierController>(FindObjectsSortMode.None);
+            foreach (var s in semuaTentara)
+            {
+                if (s != null)
+                {
+                    SpriteRenderer[] sprites = s.GetComponentsInChildren<SpriteRenderer>();
+                    foreach (SpriteRenderer sr in sprites) sr.enabled = false;
+
+                    Canvas[] canvases = s.GetComponentsInChildren<Canvas>();
+                    foreach (Canvas c in canvases) c.enabled = false;
+                }
+            }
+
+            foreach (RoomFocusEntry rfe in roomEntries)
+            {
+                if (rfe != currentFocusedEntry && rfe.triggers != null)
+                {
+                    foreach (var t in rfe.triggers)
+                    {
+                        if (t != null && t.gameObject.activeSelf)
+                        {
+                            t.gameObject.SetActive(false);
+                        }
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

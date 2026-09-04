@@ -19,8 +19,6 @@ public class DayManager : MonoBehaviour
     public GameObject panelWin;
 
     private float detikBertahan = 0f;
-
-    // PERBAIKAN: Dimatikan dari awal agar menunggu Main Menu
     public bool waktuBerjalan = false;
 
     void Awake()
@@ -30,13 +28,14 @@ public class DayManager : MonoBehaviour
 
     void Start()
     {
+        // Paksa mati di awal agar menunggu tombol Play di Main Menu
         waktuBerjalan = false;
         detikBertahan = 0f;
 
         if (panelWin != null) panelWin.SetActive(false);
 
         UpdateUIHari();
-        UpdateTeksWaktu(); 
+        UpdateTeksWaktu();
     }
 
     void Update()
@@ -92,5 +91,22 @@ public class DayManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         Debug.Log("Kembali ke Main Menu");
+    }
+
+    // ==========================================
+    // FUNGSI KONTROL WAKTU DARI MINIGAME
+    // ==========================================
+    public void JedaSistemWaktu()
+    {
+        waktuBerjalan = false;
+        if (teksWaktuUI != null) teksWaktuUI.gameObject.SetActive(false);
+        if (teksHariUI != null) teksHariUI.gameObject.SetActive(false);
+    }
+
+    public void LanjutkanSistemWaktu()
+    {
+        waktuBerjalan = true;
+        if (teksWaktuUI != null) teksWaktuUI.gameObject.SetActive(true);
+        if (teksHariUI != null) teksHariUI.gameObject.SetActive(true);
     }
 }

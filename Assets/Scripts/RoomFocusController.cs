@@ -10,10 +10,10 @@ public class RoomFocusController : MonoBehaviour
     {
         public RoomController room;
         public MinigameTrigger[] triggers;
-        
+
         [Header("Room Visuals")]
         [Tooltip("Masukkan GameObject UI Image background untuk ruangan ini di sini.")]
-        public GameObject roomBackground; // CONTAINER BACKGROUND BARU
+        public GameObject roomBackground;
     }
 
     [Header("Room Setup")]
@@ -42,7 +42,6 @@ public class RoomFocusController : MonoBehaviour
     {
         foreach (RoomFocusEntry entry in roomEntries)
         {
-            // Matikan semua background ruangan saat game dimulai
             if (entry.roomBackground != null)
             {
                 entry.roomBackground.SetActive(false);
@@ -130,7 +129,6 @@ public class RoomFocusController : MonoBehaviour
             }
         }
 
-        // Matikan semua background ruangan lain untuk berjaga-jaga
         foreach (RoomFocusEntry e in roomEntries)
         {
             if (e.roomBackground != null) e.roomBackground.SetActive(false);
@@ -138,11 +136,17 @@ public class RoomFocusController : MonoBehaviour
 
         currentFocusedEntry = entry;
 
-        // NYALAKAN Background ruangan yang sedang difokuskan
         if (entry.roomBackground != null)
         {
             entry.roomBackground.SetActive(true);
         }
+
+        // --- PERBAIKAN: Tutup Panel Tentara secara paksa saat masuk ke interior ---
+        if (SoldierManager.instance != null)
+        {
+            SoldierManager.instance.TutupUI();
+        }
+        // --------------------------------------------------------------------------
 
         foreach (MinigameTrigger trigger in allTriggers)
         {
@@ -186,7 +190,6 @@ public class RoomFocusController : MonoBehaviour
 
         foreach (RoomFocusEntry entry in roomEntries)
         {
-            // MATIKAN background ruangan saat kembali ke CCTV
             if (entry.roomBackground != null)
             {
                 entry.roomBackground.SetActive(false);
@@ -225,7 +228,6 @@ public class RoomFocusController : MonoBehaviour
 
         AturVisualDunia(true);
 
-        // --- KEMBALIKAN TIMER JIKA SEBELUMNYA DIJEDA OLEH MINIGAME ---
         if (DayManager.instance != null)
         {
             DayManager.instance.LanjutkanSistemWaktu();

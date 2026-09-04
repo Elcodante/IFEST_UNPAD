@@ -60,7 +60,9 @@ public class MainMenuController : MonoBehaviour
         if (slider2 != null) slider2.SetActive(false);
         if (pintu != null) pintu.SetActive(false);
         if (timer != null) timer.SetActive(false);
-        if (day != null) day.SetActive(false);
+
+        // --- PERUBAHAN DI SINI: Ubah false menjadi true agar Day muncul di Main Menu ---
+        if (day != null) day.SetActive(true);
 
         // Pastikan settings tertutup di awal game
         if (settingsPanel != null) settingsPanel.SetActive(false);
@@ -191,12 +193,14 @@ public class MainMenuController : MonoBehaviour
         if (slider2 != null) slider2.SetActive(true);
         if (pintu != null) pintu.SetActive(true);
         if (timer != null) timer.SetActive(true);
+
+        // Day tetap menyala saat masuk gameplay
         if (day != null) day.SetActive(true);
 
         if (playerController != null) playerController.enabled = true;
         if (gameplaySystemsController != null) gameplaySystemsController.StartGameplay();
 
-        // PERBAIKAN: Nyalakan waktu saat masuk ke game
+        // Nyalakan waktu saat masuk ke game
         if (DayManager.instance != null) DayManager.instance.waktuBerjalan = true;
     }
 

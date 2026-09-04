@@ -10,10 +10,14 @@ public class RoomFocusController : MonoBehaviour
     {
         public RoomController room;
         public MinigameTrigger[] triggers;
+        
+        [Header("Room Visuals")]
+        [Tooltip("Masukkan GameObject UI Image background untuk ruangan ini di sini.")]
+        public GameObject roomBackground; // CONTAINER BACKGROUND BARU
     }
 
     [Header("Room Setup")]
-    [Tooltip("Satu entry per room: RoomController-nya dan MinigameTrigger miliknya.")]
+    [Tooltip("Satu entry per room: RoomController-nya, MinigameTrigger miliknya, dan Background-nya.")]
     [SerializeField] private RoomFocusEntry[] roomEntries;
 
     [Header("Focus Position")]
@@ -38,6 +42,12 @@ public class RoomFocusController : MonoBehaviour
     {
         foreach (RoomFocusEntry entry in roomEntries)
         {
+            // Matikan semua background ruangan saat game dimulai
+            if (entry.roomBackground != null)
+            {
+                entry.roomBackground.SetActive(false);
+            }
+
             if (entry?.triggers == null) continue;
 
             foreach (MinigameTrigger trigger in entry.triggers)
@@ -120,7 +130,19 @@ public class RoomFocusController : MonoBehaviour
             }
         }
 
+        // Matikan semua background ruangan lain untuk berjaga-jaga
+        foreach (RoomFocusEntry e in roomEntries)
+        {
+            if (e.roomBackground != null) e.roomBackground.SetActive(false);
+        }
+
         currentFocusedEntry = entry;
+
+        // NYALAKAN Background ruangan yang sedang difokuskan
+        if (entry.roomBackground != null)
+        {
+            entry.roomBackground.SetActive(true);
+        }
 
         foreach (MinigameTrigger trigger in allTriggers)
         {
@@ -164,6 +186,12 @@ public class RoomFocusController : MonoBehaviour
 
         foreach (RoomFocusEntry entry in roomEntries)
         {
+            // MATIKAN background ruangan saat kembali ke CCTV
+            if (entry.roomBackground != null)
+            {
+                entry.roomBackground.SetActive(false);
+            }
+
             if (entry?.triggers == null) continue;
 
             bool roomStillUnderAttack = entry.room != null && entry.room.CurrentStatus == RoomStatus.Diserang;

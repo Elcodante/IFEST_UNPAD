@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,6 +28,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverUI;
+
+    [Header("Audio Settings")]
+    [Tooltip("ID SFX yang akan dipanggil di AudioManager saat diserang")]
+    [SerializeField] private string attackSfxID = "Minigame_Bersih_Filter"; // Sesuaikan dengan ID audio serangan Anda
 
     private bool gameOver;
     private Coroutine attackRoutine;
@@ -67,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         while (!gameOver)
         {
-            // PERBAIKAN: Tahan proses jika game belum di-play (masih di menu)
+            // Tahan proses jika game belum di-play (masih di menu)
             while (DayManager.instance != null && !DayManager.instance.waktuBerjalan)
             {
                 yield return null;
@@ -91,6 +97,16 @@ public class GameManager : MonoBehaviour
             return;
 
         room.SetUnderAttack();
+
+        // MENGGUNAKAN AUDIOMANAGER ANDA
+        if (AudioManager.Instance != null)
+        {
+            // Saya menggunakan attackSfxID agar Anda bisa mengubah string-nya dari Inspector
+            AudioManager.Instance.PlaySFX("Warning");
+
+            // Catatan: Jika SFX serangan bukan tipe looping, 
+            // Anda bisa menggantinya dengan: AudioManager.Instance.PlaySFX(attackSfxID);
+        }
     }
 
     private RoomController GetRandomAvailableRoom()
@@ -107,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     private RoomController[] GetAvailableRooms()
     {
-        var available = new System.Collections.Generic.List<RoomController>();
+        var available = new List<RoomController>();
 
         foreach (RoomController room in rooms)
         {

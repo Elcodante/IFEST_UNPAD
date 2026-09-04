@@ -9,6 +9,10 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [Header("Item Properties")]
     public string itemID;
 
+    [Header("Audio Settings")]
+    [Tooltip("ID suara di AudioManager saat barang ini disentuh (misal: SFX_Ambil_Obat, SFX_Ambil_Kertas)")]
+    public string pickupSoundID = "SFX_Ambil";
+
     [Header("O2 Wind Mechanic")]
     public bool affectedByWind = false;
     public float dragTolerance = 2.5f;
@@ -49,6 +53,12 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         isFailedDrag = false;
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
+
+        if (AudioManager.Instance != null && !string.IsNullOrEmpty(pickupSoundID))
+        {
+            // Play dengan Random Pitch agar suaranya bervariasi setiap kali diambil
+            AudioManager.Instance.PlaySFXRandomPitch(pickupSoundID, 0.9f, 1.1f);
+        }
     }
 
     public void OnDrag(PointerEventData eventData)

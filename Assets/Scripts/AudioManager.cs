@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [Header("Audio Routing")]
+    [SerializeField] private AudioMixer mainMixer; // Referensi ke file Audio Mixer utama
     public AudioMixerGroup bgmMixer;
     public AudioMixerGroup sfxMixer;
 
@@ -26,7 +27,12 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource bgmSource;
     private AudioSource sfxSource;
+    private AudioSource sfxLoopSource;
     private Coroutine crossfadeRoutine;
+
+    // Nama parameter yang kita expose di Mixer editor
+    private const string BGM_PARAMS = "BGMVolume";
+    private const string SFX_PARAMS = "SFXVolume";
 
     private void Awake()
     {
@@ -51,7 +57,51 @@ public class AudioManager : MonoBehaviour
         sfxSource = gameObject.AddComponent<AudioSource>();
         sfxSource.spatialBlend = 0f;
         sfxSource.outputAudioMixerGroup = sfxMixer;
+
+        sfxLoopSource = gameObject.AddComponent<AudioSource>();
+        sfxLoopSource.loop = true; // SANGAT PENTING: Aktifkan mode pengulangan
+        sfxLoopSource.spatialBlend = 0f;
+        sfxLoopSource.outputAudioMixerGroup = sfxMixer;
     }
+
+    // ==========================================
+    // PENGATURAN VOLUME (LOGARITMIK)
+    // ==========================================
+
+    // Slider UI biasanya 0 hingga 1 (Linier). Mixer menggunakan Desibel (Logaritmik).
+    // Kita butuh fungsi konversi. Middel slider (0.5) akan menjadi sekitar -6dB, bukan -40dB.
+    // 0 linier akan menjadi -80dB (senyap).
+    private float LinearToDecibel(float linear)
+    {
+        // Beri batasan agar tidak log(0) yang menghasilkan error infinity
+        if (linear <= 0) return -80f;
+
+        // Rumus standar konversi linier ke dB
+        return Mathf.Log10(linear) * 20f;
+    }
+
+    // Fungsi ini dipanggil oleh Slider UI
+    public void SetBGMVolume(float sliderValue)
+    {
+        if (mainMixer == null)
+        {
+            Debug.LogError("Main Mixer belum dipasang di AudioManager!");
+            return;
+        }
+        mainMixer.SetFloat(BGM_PARAMS, LinearToDecibel(sliderValue));
+    }
+
+    // Fungsi ini dipanggil oleh Slider UI
+    public void SetSFXVolume(float sliderValue)
+    {
+        if (mainMixer == null)
+        {
+            Debug.LogError("Main Mixer belum dipasang di AudioManager!");
+            return;
+        }
+        mainMixer.SetFloat(SFX_PARAMS, LinearToDecibel(sliderValue));
+    }
+
 
     // ==========================================
     // FUNGSI PENCARI AUDIO BERDASARKAN ID
@@ -100,6 +150,8 @@ public class AudioManager : MonoBehaviour
     // ==========================================
     // PEMUTAR BGM (DENGAN CROSSFADE)
     // ==========================================
+    // Catatan: Crossfade mengubah volume pada AudioSource, 
+    // sedangkan Slider mengubah volume pada Mixer Group. Keduanya tumpuk menumpuk (stack).
     public void PlayBGM(string id, float fadeDuration = 1.5f)
     {
         AudioClip clipToPlay = GetBGMClip(id);
@@ -107,6 +159,27 @@ public class AudioManager : MonoBehaviour
 
         if (crossfadeRoutine != null) StopCoroutine(crossfadeRoutine);
         crossfadeRoutine = StartCoroutine(CrossfadeBGM(clipToPlay, fadeDuration));
+    }
+
+    public void PlayLoopingSFX(string id, float volume = 1f)
+    {
+        // Jangan putar ulang jika suara gosokan yang sama sudah sedang dimainkan
+        AudioClip clipToPlay = GetSFXClip(id);
+        if (clipToPlay != null && sfxLoopSource.clip != clipToPlay || !sfxLoopSource.isPlaying)
+        {
+            sfxLoopSource.clip = clipToPlay;
+            sfxLoopSource.volume = volume;
+            sfxLoopSource.Play();
+        }
+    }
+
+    // 4. TAMBAHAN: Fungsi untuk mematikan suara gosokan saat kursor dilepas
+    public void StopLoopingSFX()
+    {
+        if (sfxLoopSource.isPlaying)
+        {
+            sfxLoopSource.Stop();
+        }
     }
 
     private IEnumerator CrossfadeBGM(AudioClip newClip, float duration)
@@ -134,6 +207,7 @@ public class AudioManager : MonoBehaviour
             bgmSource.volume = Mathf.Lerp(0f, 1f, currentTime / duration);
             yield return null;
         }
+        // Pastikan kembali ke volume maksimal AudioSource (Mixer volume tetap diatur slider)
         bgmSource.volume = 1f;
     }
 }

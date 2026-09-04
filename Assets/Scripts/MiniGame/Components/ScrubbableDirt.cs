@@ -88,6 +88,11 @@ public class ScrubbableDirt : MonoBehaviour, IDragHandler, IPointerDownHandler, 
             scrubParticles.Emit(Random.Range(1, 4));
         }
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayLoopingSFX("Minigame_Bersih_Air");
+        }
+
         // 4. Perbarui Visual
         UpdateVisualState();
 
@@ -101,6 +106,9 @@ public class ScrubbableDirt : MonoBehaviour, IDragHandler, IPointerDownHandler, 
             canvasGroup.blocksRaycasts = false;
             transform.localScale = originalScale;
 
+            if (AudioManager.Instance != null) AudioManager.Instance.StopLoopingSFX();
+
+
             if (manager != null)
             {
                 manager.ChekWinCondition();
@@ -111,6 +119,11 @@ public class ScrubbableDirt : MonoBehaviour, IDragHandler, IPointerDownHandler, 
     public void OnEndDrag(PointerEventData eventData)
     {
         if (!isClean) transform.localScale = originalScale;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopLoopingSFX();
+        }
     }
 
     private void UpdateVisualState()

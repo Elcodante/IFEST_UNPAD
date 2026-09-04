@@ -41483,14 +41483,14 @@ MonoBehaviour:
   cctvPanel: {fileID: 982927613}
   backButtonUI: {fileID: 453304769}
   allMinigamePanels:
-  - {fileID: 863990328}
-  - {fileID: 395707404}
-  - {fileID: 1041299985}
-  - {fileID: 677001003}
-  - {fileID: 1050762114}
-  - {fileID: 2041352965}
-  - {fileID: 1587454048}
-  - {fileID: 1485914069}
+  - {fileID: 1480505452}
+  - {fileID: 1557225228}
+  - {fileID: 164491405}
+  - {fileID: 1824837883}
+  - {fileID: 153073594}
+  - {fileID: 1669178240}
+  - {fileID: 1944786445}
+  - {fileID: 2140105206}
 --- !u!4 &1032119493
 Transform:
   m_ObjectHideFlags: 0

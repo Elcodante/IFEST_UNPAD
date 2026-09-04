@@ -81,22 +81,33 @@ public class MinigameTrigger : MonoBehaviour
 
     private void DetectClick()
     {
-
         if (!isDangerActive) return;
 
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
+        // Ambil posisi mouse
+        Vector3 mouseScreenPosition = Mouse.current.position.ReadValue();
 
-        Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
-        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+        // PENTING: Tentukan jarak Z dari kamera ke objek (biasanya jaraknya 10 unit)
+        mouseScreenPosition.z = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
 
+        // Konversi ke World Point dengan Z yang benar
+        Vector3 worldPos3D = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+        Vector2 worldPosition = new Vector2(worldPos3D.x, worldPos3D.y);
+
+        // Deteksi Collider
         Collider2D hitCollider = Physics2D.OverlapPoint(worldPosition);
 
-        if (hitCollider != null && hitCollider.gameObject == this.gameObject)
+        if (hitCollider != null)
         {
-            AcknowledgeWarning();
+            Debug.Log("Berhasil klik objek: " + hitCollider.gameObject.name);
+
+            if (hitCollider.gameObject == this.gameObject)
+            {
+                AcknowledgeWarning();
+            }
+        }
+        else
+        {
+            Debug.Log($"Klik tidak mengenai collider apapun. Posisi klik: ({worldPosition.x:F2}, {worldPosition.y:F2})");
         }
     }
 

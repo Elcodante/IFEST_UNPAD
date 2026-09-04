@@ -21,14 +21,20 @@ public class RoomManager : MonoBehaviour
     public GameObject prefabEventInvasi;
     public GameObject panelGameOver;
 
+    [Header("PENGATURAN SCENE AWAL")]
+    public string namaSceneAwal = "Day 1";
+
+    [Header("PENGATURAN LOSE CONDITION")]
+    [Tooltip("Masukkan Room ID untuk ruang Security")]
+    public int securityRoomID = 6; // Sesuaikan dengan ID Security di Inspector
+
     [Header("PENGATURAN SPAM ZOMBIE")]
     public float waktuTungguAwal = 5f;
     public float jedaAntarInvasi = 20f;
-
-    [Header("BATAS INVASI SCENE INI")]
     public int batasMaksimalInvasi = 4;
 
     private bool invasiBerjalan = true;
+    private bool isGameOverTriggered = false;
 
     void Awake()
     {
@@ -45,23 +51,27 @@ public class RoomManager : MonoBehaviour
         StartCoroutine(MesinSpamZombie());
     }
 
+    void Update()
+    {
+        // Memantau kondisi kalah secara *real-time* selama invasi berjalan
+        if (invasiBerjalan && !isGameOverTriggered)
+        {
+            CekKondisiKalah();
+        }
+    }
+
     IEnumerator MesinSpamZombie()
     {
-        Debug.Log("WAVE SYSTEM: Menunggu player menekan Play...");
-
-        // PERBAIKAN: Tunggu sampai game benar-benar di-play
         while (DayManager.instance != null && !DayManager.instance.waktuBerjalan)
         {
             yield return null;
         }
 
-        Debug.Log("WAVE SYSTEM: Game dimulai! Menunggu persiapan awal...");
         yield return new WaitForSeconds(waktuTungguAwal);
 
         for (int i = 0; i < batasMaksimalInvasi; i++)
         {
             if (!invasiBerjalan) yield break;
-
             SpawnZombieDiRuangAcak();
 
             if (i < batasMaksimalInvasi - 1)
@@ -69,8 +79,53 @@ public class RoomManager : MonoBehaviour
                 yield return new WaitForSeconds(jedaAntarInvasi);
             }
         }
+    }
 
-        Debug.Log("WAVE SYSTEM: Seluruh " + batasMaksimalInvasi + " invasi selesai!");
+    private void CekKondisiKalah()
+    {
+        // 1. KONDISI KALAH: Jika Zombie masuk ke Ruang Security (ID 6)
+        Room ruangSecurity = rooms.Find(r => r.roomID == securityRoomID);
+        if (ruangSecurity != null)
+        {
+            if (ruangSecurity.currentState == RoomState.Diinvasi || ruangSecurity.currentState == RoomState.Hancur)
+            {
+                Debug.Log("GAME OVER: Ruang Security telah dikuasai zombie!");
+                TriggerGameOverCustom();
+                return;
+            }
+        }
+
+        // 2. KONDISI KALAH: Jika Room 2, 3, 4, dan 5 semuanya dikuasai (Diinvasi / Hancur)
+        int[] targetRooms = { 2, 3, 4, 5 };
+        bool semuaEmpatRuanganKalah = true;
+
+        foreach (int id in targetRooms)
+        {
+            Room r = rooms.Find(room => room.roomID == id);
+            if (r != null)
+            {
+                // Jika masih ada SATU saja dari ruangan ini yang "Aman", berarti belum kalah
+                if (r.currentState == RoomState.Aman)
+                {
+                    semuaEmpatRuanganKalah = false;
+                    break;
+                }
+            }
+        }
+
+        if (semuaEmpatRuanganKalah)
+        {
+            Debug.Log("GAME OVER: Room 2, 3, 4, dan 5 semuanya telah dikuasai zombie!");
+            TriggerGameOverCustom();
+            return;
+        }
+    }
+
+    private void TriggerGameOverCustom()
+    {
+        if (isGameOverTriggered) return;
+        isGameOverTriggered = true;
+        MunculkanGameOver();
     }
 
     public void HentikanInvasi()
@@ -81,11 +136,7 @@ public class RoomManager : MonoBehaviour
     public void JadikanRuanganAman(int id)
     {
         Room r = rooms.Find(x => x.roomID == id);
-        if (r != null)
-        {
-            r.currentState = RoomState.Aman;
-            Debug.Log("Sistem: Ruangan " + id + " sekarang kembali AMAN.");
-        }
+        if (r != null) r.currentState = RoomState.Aman;
     }
 
     public void MunculkanGameOver()
@@ -100,7 +151,7 @@ public class RoomManager : MonoBehaviour
     public void TombolRestartDitekan()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(namaSceneAwal);
     }
 
     public void SebarkanZombieDari(int idAsal)
@@ -111,11 +162,7 @@ public class RoomManager : MonoBehaviour
         List<Room> targetAman = new List<Room>();
         foreach (int idTetangga in ruangAsal.neighborIDs)
         {
-            if (PintuController.CekJalurDiblokir(idAsal, idTetangga))
-            {
-                Debug.Log($"VIRUS GAGAL MENYEBAR! Jalur {idAsal} ke {idTetangga} sedang dikarantina.");
-                continue;
-            }
+            if (PintuController.CekJalurDiblokir(idAsal, idTetangga)) continue;
 
             Room tetangga = rooms.Find(r => r.roomID == idTetangga);
             if (tetangga != null && tetangga.currentState == RoomState.Aman)
@@ -142,10 +189,15 @@ public class RoomManager : MonoBehaviour
 
     public void SpawnZombieDiRuangAcak()
     {
+        // Daftar ID ruangan yang boleh di-spawn zombie secara acak (Room 2, 3, 4, dan 5)
+        int[] daftarRuangTarget = { 2, 3, 4, 5 };
         List<Room> daftarRuangAman = new List<Room>();
-        foreach (Room r in rooms)
+
+        foreach (int id in daftarRuangTarget)
         {
-            if (r.currentState == RoomState.Aman && r.roomID != 6)
+            Room r = rooms.Find(room => room.roomID == id);
+            // Masukkan ke daftar jika ruangannya ditemukan dan statusnya sedang Aman
+            if (r != null && r.currentState == RoomState.Aman)
             {
                 daftarRuangAman.Add(r);
             }
@@ -163,7 +215,13 @@ public class RoomManager : MonoBehaviour
                 ZombieController zc = invasiBaru.GetComponent<ZombieController>();
                 zc.targetRoomID = target.roomID;
                 zc.lokasiSpawn = target.lokasiRuangan;
+                
+                Debug.Log($"ZOMBIE MUNCUL DI: Room ID {target.roomID}");
             }
+        }
+        else
+        {
+            Debug.Log("Semua ruang target sudah diinvasi atau hancur!");
         }
     }
 }

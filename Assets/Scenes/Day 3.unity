@@ -1592,13 +1592,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1428028365}
+        m_TargetAssemblyTypeName: DayManager, Assembly-CSharp
+        m_MethodName: TombolNextDayDitekan
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -29033,13 +29033,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1428028366}
+        m_TargetAssemblyTypeName: RoomManager, Assembly-CSharp
+        m_MethodName: TombolRestartDitekan
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -58733,7 +58733,7 @@ MonoBehaviour:
   hariSaatIni: 3
   teksHariUI: {fileID: 1128144539}
   teksWaktuUI: {fileID: 1232468250}
-  panelWin: {fileID: 0}
+  panelWin: {fileID: 1263809085}
   waktuBerjalan: 1
 --- !u!114 &1428028366
 MonoBehaviour:
@@ -58773,7 +58773,9 @@ MonoBehaviour:
     neighborIDs: 04000000
     lokasiRuangan: {fileID: 181474531}
   prefabEventInvasi: {fileID: 3463894118187994509, guid: 128fb848aab3add488291f8581d5a78e, type: 3}
-  panelGameOver: {fileID: 0}
+  panelGameOver: {fileID: 229719707}
+  namaSceneAwal: Day 1
+  securityRoomID: 6
   waktuTungguAwal: 25
   jedaAntarInvasi: 30
   batasMaksimalInvasi: 5

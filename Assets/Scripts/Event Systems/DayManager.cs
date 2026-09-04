@@ -9,7 +9,7 @@ public class DayManager : MonoBehaviour
 
     [Header("PENGATURAN KEMENANGAN & HARI")]
     public float targetWaktuMenang = 180f;
-    public string namaSceneBerikutnya = "Day3";
+    public string namaSceneBerikutnya = "Day 2";
 
     public int hariSaatIni = 1;
 
@@ -28,7 +28,6 @@ public class DayManager : MonoBehaviour
 
     void Start()
     {
-        // Paksa mati di awal agar menunggu tombol Play di Main Menu
         waktuBerjalan = false;
         detikBertahan = 0f;
 
@@ -72,11 +71,7 @@ public class DayManager : MonoBehaviour
         Debug.Log("GAME CLEAR: Waktu bertahan hidup berhasil dicapai!");
         waktuBerjalan = false;
 
-        if (RoomManager.instance != null)
-        {
-            RoomManager.instance.HentikanInvasi();
-        }
-
+        if (RoomManager.instance != null) RoomManager.instance.HentikanInvasi();
         if (panelWin != null) panelWin.SetActive(true);
         Time.timeScale = 0f;
     }
@@ -87,15 +82,6 @@ public class DayManager : MonoBehaviour
         SceneManager.LoadScene(namaSceneBerikutnya);
     }
 
-    public void TombolMainMenuDitekan()
-    {
-        Time.timeScale = 1f;
-        Debug.Log("Kembali ke Main Menu");
-    }
-
-    // ==========================================
-    // FUNGSI KONTROL WAKTU DARI MINIGAME
-    // ==========================================
     public void JedaSistemWaktu()
     {
         waktuBerjalan = false;

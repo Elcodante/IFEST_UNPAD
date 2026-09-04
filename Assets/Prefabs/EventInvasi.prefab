@@ -48,6 +48,6 @@ MonoBehaviour:
   titikSekarang: 0
   maksimalTitik: 5
   jedaAwal: 0
-  waktuTumbuh: 5
+  waktuTumbuh: 10
   prefabTitikMerah: {fileID: 5026554852279678331, guid: 252def12bf9e84f41ad5a245257e3ce1, type: 3}
   lokasiSpawn: {fileID: 0}
